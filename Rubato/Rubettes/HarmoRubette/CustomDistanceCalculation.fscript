@@ -1,0 +1,80 @@
+PitchClasses:={'C','C#', 'D','D#', 'E', 'F','F#', 'G','G#', 'A','A#', 'B'}.
+PitchClassCount:=PitchClasses count.
+"Calculation of the Riemann Tensor"
+"Names of the elements in Harmo Space"
+Tonalities:={'C','C#', 'D','D#', 'E', 'F','F#', 'G','G#', 'A','A#', 'B'}. 
+TonalityCount:= Tonalities count.
+TonalityToPitchClassMapping:=12 iota.
+
+ModelessFunctions:={'S','T','D'}.
+ModelessFunctionCount:= ModelessFunctions count.
+Modes:={'M','m','P','p'}. "Major, minor, Major Parallel of minor, minor Parallel of Major"
+ModeCount:=Modes count.
+
+"optional naming of ModelessFunctions x Modes elements"
+Functions:={'S','T','D','s','t','d','pS','pT','pD','Ps','Pt','Pd'}. 
+FunctionCount:=Functions count.
+BaseShift:={ 5 , 0 , 7 , 5 , 0 , 7 , 2  , 10 , 5  , 8  , 3  , 10 }. "Pitch Shift"
+NeighbourTonalities:= BaseShift union:([:pb | PitchClassCount - pb] value:@BaseShift).
+MajorFun:= {YES,YES,YES, NO, NO, NO, NO , NO , NO , YES, YES, YES}.
+CMajorPitches:={0,4,7}.
+CMinorPitches:={0,3,7}.
+IsChordTone:=[:function :pitch || cPitch|
+ cPitch:= (PitchClassCount + pitch - (BaseShift at:function)) mod:PitchClassCount. 
+ (MajorFun at:function) ifTrue:[CMajorPitches containsObject:cPitch] ifFalse:[CMinorPitches containsObject:cPitch]].
+
+LocusCount:= FunctionCount * TonalityCount.
+DistanceMatrix:=[:loc1 :loc2|| fu1 fu2 ton1 ton2| 
+  fu1:=(loc1 / TonalityCount) floor.
+  fu2:=(loc2 / TonalityCount) floor. 
+  ton1:=(loc1 mod:TonalityCount). 
+  ton2:=(loc2 mod:TonalityCount).
+  (ton1 isEqual:ton2) ifTrue:[0.0]
+    ifFalse:[|base1 base2 diff|
+      base1:=TonalityToPitchClassMapping at:ton1.
+      base2:=TonalityToPitchClassMapping at:ton2.
+      diff:=((PitchClassCount + base2 - base1) mod:PitchClassCount).
+      (NeighbourTonalities containsObject:diff) 
+        ifTrue:[1.0]
+        ifFalse:[2.0]
+      ] 
+  ] value:@(LocusCount iota) value:@2(LocusCount iota).
+
+"Arrangement in Riemann graph"
+"Permutation of Tonalities: (Tonalities at:6) == 'F#'"
+HarmoGraphTonalityNumbers:={6,11,4,9,2,7,0,5,10,3,8,1}.
+"optional naming of Tonalities in Riemann graph"
+HarmoGraphTonalities:={'F#', 'B', 'E', 'Ah', 'D', 'G', 'C', 'F', 'Bb', 'Eb','Ab','Db'}.
+
+"==================="
+"Register Space"
+
+space:=(NSMutableDictionary dictionaryWithObjects:
+  {Functions, Tonalities, Modes, ModelessFunctions, PitchClasses, HarmoGraphTonalities, HarmoGraphTonalityNumbers, DistanceMatrix} forKeys:
+  {'Functions','Tonalities','Modes','ModelessFunctions','PitchClasses' , 'HarmoGraphTonalities', 'HarmoGraphTonalityNumbers','DistanceMatrix'}).
+
+rubetteDriver setHarmoSpace:space.
+
+"=========================="
+"Define & register calculation Methods"
+harmoPreferences:=(rubetteDriver valueForKey:'myPreferences').
+SetMatrixValue:=[:matrix :setCellBlock ||rowCount colCount| rowCount:=matrix numberOfRows. colCount:=matrix numberOfColumns. [:r :c | setCellBlock value:r value:c value:(matrix cellAtRow:r column:c)] value:@(rowCount iota) value:@2(colCount iota)].
+
+"RiemannMatrix calculation (chord -> RiemannMatrix)"
+"Use standard algorithm, but preset reasonable values"
+SetFunctionScaleCell:=[:function :pitch :cell| 
+  cell setDoubleValue: ((IsChordTone value:function value:pitch) ifTrue:[1.0] ifFalse:[0.0])].
+SetZeroDouble:=[:r :c :cell | cell setDoubleValue:0.0].
+
+myModelessFunctionDistanceMatrix:=(harmoPreferences valueForKey:'myModelessFunctionDistanceMatrix').
+myModeDistanceMatrix:=(harmoPreferences valueForKey:'myModeDistanceMatrix').
+myTonalityDistanceMatrix:=(harmoPreferences valueForKey:'myTonalityDistanceMatrix').
+myFunctionScaleMatrix:=(harmoPreferences valueForKey:'myFunctionScaleMatrix').
+
+SetMatrixValue value:myModelessFunctionDistanceMatrix value:SetZeroDouble.
+SetMatrixValue value:myModeDistanceMatrix value:SetZeroDouble.
+SetMatrixValue value:myTonalityDistanceMatrix value:SetZeroDouble.
+SetMatrixValue value:myFunctionScaleMatrix value:SetFunctionScaleCell.
+
+functionScaleMatrix sendAction.
+rubetteDriver doCalculate:nil.
