@@ -25,16 +25,41 @@
   [super dealloc];
 }
 
+
+static BOOL sizesTitleScrollViews=YES;
+
++ (void)setSizesTitleScrollViews:(BOOL)newVal;
+{
+  sizesTitleScrollViews=newVal;
+}
+
 - (NSScrollView *)scrollableWrapperForView:(NSView *)view;
 {// return value has retaincount 1.
   id superView=[view superview];
-  id newView=[[NSScrollView alloc] initWithFrame:[view frame]];
+  NSRect titleViewFrame=[view frame]; // need not be a titleView, but then it has a special behaviour
+  id newView;
+  if (sizesTitleScrollViews) {
+    NSRect scrollViewFrame=[self frame];
+    if (view==horizontalTitleView) {
+      titleViewFrame.size.width=scrollViewFrame.size.width-(titleViewFrame.origin.x-scrollViewFrame.origin.x);
+    } else if (view==verticalTitleView) {
+      titleViewFrame.size.height=scrollViewFrame.size.height-(titleViewFrame.origin.y-scrollViewFrame.origin.y);      
+    }
+  }
+  newView=[[NSScrollView alloc] initWithFrame:titleViewFrame];
   [newView setDrawsBackground:NO];
   [newView setHasVerticalScroller:NO];
   [newView setHasHorizontalScroller:NO];
+
+  // Resizing
+  [newView setAutoresizingMask:[view autoresizingMask]]; // get mask from view
+  [view setAutoresizingMask:NSViewNotSizable]; // in a scrollView the contentView need not be resized.
+  
   [view setFrameOrigin:NSZeroPoint]; // move to relative 0,0
   [view retain];
-  [superView replaceSubview:view with:newView];
+  [superView replaceSubview:view with:newView]; // keeps the back to front ordering? or replacable by next two methods?
+//  [view removeFromSuperview];
+//  [superView addSubview:newView];
   [newView setDocumentView:view];
   [view setNeedsDisplay:YES];
   [newView setNeedsDisplay:YES];
