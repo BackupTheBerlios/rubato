@@ -801,7 +801,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
                 else
                   val=0.0;
               } else {
-                val=myFunctionScale[i][(k+pcCount-j) % pcCount]; // pcCount==12!
+                val=myFunctionScale[i][(k+pcCount-j) % pcCount]; // tonalityCount must be pcCount 
               }
               harmonicProfile[i][j][k]=val;
             }

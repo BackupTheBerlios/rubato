@@ -1,0 +1,93 @@
+"Define Names that are displayed in the GUI of the HarmoRubette"
+
+"Let Space=Tonalities x ModelessFunctions x Modes"
+
+"Calculation of the Riemann Matrix"
+"Names of Pitch classes for Function Scale Matrix"
+PitchClasses:={'C','C#', 'D','D#', 'E', 'F','F#', 'G','G#', 'A','A#', 'B'}.
+
+"Calculation of the Riemann Tensor"
+"Names of the elements in Harmo Space"
+Tonalities:={'C','C#', 'D','D#', 'E', 'F','F#', 'G','G#', 'A','A#', 'B'}. "can also be a subset of PitchClasses!"
+"The number of Tonalities can be less than the number of PitchClasses or the Tonalities can be ordered differently.
+ In this case define a mapping of Indices: e.g. for Tonalities {'F','C','G'} define {5,0,7}"
+TonalityToPitchClassMapping:=12 iota.
+
+ModelessFunctions:={'I','V','IV'}.
+Modes:={'Major','Minor','Parallel'}.
+
+"optional naming of ModelessFunctions x Modes elements"
+Functions:={'T','D','S','t','d','s','Tp','Dp','Sp'}.
+"optional naming of Loci = Tonality x Function  elements"
+Loci:=([:fu :to | fu ++ '(' ++ to ++ ')'] value:@Functions value:@Tonalities) \ #++.
+
+"Arrangement in Riemann graph"
+"Permutation of Tonalities: (Tonalities at:6) == 'F#'"
+HarmoGraphTonalityNumbers:={6,11,4,9,2,7,0,5,10,3,8,1}.
+"optional naming of Tonalities in Riemann graph"
+HarmoGraphTonalities:={'F#', 'B', 'E', 'Ah', 'D', 'G', 'C', 'F', 'Bb', 'Eb','Ab','Db'}.
+
+"==================="
+" reduced example:
+Tonalities:={'F','C','G'}.
+TonalityToPitchClassMapping:={5,0,7}.
+HarmoGraphTonalities:={'F','C','G'}.
+HarmoGraphTonalityNumbers:={0,1,2}.
+Loci:=([:fu :to | fu ++ '(' ++ to ++ ')'] value:@Functions value:@2Tonalities) \ #++.
+"
+
+"==================="
+"Register Space"
+
+space:=(NSMutableDictionary dictionaryWithObjects:{Functions, Tonalities, Modes, ModelessFunctions, PitchClasses, HarmoGraphTonalities, HarmoGraphTonalityNumbers, Loci, TonalityToPitchClassMapping} 
+forKeys:{'Functions','Tonalities','Modes','ModelessFunctions','PitchClasses' , 'HarmoGraphTonalities', 'HarmoGraphTonalityNumbers', 'Loci', 'TonalityToPitchClassMapping'}).
+
+rubetteDriver setHarmoSpace:space.
+
+"=========================="
+"Define & register calculation Methods"
+
+"RiemannMatrix calculation (chord -> RiemannMatrix)
+"optional: Calculating the harmonicProfile for the calculation of the RiemannMatrix (standard uses functionScaleMatrix: (PitchClasses x Functions))"
+" if PitchClasses do not map with Tonalities, define TonalityToPitchClassMapping in harmoSpace"
+(rubetteDriver chordSequence fsBlocks) setObject:[:function :tonality :pitchClass | 1.0] forKey:'HarmonicProfileValueForFunction:tonic:pc:'.
+(rubetteDriver chordSequence fsBlocks) setObject:[:chord :function :tonality | 1.0] forKey:'Chord:calcRiemannValueAtFunction:andTonic:'.
+(rubetteDriver chordSequence fsBlocks) setObject:[:summand | summand exp] forKey:'ChordSummationFormulaBlock:'. "within -[Chord calcRiemannValueAtFunction:andTonic:]"
+
+
+"========================"
+"Display"
+
+JGArrayTableView arrayTableViewWithArray:LocusNames identifiers: {'Meta-1'} titles:{'Locus Name'} getBlocks:{[:arr :ind | arr at:ind]} setBlocks:{[:arr :ind :str| arr setObject:str atIndex:ind]}.
+
+SysEval:=[:str :trueBlock :falseBlock|| interpreter result| interpreter:= FSInterpreter alloc init autorelease. "sys sys interpreter" result:=interpreter execute:str. 
+  (result isOk) ifTrue:[trueBlock value:(result result)]
+                ifFalse:[falseBlock value:result]].
+"
+sys browse:
+ (SysEval value:'{1,2,3}' value:#self value:#self).
+"
+
+JGArrayTableView arrayTableViewWithArray: C_a_Loci identifiers:{'Meta-1','Meta-2','Meta-3'} titles:{'Folio Name','Dia Tone','C~a-Locus'} 
+  getBlocks:{[:arr :ind | FolioNames at:ind],
+             [:arr :ind | ((arr at:ind) at:0) printString],
+             [:arr :ind | ((arr at:ind) at:1) printString]} 
+  setBlocks:{[:arr :ind :str| FolioNames at:ind put:str],
+             [:arr :ind :str| (arr at:ind) at:0 put:(Number numberWithDouble:(str doubleValue))],
+             [:arr :ind :str| SysEval value:str value:[:evalResult | (arr at:ind) at:1 put:evalResult] value:[:resultObject | sys beep]]
+             }.
+
+"===================="
+"other fscript methods"
+
+"Permutations"
+a := {{11,12},{21,22}}.
+perm:= [:c1 :c2 | {(c1 + 1) mod:2, (c2+2) mod:2}].
+permcopy := [:a ||b| b := [:c1 :c2 | 0] value:@(2 iota) value:@2(2 iota).
+[:c1 :c2 || coords| coords:=perm value:c1 value:c2. (b at:(coords at:0)) replaceObjectAtIndex:(coords at:1) withObject:((a at:c1) at:c2)] value:@(2 iota) value:@2(2 iota). b].
+
+"getting and modifying views"
+scrollView:=((rubetteDriver valueForKey:'myPreferences') valueForKey:'myFunctionScaleMatrix') superview superview.
+verticalView:=(scrollView verticalTitleView).
+{(scrollView frame), (verticalView frame), (verticalView documentView frame)}.
+

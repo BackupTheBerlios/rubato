@@ -44,6 +44,7 @@
 			productRefGroup = 03FEE1FE00906EAA7F000001;
 			projectDirPath = "";
 			targets = (
+				97E2E1070354C01A00951B37,
 				97D750C0034C5F4900951B37,
 				97A0B61A01BD5C3C00951B37,
 				9781A52002AE6BF100951B37,
@@ -2578,6 +2579,7 @@
 				977AFA1702EC7DBD00951B37,
 				97EB084702EF12EE00951B37,
 				97D750BF034C5F4900951B37,
+				97E2E1060354C01900951B37,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -6143,6 +6145,16 @@
 			settings = {
 			};
 		};
+		9708D0640355FF8100951B37 = {
+			isa = PBXFileReference;
+			path = HarmoSpaceTemplate.fscript;
+			refType = 4;
+		};
+		9708D0650355FFEF00951B37 = {
+			isa = PBXFileReference;
+			path = Lerdahl.fscript;
+			refType = 4;
+		};
 		970F0710024F821400951B37 = {
 			isa = PBXFileReference;
 			path = RubetteToolbarController.m;
@@ -7246,6 +7258,8 @@
 				978FC496010332C100000001,
 				978FC497010332C100000001,
 				978FC498010332C100000001,
+				9708D0640355FF8100951B37,
+				9708D0650355FFEF00951B37,
 			);
 			isa = PBXGroup;
 			path = HarmoRubette;
@@ -11309,6 +11323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97D750C9034C601900951B37,
+				97E2E10F0354C06D00951B37,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -11324,6 +11339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97D750CA034C601900951B37,
+				97E2E1100354C06D00951B37,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -11349,6 +11365,8 @@
 			children = (
 				97D750C7034C601800951B37,
 				97D750C8034C601800951B37,
+				97E2E10D0354C06D00951B37,
+				97E2E10E0354C06D00951B37,
 			);
 			isa = PBXGroup;
 			path = Patches;
@@ -11688,6 +11706,173 @@
 		};
 		97E07796019C370F00951B37 = {
 			fileRef = 97E0778A019C35D500951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1060354C01900951B37 = {
+			isa = PBXBundleReference;
+			path = Harmo.rubette.patch;
+			refType = 3;
+		};
+		97E2E1070354C01A00951B37 = {
+			buildPhases = (
+				97E2E1080354C01A00951B37,
+				97E2E1090354C01A00951B37,
+				97E2E10A0354C01A00951B37,
+				97E2E10B0354C01A00951B37,
+				97E2E10C0354C01A00951B37,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "/Volumes/jg/jg/rubato/ForeignSources/FScript/build /Volumes/jg/jg/rubato/Rubato/build";
+				OTHER_CFLAGS = "-Dselfvoid=void";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Harmo.rubette;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = patch;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = Harmo.rubette;
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = Harmo.rubette;
+			productReference = 97E2E1060354C01900951B37;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string></string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		97E2E1080354C01A00951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		97E2E1090354C01A00951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		97E2E10A0354C01A00951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+				97E2E1110354C09A00951B37,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		97E2E10B0354C01A00951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+				97E2E1120354C18D00951B37,
+				97E2E1130354C18D00951B37,
+				97E2E1140354C18D00951B37,
+				97E2E1150354C30F00951B37,
+				97E2E1160354C3A700951B37,
+				97E2E1170354C3BB00951B37,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		97E2E10C0354C01A00951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		97E2E10D0354C06D00951B37 = {
+			isa = PBXFileReference;
+			path = HarmoRubettePatch.h;
+			refType = 4;
+		};
+		97E2E10E0354C06D00951B37 = {
+			isa = PBXFileReference;
+			path = HarmoRubettePatch.m;
+			refType = 4;
+		};
+		97E2E10F0354C06D00951B37 = {
+			fileRef = 97E2E10D0354C06D00951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1100354C06D00951B37 = {
+			fileRef = 97E2E10E0354C06D00951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1110354C09A00951B37 = {
+			fileRef = 97E2E10E0354C06D00951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1120354C18D00951B37 = {
+			fileRef = 03FEE1FA00906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1130354C18D00951B37 = {
+			fileRef = 03FEE1FB00906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1140354C18D00951B37 = {
+			fileRef = 97EB1C2701A003B400951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1150354C30F00951B37 = {
+			fileRef = 03FEE20600906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1160354C3A700951B37 = {
+			fileRef = 03FEE20200906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97E2E1170354C3BB00951B37 = {
+			fileRef = 03FEE20500906EAA7F000001;
 			isa = PBXBuildFile;
 			settings = {
 			};

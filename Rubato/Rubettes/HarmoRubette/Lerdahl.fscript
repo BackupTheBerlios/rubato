@@ -1,0 +1,166 @@
+"6x12
+LocusNames := {'I/C~III/a', 'ii/C~iv/a', 'iii/C', 'V*/a', 'IV/C~VI/a', 'V/C'}.
+FolioNames := {'C~a','C#~a#', 'D~b','Eb~c', 'E~c#','F~d','F#~d#', 'G~e','Ab~f', 'A~f#','Bb~g', 'B~g#'}.
+C_a_Loci := {{0,{0,4,7}}, {2,{2,5,9}}, {4,{4,7,11}}, {4,{4,8,11}}, {5,{5,9,0}}, {7,{7,11,2}}}.
+"
+
+LocusNames := {'I/C~III/a', 'ii/C~iv/a', 'iii/C', 'V*/a', 'IV/C~VI/a', 'V/C', '#viio/a', 'vi/C~i/a', 'viio/C~iio/a'}. "abstract Loci"
+FolioNames := {'C~a','C#~a#', 'D~b','Eb~c', 'E~c#','F~d','F#~d#', 'G~e','Ab~f', 'A~f#','Bb~g', 'B~g#'}.
+C_a_Loci := {{0,{0,4,7}}, {2,{2,5,9}}, {4,{4,7,11}}, {4,{4,8,11}}, {5,{5,9,0}}, {7,{7,11,2}}, {7,{8,11,2}}, {9,{9,0,4}}, {11,{11,2,5}}}.
+
+StratificationProfile := {1,1,1,1,1}.
+DistanceProfile := {1,1,1,1,1,1}.
+
+
+PCNames:={'C','C#', 'D','D#', 'E','F','F#', 'G','A#', 'A','B#', 'B'}.
+ModelessFunctions:={'I','V','IV'}.
+Modes:={'JGMajor','Minor','Parallel'}.
+Functions:={'T','D','S','t','d','s','i','v','iv'}.
+Tonalities:=(LocusNames copy).
+QuintTonalities:={'F#', 'B', 'E', 'Ah', 'D', 'G', 'C', 'F', 'Bb', 'Eb','Ab','Db'}.
+QuintTonalityNumbers:={6,11,4,9,2,7,0,5,10,3,8,1}.
+
+
+Subst_C_a_LocusName:= [:FolioName :C_a_Name || folioComp comp2 | 
+  folioComp:= (FolioName componentsSeparatedByString:'~').
+  ([:tildeComp | " single ~ component "
+      ([:slashComps | " ii / C "
+         (slashComps objectAtIndex:0) ++ '/' ++
+          ( ((slashComps objectAtIndex:1) isEqualToString:'C') 
+               ifTrue: [folioComp objectAtIndex:0] 
+               ifFalse: [folioComp objectAtIndex:1]
+           ) 
+        ] value:(tildeComp componentsSeparatedByString:'/'))
+    ] value: @(C_a_Name componentsSeparatedByString:'~')) componentsJoinedByString:'~'].
+
+FunctionName := [:C_a_Name |
+  ([:tildeComp | " single ~ component "
+      ([:slashComps | " ii / C "
+          (slashComps objectAtIndex:0)
+        ] value:(tildeComp componentsSeparatedByString:'/'))
+    ] value: @(C_a_Name componentsSeparatedByString:'~')) componentsJoinedByString:'~'].
+
+FunctionNames := FunctionName value:@LocusNames.
+LociNames :=  (Subst_C_a_LocusName value: @ FolioNames  value:@2 LocusNames) \ #++.  "concrete Loci"
+
+space:=(NSMutableDictionary dictionaryWithObjects:{FunctionNames, FolioNames, {'SingleMode'}, LocusNames, PCNames, (FolioNames at:@ QuintTonalityNumbers), QuintTonalityNumbers, LociNames} 
+forKeys:{'Functions','Tonalities','Modes','ModelessFunctions','PitchClasses' , 'HarmoGraphTonalities', 'HarmoGraphTonalityNumbers' ,'Loci'}).
+
+rubetteDriver setHarmoSpace:space.
+
+
+"Calculate a locus at a folio from the associated locus in C~a."
+Locus := [:folio :caLocus | ((C_a_Loci at: caLocus) + folio) mod:12]. 
+Tones := 12 iota. 
+Dia := [:t | ({0,2,4,5,7,9,11} + t) mod: 12]. "t -> List of diatonic tone numbers in t major"
+
+"Returns the t major diatonic scale (list of tones) in a third chain beginning with x. "
+DiaThirdChain := [:t :x || DiaT PosTX | DiaT:=Dia value:t. PosTX:=DiaT indexOfObject:x. DiaT at: ((((7 iota) *2) + PosTX) mod:7)]. "t,x -> Liste"
+
+"Replace the beginning of the DiaThirdChain[t,x] by thirdChain elements"
+Alteration := [:t :x :thirdChain || DiaThirdChainTX c| DiaThirdChainTX:=(DiaThirdChain value:t value:x). c:= thirdChain count. thirdChain ++  (DiaThirdChainTX at: (((7-c) iota) + c))]. 
+
+AltFifthChain := [:t :x :thirdChain || AltDiaT PosTX | AltDiaT:= Alteration value:t value:x value:thirdChain. 
+  AltDiaT at: (((7 iota) *2) mod:7)]. "t,x -> Liste"
+
+"Returns a Lerdahl stratification given a thirdchain in an altered diatonic scale."
+Stratification := [:folio :caLocus || locus thirdChain | locus:= Locus value:folio value:caLocus. thirdChain:=locus at:1.  
+ {thirdChain at:{0}, thirdChain at:{0,2}, thirdChain, Alteration value:folio value:(locus at:0) value:thirdChain,Tones}].
+
+"Helper function characteristic vector of a subset of integers"
+CharVector:= [:set :len | (set containsObject: @(len iota)) ifTrue:[1] ifFalse:[0]].
+DiffCount:=[:set1 :set2 | (set1 minus:set2) count].
+ModDist := [:a :b :m | ((m + a - b) mod:m) min:((m + b - a) mod:m)].
+ClosestIndices:=[:list :val || min distList | 
+  distList:= (ModDist value:@list value: val value:12). 
+  min:= distList \ #min:. 
+  ((list count) iota) at:(distList @ isEqual: min)].
+
+LerdahlProfile:=[:folio :caLocus | (((CharVector value:@(Stratification value:folio  value: caLocus) value:12) * StratificationProfile) \ #+)]. 
+
+LerdahlMatrix:=LerdahlProfile value:@(12 iota) value:@2((C_a_Loci count) iota).
+
+"========="
+"Rubette Interface"
+
+(rubetteDriver chordSequence fsBlocks) setObject:[:caLocus :folio :pc | ((LerdahlMatrix at:folio) at:caLocus) at:pc] forKey:'HarmonicProfileValueForFunction:tonic:pc:'
+
+
+"========================"
+
+DiaFifthDistance:= [:t :x :thirdChain :p :q || list pc qc | list:=AltFifthChain value:t value:x value:thirdChain. 
+  pc:=ClosestIndices value:list value:p. 
+  qc:=ClosestIndices value:list value:q.
+  (([:a :b | ModDist value:a value:b value:7] value:@pc value:@2 qc) \ #++) \ #min:].
+
+
+DistVector := [:folio1 :caLocus1 :folio2 :caLocus2 ||s1 s2 |
+ s1:= Stratification value:folio1 value:caLocus1. 
+ s2:= Stratification value:folio2 value:caLocus2. 
+ {ModDist value:((7 * folio1) mod:12) value:((7 * folio2) mod:12) value:12,
+  DiaFifthDistance value:folio2 value:((s2 at:0) at:0) value:(s2 at:2) value:((s1 at:0) at:0) value:((s2 at:0) at:0),
+  DiffCount value:(s1 at:0) value:(s2 at:0),
+  DiffCount value:(s1 at:1) value:(s2 at:1),
+  DiffCount value:(s1 at:2) value:(s2 at:2),
+  DiffCount value:(s1 at:3) value:(s2 at:3)
+ }].
+
+
+LerdahlTensorProfile := [:folio1 :caLocus1 :folio2 :caLocus2 | 
+  ((CharVector value:(DistVector value:folio1 value:caLocus1 value:folio2 value:caLocus2) value:12) * DistanceProfile) \ #+]. 
+
+
+"Calculating the following variable can lead to memory errors and to crash of the computer."
+"jg: That is why I should do the enumeration in the main code and produce plain c double values directly."
+LerdahlTensor:= LerdahlTensorProfile value:@(1"12" iota) value:@2(1"(C_a_Loci count)" iota) value:@3(12 iota) value:@4((C_a_Loci count) iota).
+
+
+
+
+"========================"
+"Tests:"
+CharVector value:{1,4} value:12. "{0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0}"
+DiffCount value:{1,2,3} value:{2,3,4}. "1"
+ClosestIndices value:{0,2,5} value:3. "{1}"
+ClosestIndices value:{0,2,5} value:1. "{0, 1}"
+
+Locus value:6 value:6. "{1, {2, 5, 8}}"
+DiaThirdChain value:4 value:8. "{8, 11, 3, 6, 9, 1, 4}"
+AltFifthChain value:4 value:8 value:{}. "{8, 3, 9, 4, 11, 6, 1}"
+AltFifthChain value:4 value:8 value:{8,0,4}. "{8, 4, 9, 4, 0, 6, 1}"
+Alteration value:0 value:0 value:{0,3,6}. "{0, 3, 6, 11, 2, 5, 9}"
+Stratification value:0 value:0. "{{0}, {0, 7}, {0, 4, 7}, {0, 4, 7, 11, 2, 5, 9}, {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}}"
+LerdahlProfile value:0 value:0. "{15, 5, 9, 5, 12, 9, 5, 14, 5, 9, 5, 9}"
+DiaFifthDistance value:4 value:8 value:{8,0,4} value:1 value:3. "2"
+DistVector value:0 value:0 value:0 value:1.  "{0, 2, 1, 2, 3, 0}"
+LerdahlTensorProfile value:0 value:0 value:0 value:1. 
+
+"========================"
+"Display"
+
+JGArrayTableView arrayTableViewWithArray:LocusNames identifiers: {'Meta-1'} titles:{'Locus Name'} getBlocks:{[:arr :ind | arr at:ind]} setBlocks:{[:arr :ind :str| arr setObject:str atIndex:ind]}.
+
+SysEval:=[:str :trueBlock :falseBlock|| interpreter result| interpreter:= FSInterpreter alloc init autorelease. "sys sys interpreter" result:=interpreter execute:str. 
+  (result isOk) ifTrue:[trueBlock value:(result result)]
+                ifFalse:[falseBlock value:result]].
+"
+sys browse:
+ (SysEval value:'{1,2,3}' value:#self value:#self).
+"
+
+JGArrayTableView arrayTableViewWithArray: C_a_Loci identifiers:{'Meta-1','Meta-2','Meta-3'} titles:{'Folio Name','Dia Tone','C~a-Locus'} 
+  getBlocks:{[:arr :ind | FolioNames at:ind],
+             [:arr :ind | ((arr at:ind) at:0) printString],
+             [:arr :ind | ((arr at:ind) at:1) printString]} 
+  setBlocks:{[:arr :ind :str| FolioNames at:ind put:str],
+             [:arr :ind :str| (arr at:ind) at:0 put:(Number numberWithDouble:(str doubleValue))],
+             [:arr :ind :str| SysEval value:str value:[:evalResult | (arr at:ind) at:1 put:evalResult] value:[:resultObject | sys beep]]
+             }.
+
+RiemannMatrixForChord := [:pcs | [:caLocus :folio || mat| mat:= ((LerdahlMatrix at:folio) at:caLocus) at:pcs. (mat \ #+) / (mat count)] value:@(12 iota) value:@2((C_a_Loci count) iota)].
+
+LerdahlMatrix:=LerdahlProfile value:@(12 iota) value:@2((C_a_Loci count) iota).
+
+"
+(rubetteDriver chordSequence fsBlocks) setObject:[:chord :function :tonality | ? ] forKey:'Chord:calcRiemannValueAtFunction:andTonic:'.
+"

@@ -145,4 +145,7 @@
 
 - (double **)riemannMatrix;
 - (double **)levelMatrix;
+
+- (double *)closureNumbersForPitchClasses:(int)pitchClasses;
+- (double *)injectionNumbersForPitchClasses:(int)pitchClasses;
 @end
