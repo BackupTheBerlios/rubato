@@ -1265,6 +1265,8 @@
 				03FEE11C00906EAA7F000001,
 				03FEE11D00906EAA7F000001,
 				03FEE11E00906EAA7F000001,
+				97AFB7BE031CE7D700951B37,
+				97AFB7BF031CE7D700951B37,
 			);
 			isa = PBXGroup;
 			name = Classes;
@@ -4592,7 +4594,7 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
 				FRAMEWORK_VERSION = A;
 				HEADER_SEARCH_PATHS = Frameworks;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -4709,6 +4711,7 @@
 				97C8635101A0367400951B37,
 				97C8635201A0367400951B37,
 				97C8635301A0367400951B37,
+				97AFB7C2031D256500951B37,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -4983,6 +4986,7 @@
 				97C863A001A0367400951B37,
 				97C863A801A0367400951B37,
 				970F0714024F90D900951B37,
+				97AFB7C3031D256500951B37,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -5113,6 +5117,7 @@
 				03FEE35400906EAA7F000001,
 				03FEE35500906EAA7F000001,
 				03FEE35600906EAA7F000001,
+				97AFB7DA031FE81000951B37,
 			);
 			isa = PBXFrameworksBuildPhase;
 			name = "Frameworks & Libraries";
@@ -5525,7 +5530,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
-				97F4764902D4FBB100951B37,
+				97AFB7C8031D608700951B37,
 			);
 			isa = PBXApplicationTarget;
 			name = "Rubato (Application)";
@@ -10294,6 +10299,38 @@
 			settings = {
 			};
 		};
+		97AFB7BE031CE7D700951B37 = {
+			isa = PBXFileReference;
+			path = JGPredicateConverter.h;
+			refType = 4;
+		};
+		97AFB7BF031CE7D700951B37 = {
+			isa = PBXFileReference;
+			path = JGPredicateConverter.m;
+			refType = 4;
+		};
+		97AFB7C2031D256500951B37 = {
+			fileRef = 97AFB7BE031CE7D700951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97AFB7C3031D256500951B37 = {
+			fileRef = 97AFB7BF031CE7D700951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97AFB7C8031D608700951B37 = {
+			isa = PBXTargetDependency;
+			target = 03FEE32900906EAA7F000001;
+		};
+		97AFB7DA031FE81000951B37 = {
+			fileRef = 97EB1C2701A003B400951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		97C2EEEF0197268700951B37 = {
 			fileRef = 03FEE1FA00906EAA7F000001;
 			isa = PBXBuildFile;
@@ -11436,7 +11473,7 @@
 		};
 		97EB084702EF12EE00951B37 = {
 			isa = PBXBundleReference;
-			path = External.bundle;
+			path = External.rubette;
 			refType = 3;
 		};
 		97EB084802EF12EF00951B37 = {
@@ -11450,7 +11487,6 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
 				INSTALL_PATH = "@executable_path/../PlugIns";
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "-Dselfvoid=void";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -12345,10 +12381,6 @@
 					Public,
 				);
 			};
-		};
-		97F4764902D4FBB100951B37 = {
-			isa = PBXTargetDependency;
-			target = 03FEE35A00906EAA7F000001;
 		};
 		97F569A702DC4C9300951B37 = {
 			isa = PBXFileReference;
