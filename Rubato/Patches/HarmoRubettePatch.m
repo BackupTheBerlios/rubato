@@ -43,7 +43,7 @@
 
 @implementation ChordSequence (Patch)
 
-// not yet copied
+// copied to ChordSequence
 - generateRiemannLogic;
 {
   int i, j, c = [myChords count];
