@@ -181,8 +181,7 @@
                   } else if (kindOfString==1) {
                     id plist=[JGPredicateConverter listForPredicate:predicate useNames:YES];
                     if (plist){
-                     str=[FSPropertyList2Lisp_Class stringFromPropertyList:plist vectorString:nil];
-
+                      str=[FSPropertyList2Lisp_Class macroStringForArrays:plist];
                     }
                   }
                   if (str) 
