@@ -128,6 +128,7 @@
 				03FEE03D00906EAA7F000001,
 				03FEE03E00906EAA7F000001,
 				03FEE03F00906EAA7F000001,
+				97C1662F032762E000951B37,
 			);
 			isa = PBXGroup;
 			name = Classes;
@@ -180,6 +181,7 @@
 				03FEE04800906EAA7F000001,
 				03FEE04900906EAA7F000001,
 				03FEE04A00906EAA7F000001,
+				97C16630032762E000951B37,
 			);
 			isa = PBXGroup;
 			name = Headers;
@@ -237,6 +239,10 @@
 		};
 		03FEE04B00906EAA7F000001 = {
 			children = (
+				97C16631032762E000951B37,
+				97C16632032762E000951B37,
+				97C16633032762E000951B37,
+				97C16634032762E000951B37,
 				03FEE05100906EAA7F000001,
 			);
 			isa = PBXGroup;
@@ -2722,6 +2728,7 @@
 				03FEE21300906EAA7F000001,
 				03FEE21400906EAA7F000001,
 				03FEE21500906EAA7F000001,
+				97C16637032762E100951B37,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -3492,6 +3499,7 @@
 				9760AC7D02C114B700951B37,
 				9758C9B902C128EE00951B37,
 				977AFA1502EC7B1D00951B37,
+				97C16635032762E000951B37,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -3798,6 +3806,7 @@
 				9760AC4002C0D89900951B37,
 				9758C9BA02C128EE00951B37,
 				977AFA1602EC7B1D00951B37,
+				97C16636032762E000951B37,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -5117,7 +5126,6 @@
 				03FEE35400906EAA7F000001,
 				03FEE35500906EAA7F000001,
 				03FEE35600906EAA7F000001,
-				97AFB7DA031FE81000951B37,
 			);
 			isa = PBXFrameworksBuildPhase;
 			name = "Frameworks & Libraries";
@@ -5158,7 +5166,7 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
 				FRAMEWORK_VERSION = A;
 				HEADER_SEARCH_PATHS = Frameworks;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -5530,7 +5538,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
-				97AFB7C8031D608700951B37,
+				97C1663B0327B88200951B37,
 			);
 			isa = PBXApplicationTarget;
 			name = "Rubato (Application)";
@@ -5837,6 +5845,7 @@
 				97EB085D02EF14AB00951B37,
 				97EB085E02EF14AB00951B37,
 				97EB085F02EF14AB00951B37,
+				97C1663D0327C45400951B37,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -10321,12 +10330,69 @@
 			settings = {
 			};
 		};
-		97AFB7C8031D608700951B37 = {
-			isa = PBXTargetDependency;
-			target = 03FEE32900906EAA7F000001;
+		97C1662F032762E000951B37 = {
+			isa = PBXFileReference;
+			path = JGValueArray.m;
+			refType = 4;
 		};
-		97AFB7DA031FE81000951B37 = {
-			fileRef = 97EB1C2701A003B400951B37;
+		97C16630032762E000951B37 = {
+			isa = PBXFileReference;
+			path = JGValueArray.h;
+			refType = 4;
+		};
+		97C16631032762E000951B37 = {
+			isa = PBXFileReference;
+			path = JGValueArray_access.m;
+			refType = 4;
+		};
+		97C16632032762E000951B37 = {
+			isa = PBXFileReference;
+			path = JGValueArray_init.m;
+			refType = 4;
+		};
+		97C16633032762E000951B37 = {
+			isa = PBXFileReference;
+			path = JGValueArray_initPrototype.m;
+			refType = 4;
+		};
+		97C16634032762E000951B37 = {
+			isa = PBXFileReference;
+			path = JGValueArray_Test.txt;
+			refType = 4;
+		};
+		97C16635032762E000951B37 = {
+			fileRef = 97C16630032762E000951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97C16636032762E000951B37 = {
+			fileRef = 97C1662F032762E000951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97C16637032762E100951B37 = {
+			fileRef = 97C16630032762E000951B37;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					Public,
+				);
+			};
+		};
+		97C1663B0327B88200951B37 = {
+			isa = PBXTargetDependency;
+			target = 97EB084802EF12EF00951B37;
+		};
+		97C1663C0327C45300951B37 = {
+			isa = PBXFileReference;
+			name = "F-Script.icns";
+			path = "Applications/Rubato/F-Script.icns";
+			refType = 2;
+		};
+		97C1663D0327C45400951B37 = {
+			fileRef = 97C1663C0327C45300951B37;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -11235,6 +11301,7 @@
 				97EB1C1A019FFAE000951B37,
 				97EB1C1D019FFEFC00951B37,
 				97EB1C1F01A0003700951B37,
+				97C1663C0327C45300951B37,
 			);
 			isa = PBXGroup;
 			name = FScriptRubette;

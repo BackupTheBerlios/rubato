@@ -4,7 +4,7 @@
 		activeBuildStyle = 1CB7B68D0090B9A17F000001;
 		activeTarget = 03FEE38100906EAA7F000001;
 		addToTargets = (
-			03FEE26000906EAA7F000001,
+			03FEE38100906EAA7F000001,
 		);
 		breakpoints = (
 			97EB083202ED962700951B37,
@@ -32,16 +32,16 @@
 								Split0 = {
 									Frame = "{{0, 158}, {691, 164}}";
 									Split0 = {
-										Frame = "{{0, 0}, {286, 164}}";
+										Frame = "{{0, 0}, {285, 164}}";
 									};
 									Split1 = {
-										Frame = "{{295, 0}, {396, 164}}";
+										Frame = "{{294, 0}, {397, 164}}";
 									};
 									SplitCount = 2;
 								};
 								SplitCount = 1;
 								Tab0 = {
-									Frame = "{{0, 0}, {750, 50}}";
+									Frame = "{{0, 0}, {691, 50}}";
 								};
 								Tab1 = {
 									Frame = "{{0, 0}, {691, 134}}";
@@ -403,7 +403,7 @@
 	97EB083302EDA8C100951B37 = {
 		fileReference = 03FEE18C00906EAA7F000001;
 		isa = PBXFileBreakpoint;
-		lineNumber = 727;
+		lineNumber = 753;
 		state = 2;
 	};
 	97EB084802EF12EF00951B37 = {
