@@ -1,0 +1,35 @@
+":fileName"
+fileName:='/Users/jg/scores/bach/chorales/chor024.score'.
+documentController:=NSDocumentController sharedDocumentController.
+documentController openDocumentWithContentsOfFile:fileName display:YES.
+documents:= documentController documents.
+document:= documents at:0.
+distributor:=document distributor.
+distributor loadRubetteByFilename: (((NSBundle mainBundle)  builtInPlugInsPath) stringByAppendingPathComponent:'Metro.rubette').
+rubetteDriversDictionary:=distributor toolDictionary.
+metroRubetteDriver:= rubetteDriversDictionary objectForKey:'Metro_1'.
+"(metroRubetteDriver valueForKey:'myWindow') makeKeyAndOrderFront:nil."
+metroRubetteDriver doSearchWithFindPredicateSpecification:(metroRubetteDriver valueForKey:'findPredicatesWindowController').
+metroRubetteDriver showEvaluationView:nil. "no visuable result until current script execution is at end !"
+profileField:= metroRubetteDriver valueForKey:'myMetricalProfileField'.
+weightView:= metroRubetteDriver valueForKey:'myWeightView'.
+rect:=weightView bounds.
+images:={}.
+RecalcWithProfile:=[:profValue |
+  profileField setDoubleValue: profValue.
+  profileField sendAction:(profileField action) to:(profileField target).
+  metroRubetteDriver doCalculateWeight:nil.
+  image:=(NSImage alloc) initWithData:(weightView dataWithPDFInsideRect:rect). "autorelease leads to breakdown of program! report to Philippe"
+  images addObject:image.
+  image release.].
+
+RecalcWithProfile value:@(10 iota).
+
+imageView := (NSImageView alloc initWithFrame:rect).
+imageWindow := NSWindow alloc initWithContentRect:rect styleMask:NSTitledWindowMask+NSClosableWindowMask backing:NSBackingStoreBuffered defer:false.imageWindow setTitle:'Weights'.imageWindow orderFront:nil.imageWindow contentView addSubview: imageView.
+
+"imageView setImage:(images at:0)."
+
+imageIterator := [*arr :timer | ((arr count) > 0) ifTrue:[imageView setImage:((arr at:0) retain). (arr removeObjectAtIndex:0)] ifFalse:[timer invalidate]].
+imageIterator bind:'arr' to:(Array arrayWithArray:images).
+timer:=NSTimer scheduledTimerWithTimeInterval:0.5 target:imageIterator selector:#value: userInfo:nil repeats:YES.
