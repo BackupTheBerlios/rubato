@@ -2,7 +2,7 @@
 {
 	03FEE03000906EAA7F000001 = {
 		activeBuildStyle = 1CB7B68D0090B9A17F000001;
-		activeTarget = 978FC66C0103427400000001;
+		activeTarget = 03FEE38100906EAA7F000001;
 		addToTargets = (
 			978FC66C0103427400000001,
 		);
@@ -61,7 +61,7 @@
 							Frame = "{{0, 0}, {691, 222}}";
 						};
 						Tab3 = {
-							Frame = "{{0, 0}, {691, 185}}";
+							Frame = "{{0, 0}, {661, 185}}";
 						};
 						TabCount = 4;
 					};

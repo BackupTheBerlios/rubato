@@ -775,68 +775,100 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 /* generating the Riemann logic background if necessary */
 - generateRiemannLogic;
 {
-    int i, j, c = [myChords count];
-    
-    if(!isRiemannCalculated){
-        // NEWHARMO
-      Block *block=[fsBlocks objectForKey:@"HarmonicProfileValueForFunction:tonic:pc:"];
-      int i,j,k;
-        int sumCount;
-        if (harmonicProfile)
-          free(harmonicProfile);
-        if (useMorphology) {
-          sumCount=144;
-        } else
-          sumCount=pcCount;
-        MALLOC3(harmonicProfile,functionCount,tonalityCount,sumCount,double);
+  int i, j, c = [myChords count];
 
-        for (i=0; i<functionCount; i++)
-          for (j=0; j<tonalityCount; j++)
-            for (k=0; k<sumCount; k++) {
-              double val;
-              if (block) {
-                id blockVal=[block value:NUMBER(i) value:NUMBER(j) value:NUMBER(k)];
-                if ([blockVal respondsToSelector:@selector(doubleValue)])
-                  val=[blockVal doubleValue];
-                else
-                  val=0.0;
-              } else {
-                val=myFunctionScale[i][(k+pcCount-j) % pcCount]; // tonalityCount must be pcCount 
-              }
-              harmonicProfile[i][j][k]=val;
-            }
-        [self calcNollMatrix];
-        for(i=0; i<c; i++)
-          [[myChords objectAt:i] calcRiemannMatrix];
-        isRiemannCalculated = YES;
+  if(!isRiemannCalculated){
+    // NEWHARMO
+    Block *block=[fsBlocks objectForKey:@"HarmonicProfileValueForFunction:tonic:pc:"];
+    int i,j,k;
+    int sumCount;
+    NSArray *tonalityToPitchClassMapping;
+    int *tonalityMapping;
+    if (harmonicProfile)
+      free(harmonicProfile);
+    if (useMorphology) {
+      sumCount=144;
+    } else
+      sumCount=pcCount;
+    MALLOC3(harmonicProfile,functionCount,tonalityCount,sumCount,double);
+
+    tonalityToPitchClassMapping=[harmoSpace objectForKey:@"TonalityToPitchClassMapping"];
+    NSParameterAssert(!tonalityToPitchClassMapping || (tonalityCount==[tonalityToPitchClassMapping count]));
+    if (!tonalityToPitchClassMapping && (pcCount!=tonalityCount)) {
+      NSLog(@"Warning: pcCount!=tonalityCount and there is no TonalityToPitchClassMapping installed");
+      NSBeep();
     }
-    if(!isLevelCalculated){
-	double gLevel = 0.0, lLevel =0.0;
-	id iChord;
-	for (i=0; i<c;i++) {
+    tonalityMapping=malloc(tonalityCount*sizeof(int));
+    for (j=0; j<tonalityCount; j++) {
+      if (tonalityToPitchClassMapping) {
+        int tonalityToPitchClassValue;
+        id tonalityToPitchClassEntry=[tonalityToPitchClassMapping objectAtIndex:j];
+        if ([tonalityToPitchClassEntry respondsToSelector:@selector(intValue)]) {
+          tonalityToPitchClassValue=[tonalityToPitchClassEntry intValue];
+        } else if ([tonalityToPitchClassEntry respondsToSelector:@selector(doubleValue)]) {
+          double dval=[tonalityToPitchClassEntry doubleValue];
+          tonalityToPitchClassValue=(int)dval;
+        } else {
+          NSAssert(NO,@"Some entries of TonalityToPitchClassMapping are no numbers");
+          tonalityToPitchClassValue=j;
+        }
+        NSParameterAssert((tonalityToPitchClassValue>=0) && (tonalityToPitchClassValue<pcCount));
+        tonalityMapping[j]=tonalityToPitchClassValue;
+      } else {
+        tonalityMapping[j]=j;
+      }
+    }
+
+    for (i=0; i<functionCount; i++) {
+      for (j=0; j<tonalityCount; j++) {
+        for (k=0; k<sumCount; k++) {
+          double val;
+          if (block) {
+            id blockVal=[block value:NUMBER(i) value:NUMBER(j) value:NUMBER(k)];
+            if ([blockVal respondsToSelector:@selector(doubleValue)])
+              val=[blockVal doubleValue];
+            else
+              val=0.0;
+          } else {
+            val=myFunctionScale[i][(pcCount+k-tonalityMapping[j]) % pcCount]; // tonalityCount must be pcCount
+          } // if
+          harmonicProfile[i][j][k]=val;
+        } // for k
+      } // for j
+    } // for i
+    free(tonalityMapping); tonalityMapping=NULL;
+    [self calcNollMatrix];
+    for(i=0; i<c; i++)
+      [[myChords objectAt:i] calcRiemannMatrix];
+    isRiemannCalculated = YES;
+  }
+  if(!isLevelCalculated){
+    double gLevel = 0.0, lLevel =0.0;
+    id iChord;
+    for (i=0; i<c;i++) {
 	     lLevel = [[myChords objectAt:i] maxRiemannValue];
 	     gLevel = lLevel>gLevel ? lLevel : gLevel;
-	}
-	gLevel = (myGlobalLevel/100)*gLevel;
-	for(i=0; i<c; i++) {
-	    iChord = [myChords objectAt:i];
-	    lLevel = [iChord maxRiemannValue];
-	    lLevel = (myLocalLevel/100)*lLevel;
-	    [iChord calcLevelMatrixWithLevel:(gLevel>lLevel ? gLevel : lLevel)];
-	    for (j=0; j<VAL_MAX_LOCUS; j++)
-		if (!myUseFunctionList[j])
-		    [iChord restrictLevelMatrixAtLocus:j];
-	}
-	isLevelCalculated = YES;
     }
-    if(!isDistanceCalculated){
-	for(i=0;i<VAL_MAX_LOCUS;i++){
-	    for(j=0;j<VAL_MAX_LOCUS;j++)
-		myDistanceMatrix[i][j] = [self calcDistanceFrom:i to:j];
-	}
-	isDistanceCalculated = YES;
+    gLevel = (myGlobalLevel/100)*gLevel;
+    for(i=0; i<c; i++) {
+      iChord = [myChords objectAt:i];
+      lLevel = [iChord maxRiemannValue];
+      lLevel = (myLocalLevel/100)*lLevel;
+      [iChord calcLevelMatrixWithLevel:(gLevel>lLevel ? gLevel : lLevel)];
+      for (j=0; j<VAL_MAX_LOCUS; j++)
+        if (!myUseFunctionList[j])
+          [iChord restrictLevelMatrixAtLocus:j];
     }
-    return self;
+    isLevelCalculated = YES;
+  }
+  if(!isDistanceCalculated){
+    for(i=0;i<VAL_MAX_LOCUS;i++){
+      for(j=0;j<VAL_MAX_LOCUS;j++)
+        myDistanceMatrix[i][j] = [self calcDistanceFrom:i to:j];
+    }
+    isDistanceCalculated = YES;
+  }
+  return self;
 }
 
 - (BOOL)isRiemannLogicOK;
