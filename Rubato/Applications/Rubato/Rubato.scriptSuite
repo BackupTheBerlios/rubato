@@ -3,7 +3,7 @@
 <plist version="0.9">
 <dict>
 	<key>AppleEventCode</key>
-	<string>fsfs</string>
+	<string>Rbto</string>
 	<key>Commands</key>
         <dict>
 		<key>Eval</key>

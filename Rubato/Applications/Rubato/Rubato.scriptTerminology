@@ -13,7 +13,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>Commands for fs.</string>
+	<string>FScript Commands for Rubato.</string>
 	<key>Name</key>
 	<string>FScript Suite</string>
 </dict>
