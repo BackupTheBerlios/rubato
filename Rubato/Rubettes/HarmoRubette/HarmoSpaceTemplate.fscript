@@ -19,7 +19,7 @@ Modes:={'Major','Minor','Parallel'}.
 "optional naming of ModelessFunctions x Modes elements"
 Functions:={'T','D','S','t','d','s','Tp','Dp','Sp'}.
 "optional naming of Loci = Tonality x Function  elements"
-Loci:=([:fu :to | fu ++ '(' ++ to ++ ')'] value:@Functions value:@Tonalities) \ #++.
+Loci:=([:fu :to | fu ++ '(' ++ to ++ ')'] value:@1 Functions value:@2 Tonalities) \ #++.
 
 "Arrangement in Riemann graph"
 "Permutation of Tonalities: (Tonalities at:6) == 'F#'"

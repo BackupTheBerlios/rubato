@@ -3389,9 +3389,9 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = /Volumes/OSX_ext/Users/jg/rubato/ForeignSources/FScript/build;
+				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-Dselfvoid=void";
@@ -4616,9 +4616,9 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = Frameworks;
+				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-Dselfvoid=void";
@@ -5179,7 +5179,7 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				FRAMEWORK_VERSION = A;
 				HEADER_SEARCH_PATHS = Frameworks;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -5538,7 +5538,7 @@
 				973587F402ECAF9000951B37,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "/Users/jg/rubato/ForeignSources/FScript/build /Users/jg/rubato/ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build";
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = /Rubato;
 				LIBRARY_SEARCH_PATHS = "";
@@ -6618,15 +6618,13 @@
 		};
 		977257DF035F58A100D3499E = {
 			isa = PBXFileReference;
-			name = fs.scriptSuite;
-			path = ../ForeignSources/FScript/JGAdditions/fs.scriptSuite;
-			refType = 2;
+			path = Rubato.scriptSuite;
+			refType = 4;
 		};
 		977257E0035F58A100D3499E = {
 			isa = PBXFileReference;
-			name = fs.scriptTerminology;
-			path = ../ForeignSources/FScript/JGAdditions/fs.scriptTerminology;
-			refType = 2;
+			path = Rubato.scriptTerminology;
+			refType = 4;
 		};
 		977257E1035F58A300D3499E = {
 			fileRef = 977257DF035F58A100D3499E;
@@ -8504,7 +8502,7 @@
 				978FC6710103427400000001,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				INSTALL_PATH = "@executable_path/../PlugIns";
 				OTHER_CFLAGS = "-Dselfvoid=void";
 				OTHER_LDFLAGS = "-bundle -undefined error";
@@ -8964,7 +8962,7 @@
 				97A5A87C0103458100000001,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "/Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build /Users/jg/rubato/ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build";
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				INSTALL_PATH = "@executable_path/../PlugIns";
 				OTHER_CFLAGS = "-DWITHMUSICKIT -Dselfvoid=void";
 				OTHER_LDFLAGS = "-bundle -undefined error";
@@ -9182,8 +9180,9 @@
 		};
 		97A5A88C010347E800000001 = {
 			isa = PBXBundleReference;
-			path = Physical.operator;
-			refType = 3;
+			name = Physical.operator;
+			path = build/Physical.operator;
+			refType = 2;
 		};
 		97A5A88D010347E800000001 = {
 			children = (
@@ -9546,23 +9545,27 @@
 		};
 		97A5A8DA01034A8F00000001 = {
 			isa = PBXBundleReference;
-			path = Scalar.operator;
-			refType = 3;
+			name = Scalar.operator;
+			path = build/Scalar.operator;
+			refType = 2;
 		};
 		97A5A8DB01034A8F00000001 = {
 			isa = PBXBundleReference;
-			path = Tempo.operator;
-			refType = 3;
+			name = Tempo.operator;
+			path = build/Tempo.operator;
+			refType = 2;
 		};
 		97A5A8DC01034A8F00000001 = {
 			isa = PBXBundleReference;
-			path = Split.operator;
-			refType = 3;
+			name = Split.operator;
+			path = build/Split.operator;
+			refType = 2;
 		};
 		97A5A8DD01034A8F00000001 = {
 			isa = PBXBundleReference;
-			path = Symbolic.operator;
-			refType = 3;
+			name = Symbolic.operator;
+			path = build/Symbolic.operator;
+			refType = 2;
 		};
 		97A5A8DE01034A8F00000001 = {
 			isa = PBXTargetDependency;
@@ -11696,25 +11699,25 @@
 		97E07787019C35D500951B37 = {
 			isa = PBXFrameworkReference;
 			name = MKDSP.framework;
-			path = "../ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build/MKDSP.framework";
+			path = ../ForeignFrameworks/build/MKDSP.framework;
 			refType = 2;
 		};
 		97E07788019C35D500951B37 = {
 			isa = PBXFrameworkReference;
 			name = MusicKit.framework;
-			path = "../ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build/MusicKit.framework";
+			path = ../ForeignFrameworks/build/MusicKit.framework;
 			refType = 2;
 		};
 		97E07789019C35D500951B37 = {
 			isa = PBXFrameworkReference;
 			name = SndKit.framework;
-			path = "../ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build/SndKit.framework";
+			path = ../ForeignFrameworks/build/SndKit.framework;
 			refType = 2;
 		};
 		97E0778A019C35D500951B37 = {
 			isa = PBXFrameworkReference;
 			name = MKPerformSndMIDI.framework;
-			path = "../ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build/MKPerformSndMIDI.framework";
+			path = ../ForeignFrameworks/build/MKPerformSndMIDI.framework;
 			refType = 2;
 		};
 		97E0778B019C35D500951B37 = {
@@ -11992,7 +11995,7 @@
 				97EB084D02EF12EF00951B37,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = ../ForeignFrameworks/build;
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "@executable_path/../PlugIns";
 				OTHER_CFLAGS = "-Dselfvoid=void";
@@ -12289,7 +12292,7 @@
 		97EB1C2701A003B400951B37 = {
 			isa = PBXFrameworkReference;
 			name = FScript.framework;
-			path = ../ForeignSources/FScript/build/FScript.framework;
+			path = ../ForeignFrameworks/build/FScript.framework;
 			refType = 2;
 		};
 		97EB1C2801A003B500951B37 = {
