@@ -5,6 +5,8 @@
 // If fixed, set HARMOTYPES_NO_INLINE to YES if DEBUG, NO otherwise.
 #define HARMOTYPES_NO_INLINE
 
+#define CHORDSEQ_DYN
+
 #define PATHNUMBER 2 /*selection of number of best paths, presently, have only the best and the workpath */
 #define MAX_TONALITY 12
 #define MAX_FUNCTION 6

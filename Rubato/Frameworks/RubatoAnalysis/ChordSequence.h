@@ -6,23 +6,38 @@
 #define NOLL 2 
 #define FLEISCHER 3 /* not yet implemented */ 
 
+
 @interface ChordSequence:JgRefCountObject
 {
 @public
-    double myFunctionScale[MAX_FUNCTION][MAX_TONALITY]; /* 6x12 matrix with the TDS major and minor values of each tone     */
+  int maxFunction,maxTonality,maxLocus; // non inclusive
+#ifdef  CHORDSEQ_DYN
+    double **myFunctionScale; /* [MAX_FUNCTION][MAX_TONALITY] 6x12 matrix with the TDS major and minor values of each tone     */
+#else
+    double myFunctionScale[MAX_FUNCTION][MAX_TONALITY];
+#endif 
     double ***myNollMatrix;
+    double ***harmonicProfile; /* 6x12x12 Function x Tonalities x TwelveVector (for scalar multiplication with chord twelve vector), not persistent */
 
 //@protected
     id myChords; /* list of chord objects */
     double myFunctionDist[3][3]; /* 3x3 matrix of nine distances for TDS-walks T~0, D~1, S~2 walks are row->col */
     double myModeDist[2][2]; /* 2x2 matrix of four distances for Major-Minor-walks */
     double myTonalityDist[2][7]; /* 2x7 matrix of tonality walks with fourth and fifth direction */
-    double myDistanceMatrix[MAX_LOCUS][MAX_LOCUS]; /* 72x72 matrix of distance */
+#ifdef  CHORDSEQ_DYN
+    double **myDistanceMatrix; /* [MAX_LOCUS][MAX_LOCUS] 72x72 matrix of distance */
+#else
+    double myDistanceMatrix[MAX_LOCUS][MAX_LOCUS];
+#endif
     double myPitchReference; /* reference pitch for quantization */
     double mySemitoneUnit; /* unit pitch step for quantization */
     double myGlobalLevel; /* global level for path calculations */
     double myLocalLevel; /* local relative level for path calculations */
+#ifdef  CHORDSEQ_DYN
+    BOOL   *myUseFunctionList; /* [MAX_LOCUS] */
+#else
     BOOL   myUseFunctionList[MAX_LOCUS];
+#endif
     double myWeightProfile; /* contribution of the weights to the path weights */
     double myTransitionProfile; /* contribution of the transitions to the path weights */
     double myStartWeight; /* first non-vanishing weight from best path */
@@ -41,7 +56,10 @@
     // jg added for quicker best patch calculation
     SEL calcBestPathSelector;
     id viterbiContext;
+    NSMutableDictionary *fsBlocks; // Hooks, not persistent
 }
+- (void)setFunctionCount:(int)fuCount tonalityCount:(int)tonCount; // NEWHARMO
+- (NSMutableDictionary *)fsBlocks;
 
 - init;
 - (void)dealloc;

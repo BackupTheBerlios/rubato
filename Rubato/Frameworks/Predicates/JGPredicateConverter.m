@@ -82,11 +82,15 @@ NSString *JGLispPboardType=@"JGLispPboardType";
 // Pasteboard conveniences
 - (void)putPredicate:(id)pred toPasteboard:(NSPasteboard *)pboard;
 {
-  NSString *type=[NSString stringWithCString:PredFileType];
-  NSArray *typeList = [NSArray arrayWithObjects:type,nil];
-  NSData *dataBuffer=[NSArchiver archivedDataWithRootObject:pred];
-  [pboard declareTypes:typeList owner:self];
-  [pboard setData:dataBuffer forType:type];
+  if (!pred)
+    NSBeep();
+  else {
+    NSString *type=[NSString stringWithCString:PredFileType];
+    NSArray *typeList = [NSArray arrayWithObjects:type,nil];
+    NSData *dataBuffer=[NSArchiver archivedDataWithRootObject:pred];
+    [pboard declareTypes:typeList owner:self];
+    [pboard setData:dataBuffer forType:type];    
+  }
 }
 
 - (void)putString:(NSString *)str toPasteboard:(NSPasteboard *)pboard;
@@ -285,13 +289,15 @@ NSString *JGLispPboardType=@"JGLispPboardType";
         return nil;
       }
       predItem=[[SimplePredicate alloc] init];
-      [predicate setForm:[SimpleForm valueForm]];
+      [predItem setForm:[SimpleForm valueForm]];
       [predItem setName:entryNameOrNames];
       [(SimplePredicate *)predItem setStringValue:item];
       [predItem autorelease];
     }  else if ([item isKindOfClass:[NSArray class]]) {
       // entryNameOrNames can be nil, in which case the entry should contain its name.
       predItem=[self predicateForList:item withGivenNameOrNames:entryNameOrNames];
+      if (!predItem)
+        return nil;
     }  else {
       NSLog(@"Could not create Predicate for List. Unexpected element class.");
       return nil;

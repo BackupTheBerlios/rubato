@@ -4,17 +4,86 @@
 #import <Rubette/MatrixEvent.h>
 
 #import "ThirdStream.h"
+#import <FScript/FScript.h>
+#define ClassArray NSClassFromString(@"Array")
+#define ClassNumber NSClassFromString(@"Number")
 
 #define EH_space 3
 
+
+//#define VAL_MAX_TONALITY MAX_TONALITY
+//#define VAL_MAX_FUNCTION MAX_FUNCTION
+//#define VAL_MAX_LOCUS MAX_LOCUS
+#define VAL_MAX_TONALITY maxTonality
+#define VAL_MAX_FUNCTION maxFunction
+#define VAL_MAX_LOCUS maxLocus
+
+
 @implementation Chord
++ (void)initialize;
+{
+  [super initialize];
+  [self setVersion:2];
+}
+
+// allocate a two dimensional array as one block.
+// Define:  type **carr;
+// Use:     carr[N][M];
+#define MALLOC2(carr,N,M,type) carr=malloc((N)*sizeof(type *)+(N)*(M)*sizeof(type)); \
+{ int carri; for (carri=0;carri<N;carri++) carr[carri]=((type *)(carr+(N)))+carri*(M);}
+
+- (void)allocRiemannMatrix:(double **)otherRiemannMatrix levelMatrix:(double **)otherLevelMatrix pitchClassWeights:(double *)otherPitchClassWeights doInit:(BOOL)doInit;
+{
+    int i,j;
+#ifdef CHORD_DYN
+    MALLOC2(myRiemannMatrix,VAL_MAX_FUNCTION,VAL_MAX_TONALITY,double);
+    MALLOC2(myLevelMatrix,VAL_MAX_FUNCTION,VAL_MAX_TONALITY,double);
+    myPitchClassWeights=malloc(VAL_MAX_TONALITY*sizeof(double));
+#endif
+    if (doInit) {
+      for(i=0; i<VAL_MAX_FUNCTION; i++) {
+        for(j=0; j<VAL_MAX_TONALITY; j++) {
+          myRiemannMatrix[i][j]=(otherRiemannMatrix ? otherRiemannMatrix[i][j] : 0.0);
+          myLevelMatrix[i][j]=(otherLevelMatrix ? otherLevelMatrix[i][j] : 0.0);
+        }
+      }
+      for(j=0; j<VAL_MAX_TONALITY; j++) {
+        myPitchClassWeights[j]=(otherPitchClassWeights ? otherPitchClassWeights[j] : 0.0);
+      }
+    }
+}
+- (void)deallocHarmoSpace;
+{
+#ifdef CHORD_DYN
+  if (myRiemannMatrix)
+    free(myRiemannMatrix);
+  myRiemannMatrix=NULL;
+  if (myLevelMatrix)
+    free(myLevelMatrix);
+  myLevelMatrix=NULL;
+  if (myPitchClassWeights)
+    free(myPitchClassWeights);
+  myPitchClassWeights=NULL;
+#endif
+}
 
 - init;
 {
-    int i,j;
-    [super init];
+    return [self initOwner:nil];
+}
 
+// Designated Initializer
+- (id)initOwner:(id)aChordSequence;
+{
+    int i;
+    [super init];
+#ifdef  CHORD_DYN
+    myRiemannMatrix=NULL;
+    myLevelMatrix=NULL;
+    myPitchClassWeights=NULL;
+#endif
     myOwnerSequence = nil;
+    [self setOwnerSequence:aChordSequence];
     myPitchList = NULL;
     myPitchCount = 0;
     myPitchClasses = 0;
@@ -22,28 +91,24 @@
     myThirdStreamList = [[[RefCountList alloc]init]ref];
     // jg added initialization for myRiemannMatrix and myLevelMatrix on Mac.
     // possible that on Mac no initialization of Memory with zeros take place...
-    // there was a Problem in ChordInspector, when in Harmo-Rubette GenerateRiemannLogic 
+    // there was a Problem in ChordInspector, when in Harmo-Rubette GenerateRiemannLogic
     // is not clicked.
-    for(i=0; i<MAX_FUNCTION; i++)
-      for(j=0; j<MAX_TONALITY; j++) {
-        myRiemannMatrix[i][j]=0.0;
-        myLevelMatrix[i][j]=0.0;
-      }
-    mySupportStart = MAX_LOCUS;
+    if (myOwnerSequence) {
+      maxFunction=myOwnerSequence->maxFunction;
+      maxTonality=myOwnerSequence->maxTonality;
+      maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+      [self allocRiemannMatrix:NULL levelMatrix:NULL pitchClassWeights:NULL doInit:YES];
+    } else {
+      maxFunction=0;
+      maxTonality=0;
+      maxLocus=0;
+    }
+    mySupportStart = VAL_MAX_LOCUS;
     for(i=0;i<=PATHNUMBER;i++){
-	myLocus[i] = MAX_LOCUS;
-	}
-    for (i=0; i<MAX_TONALITY; i++)
-	myPitchClassWeights[i] = 0.0;
+      myLocus[i] = VAL_MAX_LOCUS;
+    }
     myWeight = 0.0;
-    isWeightCalculated  = NO;
-    return self;
-}
-
-- initOwner:aChordSequence;
-{
-    [self init];
-    [self setOwnerSequence:aChordSequence];
+    isWeightCalculated  = NO;    
     return self;
 }
 
@@ -51,16 +116,17 @@
 - (void)dealloc;
 {
     /* do NXReference houskeeping */
-    
+    [self deallocHarmoSpace];
     free(myPitchList);
     [myThirdStreamList release];
     [super dealloc];
 }
 
-- copyWithZone:(NSZone*)zone;
+- copyWithZone:(NSZone*)zone; 
 {
     Chord *myCopy = JGSHALLOWCOPY;//[super copyWithZone:zone];
     int i;
+    [myCopy allocRiemannMatrix:myRiemannMatrix levelMatrix:myLevelMatrix pitchClassWeights:myPitchClassWeights doInit:YES];
     myCopy->myPitchList = malloc(myPitchCount*sizeof(double));
     for (i=0; i<myPitchCount; i++) {
 	myCopy->myPitchList[i] = myPitchList[i];
@@ -84,11 +150,19 @@
 	[aDecoder decodeValueOfObjCType:"d" at:&myPitchList[i]];
     [aDecoder decodeValueOfObjCType:"S" at:&myPitchClasses];
     [aDecoder decodeValueOfObjCType:"d" at:&myOnset];
-  
-    
-    for(i=0;i<MAX_FUNCTION*MAX_TONALITY;i++) {
-	[aDecoder decodeValueOfObjCType:"d" at:&myRiemannMatrix[i/MAX_TONALITY][i%MAX_TONALITY]];
-	[aDecoder decodeValueOfObjCType:"d" at:&myLevelMatrix[i/MAX_TONALITY][i%MAX_TONALITY]];
+
+    if ([aDecoder versionForClassName:@"Chord"]<2) {
+      maxTonality=MAX_TONALITY;
+      maxFunction=MAX_FUNCTION;
+    } else {
+      [aDecoder decodeValueOfObjCType:"i" at:&maxFunction];
+      [aDecoder decodeValueOfObjCType:"i" at:&maxTonality];
+    }
+    maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+    [self allocRiemannMatrix:NULL levelMatrix:NULL pitchClassWeights:NULL doInit:NO];
+    for(i=0;i<VAL_MAX_FUNCTION*VAL_MAX_TONALITY;i++) {
+	[aDecoder decodeValueOfObjCType:"d" at:&myRiemannMatrix[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
+	[aDecoder decodeValueOfObjCType:"d" at:&myLevelMatrix[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
     }
     
     for(i=0; i<PATHNUMBER+1; i++) 
@@ -97,7 +171,7 @@
     
     [aDecoder decodeValueOfObjCType:"c" at:&isWeightCalculated];
     [aDecoder decodeValueOfObjCType:"d" at:&myWeight];
-    for(i=0; i<MAX_TONALITY; i++) 
+    for(i=0; i<VAL_MAX_TONALITY; i++) 
 	[aDecoder decodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
 
     return self;
@@ -117,11 +191,15 @@
 	[aCoder encodeValueOfObjCType:"d" at:&myPitchList[i]];
     [aCoder encodeValueOfObjCType:"S" at:&myPitchClasses];
     [aCoder encodeValueOfObjCType:"d" at:&myOnset];
-  
-    
-    for(i=0;i<MAX_FUNCTION*MAX_TONALITY;i++) {
-	[aCoder encodeValueOfObjCType:"d" at:&myRiemannMatrix[i/MAX_TONALITY][i%MAX_TONALITY]];
-	[aCoder encodeValueOfObjCType:"d" at:&myLevelMatrix[i/MAX_TONALITY][i%MAX_TONALITY]];
+
+    if ([aCoder versionForClassName:@"Chord"]>=2) {
+      [aCoder encodeValueOfObjCType:"i" at:&maxFunction];
+      [aCoder encodeValueOfObjCType:"i" at:&maxTonality];      
+    }
+
+    for(i=0;i<VAL_MAX_FUNCTION*VAL_MAX_TONALITY;i++) {
+	[aCoder encodeValueOfObjCType:"d" at:&myRiemannMatrix[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
+	[aCoder encodeValueOfObjCType:"d" at:&myLevelMatrix[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
     }
     
     for(i=0; i<PATHNUMBER+1; i++) 
@@ -130,7 +208,7 @@
     
     [aCoder encodeValueOfObjCType:"c" at:&isWeightCalculated];
     [aCoder encodeValueOfObjCType:"d" at:&myWeight];
-    for(i=0; i<MAX_TONALITY; i++) 
+    for(i=0; i<VAL_MAX_TONALITY; i++) 
 	[aCoder encodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
 }
 
@@ -293,7 +371,7 @@
     [self updatePitchClasses];
     [self invalidateWeight];
     for(i=0;i<=PATHNUMBER;i++){
-	myLocus[i] = MAX_LOCUS;
+	myLocus[i] = VAL_MAX_LOCUS;
 	}
     
     return self;
@@ -303,7 +381,7 @@
 {
     int i;
     if(isWeightCalculated) /* reset myPitchClassWeights */
-	for (i=0; i<MAX_TONALITY; i++)
+	for (i=0; i<VAL_MAX_TONALITY; i++)
 	    myPitchClassWeights[i] = 0.0;
     
     isWeightCalculated = NO;
@@ -378,7 +456,7 @@
 - setRiemannLocusOf:(int)pathNumber to:(int)locus;
 {
     pathNumber = mod(pathNumber,PATHNUMBER+1);
-    locus = locus<MAX_LOCUS ? locus : MAX_LOCUS;
+    locus = locus<VAL_MAX_LOCUS ? locus : VAL_MAX_LOCUS;
     myLocus[pathNumber] = locus;
     return self;
 }
@@ -426,8 +504,44 @@
     return self;
 }
 
++ (Array *)twelveVectorForPitchClasses:(int)pitchClasses
+{
+  Array *a=[[[ClassArray alloc] init] autorelease];
+  int i;
+  for (i=0;i<12;i++) {
+    [a addObject:[ClassNumber numberWithDouble:(double)(pitchClasses & 1<<i)]]; // see hasPitchClass
+  }
+  return a;  
+}
+- (Array *)twelveVector;
+{
+  return [Chord twelveVectorForPitchClasses:myPitchClasses];
+}
+- (Array *)twelveVectorsForThirdStreamList;
+{
+  // Array of Array of Number (0,1)
+  NSEnumerator *e=[myThirdStreamList objectEnumerator];
+  Array *a=[[[ClassArray alloc] init] autorelease];
+  ThirdStream *s;
+  while (s=[e nextObject]) {
+    [a addObject:[Chord twelveVectorForPitchClasses:[s pitchClasses]]];
+  }
+  return a;
+}
+
 - (double)calcRiemannValueAtFunction:(int)function andTonic:(int)tonic;
 {
+  NSString *blockKey=@"Chord:calcRiemannValueAtFunction:andTonic:";
+  Block *block=[[myOwnerSequence fsBlocks] objectForKey:blockKey];
+  if (block) {
+    id blockVal=[block value:self value:[ClassNumber numberWithDouble:(double)function] value:[ClassNumber numberWithDouble:(double)tonic]];
+    if ([blockVal respondsToSelector:@selector(doubleValue)])
+      return [blockVal doubleValue];
+    else {
+      NSLog(@"Block %@ did not return a Number value",blockKey); 
+      return 0.0;      
+    }
+  } else {
     switch([myOwnerSequence method]) {
 	case MAZZOLA: {
 	    int j, c = [myThirdStreamList count]; /* c is always positive */
@@ -436,17 +550,36 @@
 	    for(j=0; j<c; j++) {
 		
 		/* add all thirdstream contributions */
+              // add flag for NEWHARMO (useThirdStream/useChord)
 		val += [[myThirdStreamList objectAt:j] riemannWeightWithFunctionScale:
-		    (void *)[myOwnerSequence functionScale] atFunction:function andTonic:tonic];
+#ifndef CHORDSEQ_DYN
+                  (void *)
+#endif
+                           [myOwnerSequence functionScale] atFunction:function andTonic:tonic];
 	    }
 		/* take average */
 	    return    val / (double)c;
 	}
 	case NOLL: return [self calcNollRiemannValueAtFunction:function andTonic:tonic 
 			genericWeight:[myOwnerSequence nollMatrix]];
-	case FLEISCHER : return 0.0;
+        // NEWHARMO
+        case FLEISCHER: {
+          int i,c=0;
+          double val = 0.0;
+          for (i=0;i<12;i++) {
+            if (myPitchClasses & 1<<i) {// see hasPitchClass
+              c++;
+              val+=(myOwnerSequence->harmonicProfile)[function][tonic][i];              
+            }
+          }
+          return val/=(double)c;
+//          for (j=0; j<myPitchCount; j++) {
+//            val+=f(myPitchList[j]);
+//          }
+        }
     }
-    return 0.0;
+    return 0.0;    
+  }
 }
 
 - (double)calcRiemannValueAtLocus:(int)locus;
@@ -459,8 +592,8 @@
 {
     int f, t;
     /* first fix the tonic, then the function */
-    for(t=0; t<MAX_TONALITY; t++){
-	for(f=0; f<MAX_FUNCTION; f++){
+    for(t=0; t<VAL_MAX_TONALITY; t++){
+	for(f=0; f<VAL_MAX_FUNCTION; f++) {
 	    myRiemannMatrix[f][t]= [self calcRiemannValueAtFunction:f andTonic:t];
 	}
     }
@@ -494,14 +627,14 @@
 
 - (double)riemannAtLocus:(int)locus;
 {
-    return myRiemannMatrix[locus/MAX_TONALITY][locus%MAX_TONALITY];
+    return myRiemannMatrix[locus/VAL_MAX_TONALITY][locus%VAL_MAX_TONALITY];
 }
 
 - (double)maxRiemannValue;
 {
     int locus;
     double maxval = 0.0, val = 0.0;
-    for(locus=0; locus<MAX_LOCUS; locus++) {
+    for(locus=0; locus<VAL_MAX_LOCUS; locus++) {
 	val=[self riemannAtLocus:locus];
 	maxval = val>maxval ? val : maxval;
     }
@@ -513,8 +646,8 @@
     int f, t;
     level = fabs(level);
 
-    for (t=0; t<MAX_TONALITY; t++) {
-	for (f=0; f<MAX_FUNCTION; f++){
+    for (t=0; t<VAL_MAX_TONALITY; t++) {
+	for (f=0; f<VAL_MAX_FUNCTION; f++){
 	    myLevelMatrix[f][t] = myRiemannMatrix[f][t]>=level ? myRiemannMatrix[f][t] : 0.0;
 	}
     }
@@ -538,8 +671,8 @@
 
 - (double)levelAtLocus:(int)locus;
 {
-    if(locus<MAX_LOCUS)
-	return myLevelMatrix[locus/MAX_TONALITY][locus%MAX_TONALITY];
+    if(locus<VAL_MAX_LOCUS)
+	return myLevelMatrix[locus/VAL_MAX_TONALITY][locus%VAL_MAX_TONALITY];
     else
 	return 0.0;
 }
@@ -553,7 +686,7 @@
 {
     int locus;
     double maxval = 0.0, val = 0.0;
-    for(locus=0; locus<MAX_LOCUS; locus++) {
+    for(locus=0; locus<VAL_MAX_LOCUS; locus++) {
 	val=[self levelAtLocus:locus];
 	maxval = val>maxval ? val : maxval;
     }
@@ -563,10 +696,10 @@
 - restrictLevelMatrixTo:(int)tonalities :(int)modeFunctions;
 {
     int i;
-    for(i=0; i<MAX_LOCUS; i++){
-	if(tonalities & 1<<(i%MAX_TONALITY) /* column of index i */
-		    | modeFunctions & 1<<(i/MAX_TONALITY)) /* row of index i */
-	    myLevelMatrix[i/MAX_TONALITY][i%MAX_TONALITY]=0.0;
+    for(i=0; i<VAL_MAX_LOCUS; i++){
+	if(tonalities & 1<<(i%VAL_MAX_TONALITY) /* column of index i */
+		    | modeFunctions & 1<<(i/VAL_MAX_TONALITY)) /* row of index i */
+	    myLevelMatrix[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]=0.0;
     }
     [self updateSupport];
     return self;
@@ -579,8 +712,8 @@
 
 - restrictLevelMatrixAtLocus:(int)locus;
 {
-    if (locus<MAX_LOCUS)
-	[self restrictLevelMatrixAtFunction:(locus/MAX_TONALITY) andTonality:(locus%MAX_TONALITY)];
+    if (locus<VAL_MAX_LOCUS)
+	[self restrictLevelMatrixAtFunction:(locus/VAL_MAX_TONALITY) andTonality:(locus%VAL_MAX_TONALITY)];
     return self;
 }
 
@@ -588,8 +721,8 @@
 - (int)supportCard;
 {
     int i, s=0;
-    if(mySupportStart<MAX_LOCUS){
-	for(i=0; i<MAX_LOCUS; i++)
+    if(mySupportStart<VAL_MAX_LOCUS){
+	for(i=0; i<VAL_MAX_LOCUS; i++)
 	    if([self levelAtLocus:i])
 		s+=1;
     }
@@ -599,7 +732,7 @@
 - (int)calcSupportStart;
 {
     int i;
-    for(i=0; i<MAX_LOCUS && ![self levelAtLocus:i]; i++);
+    for(i=0; i<VAL_MAX_LOCUS && ![self levelAtLocus:i]; i++);
     mySupportStart = i;
     return mySupportStart;
 }
@@ -613,16 +746,16 @@
 - (int)nextSupportIndexTo:(int)index;
 {
     int i;
-    if(index<MAX_LOCUS-2) { /* only then we got a chance */
-	for(i = index+1; i<MAX_LOCUS && ![self levelAtLocus:i]; i++);
+    if(index<VAL_MAX_LOCUS-2) { /* only then we got a chance */
+	for(i = index+1; i<VAL_MAX_LOCUS && ![self levelAtLocus:i]; i++);
 	return i;
     }
-    return MAX_LOCUS;
+    return VAL_MAX_LOCUS;
 }
 
 - (BOOL)maxSupportIndexAt:(int)index;
 {
-    return mySupportStart == MAX_LOCUS || MAX_LOCUS == [self nextSupportIndexTo:index];
+    return mySupportStart == VAL_MAX_LOCUS || VAL_MAX_LOCUS == [self nextSupportIndexTo:index];
 }
 
 /* checks whether work index is maximal support */
@@ -655,7 +788,7 @@
     if(!isWeightCalculated) {
 	int i;
 	double intraProfile = [myOwnerSequence intraProfile];
-	for (i=0; i<MAX_TONALITY; i++) 
+	for (i=0; i<VAL_MAX_TONALITY; i++) 
 	    myPitchClassWeights[i] = 0.0;
 	    
 	if(intraProfile>=0 && intraProfile<1 && [self levelAtLocus:locus]){
@@ -788,4 +921,22 @@
     return YES; /*self is equal to self */
 }
 
+- (NSString *)pitchListString;
+{
+  return [self pitchListStringWithPitchFormat:@"%d" delimiter:@"," asInt:YES];
+}
+- (NSString *)pitchListStringWithPitchFormat:(NSString *)pf delimiter:(NSString *)delimiter asInt:(BOOL)asInt;
+{
+  NSMutableString *str=[NSMutableString string];
+  int i;
+  for (i=0;i<myPitchCount;i++) {
+    if (i>0)
+      [str appendString:delimiter];
+    if (asInt)
+      [str appendFormat:pf,(int)(myPitchList[i])];
+    else
+      [str appendFormat:pf,myPitchList[i]];
+  }
+  return str;
+}
 @end

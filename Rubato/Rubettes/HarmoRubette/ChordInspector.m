@@ -18,7 +18,7 @@
 - (void)dealloc
 {
     /* class-specific initialization goes here */
-    { [super dealloc]; return; };
+  [super dealloc];
 }
 
 - (void)setValue:(id)sender;
@@ -34,7 +34,10 @@
     double level = 0.0, val = 0.0;
 
     [myOnsetField setDoubleValue:[patient onset]];
-    [myPitchCountField setIntValue:[patient pitchCount]];
+//    [myPitchCountField setIntValue:[patient pitchCount]]; // old
+    [myPitchCountField setStringValue:[NSString stringWithFormat:@"%d: %@",[patient pitchCount],
+      [patient pitchListStringWithPitchFormat:@"%1.1f" delimiter:@" " asInt:NO]]];
+
     i=[patient locusOfPath:0];
     if (i<MAX_LOCUS)
 	sprintf(text, "%s (%s)", pitchClassName(locusOf(i).RieTon),

@@ -7,6 +7,14 @@
 #import <RubatoDeprecatedCommonKit/ProgressPanel.h>
 #import <RubatoDeprecatedCommonKit/JgOwner.h>
 
+#import <FScript/FScript.h>
+
+//#define VAL_MAX_TONALITY MAX_TONALITY
+//#define VAL_MAX_FUNCTION MAX_FUNCTION
+//#define VAL_MAX_LOCUS MAX_LOCUS
+#define VAL_MAX_TONALITY maxTonality
+#define VAL_MAX_FUNCTION maxFunction
+#define VAL_MAX_LOCUS maxLocus
 
 /* some global variables/initialisation tables of this class */
 /* function values of chromatic scale tones */
@@ -54,8 +62,63 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     [super initialize];
     if (self == [ChordSequence class]) {
-	[ChordSequence setVersion:1];
+	[ChordSequence setVersion:2];
     }
+}
+
+
+- (void)deallocHarmoSpace;
+{
+#ifdef  CHORDSEQ_DYN
+  if (myFunctionScale)
+    free(myFunctionScale);
+  myFunctionScale=NULL;
+  if (myUseFunctionList)
+    free(myUseFunctionList);
+  myUseFunctionList=NULL;
+  if (myDistanceMatrix)
+    free(myDistanceMatrix);
+  myDistanceMatrix=NULL;
+#endif
+}
+
+#define MALLOC2(carr,N,M,type) carr=malloc((N)*sizeof(type *)+(N)*(M)*sizeof(type)); \
+{ int carri; for (carri=0;carri<N;carri++) carr[carri]=((type *)(carr+(N)))+carri*(M);}
+
+#define MALLOC3(carr,N,M,P,type) carr=malloc((N)*sizeof(type **)+(N)*(M)*sizeof(type *) +(N)*(M)*(P)*sizeof(type)); \
+{ int i,j; \
+  type **pi=(type **)(carr+(N)); \
+  type *pj=(type *)(pi+(N*M)) ; \
+  for (i=0;i<N;i++) { \
+    carr[i]=pi+i*(M); \
+    for (j=0;j<M;j++) \
+      carr[i][j]=pj +i*(M)*(P) + j*P; \
+  }}
+
+
+
+- (void)allocFunctionScale:(double **)otherFunctionScale useFunctionList:(BOOL *)otherUseFunctionList distanceMatrix:(double **)otherDistanceMatrix doInit:(BOOL)doInit;
+{
+  [self deallocHarmoSpace];
+#ifdef  CHORDSEQ_DYN
+  MALLOC2(myFunctionScale,VAL_MAX_FUNCTION,VAL_MAX_TONALITY,double);
+  myUseFunctionList=malloc(VAL_MAX_LOCUS*sizeof(BOOL));
+  MALLOC2(myDistanceMatrix,VAL_MAX_LOCUS,VAL_MAX_LOCUS,double);
+#endif
+  if (doInit) {
+    int i,j;
+    for(i=0; i<VAL_MAX_FUNCTION; i++) {
+      for(j=0; j<VAL_MAX_TONALITY; j++) {
+        myFunctionScale[i][j]=(otherFunctionScale ? otherFunctionScale[i][j] : 0.0);
+      }
+    }
+    for(i=0; i<VAL_MAX_LOCUS; i++) {
+      myUseFunctionList[i]=(otherUseFunctionList ? otherUseFunctionList[i] : YES);
+      for(j=0; j<VAL_MAX_LOCUS; j++) {
+        myDistanceMatrix[i][j]=(otherDistanceMatrix ? otherDistanceMatrix[i][j] : 0.0);
+      }
+    }
+  }
 }
 
 - init;
@@ -63,6 +126,14 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     int i, j;
     [super init];
 
+    // pure c arrays
+#ifdef  CHORDSEQ_DYN
+    myFunctionScale=NULL;
+    myUseFunctionList=NULL;
+    myDistanceMatrix=NULL;
+#endif
+    harmonicProfile=NULL;
+    fsBlocks=[[NSMutableDictionary alloc] init];
     myNollMatrix = calloc(8, sizeof(double **));
     for (i=0; i<8; i++) {
 	myNollMatrix[i] = calloc(12, sizeof(double *));
@@ -70,7 +141,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 	    myNollMatrix[i][j] = calloc(43, sizeof(double));
     }
     myChords = [[[OrderedList alloc]init]ref];
-    [self resetToDefaultValues];
+    [self resetToDefaultValues]; // initilizes maxTonality,...
     [self invalidate];
 
   calcBestPathSelector=@selector(viterbiCalcBestPathUseLevelMatrix);
@@ -81,27 +152,33 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     int i, j;
     /* do NXReference houskeeping */
-    
+  
     [myChords release]; myChords = nil;
     
-    for (i=0; i<8; i++) {
-	for (j=0; j<12; j++)
-	    free(myNollMatrix[i][j]);
-	free(myNollMatrix[i]);
-    }
-    free(myNollMatrix);
     [viterbiContext release];
+
+    // pure c arrays
+    for (i=0; i<8; i++) {
+      for (j=0; j<12; j++)
+        free(myNollMatrix[i][j]);
+      free(myNollMatrix[i]);
+    }
+    if (harmonicProfile)
+      free(harmonicProfile);
+    [self deallocHarmoSpace];
+    [fsBlocks release];
     [super dealloc];
 }
 
 - (id)copyWithZone:(NSZone *)zone;
 {
   NSAssert(NO,@"WeightWatcher copyWithZone: not expected/implemented!");
+//    [self allocFunctionScale:NULL useFunctionList:NULL distanceMatrix:NULL doInit:YES];
   return JGSHALLOWCOPY;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
-{
+{ // NEWHARMO add fsBlocks?
     int i, j, classVersion = [aDecoder versionForClassName:NSStringFromClass([ChordSequence class])];
 //    [super initWithCoder:aDecoder];
     /* class-specific code goes here */
@@ -113,12 +190,22 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 		myNollMatrix[i][j] = calloc(43, sizeof(double));
 	}
     }
-    
+
+    if (classVersion<2) {
+      maxTonality=MAX_TONALITY;
+      maxFunction=MAX_FUNCTION;
+    } else {
+      [aDecoder decodeValueOfObjCType:"i" at:&maxFunction];
+      [aDecoder decodeValueOfObjCType:"i" at:&maxTonality];
+    }
+    maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+    [self allocFunctionScale:NULL useFunctionList:NULL distanceMatrix:NULL doInit:NO];
+
     myChords = [[[aDecoder decodeObject] retain] ref];
     
     /* read Riemann Function Values */
-    for(i=0;i<MAX_LOCUS;i++) {
-	[aDecoder decodeValueOfObjCType:"d" at:&myFunctionScale[i/MAX_TONALITY][i%MAX_TONALITY]];
+    for(i=0;i<VAL_MAX_LOCUS;i++) {
+	[aDecoder decodeValueOfObjCType:"d" at:&myFunctionScale[i/maxTonality][i%maxTonality]];
 	[aDecoder decodeValueOfObjCType:"c" at:&myUseFunctionList[i]];
     }
     for(i=0;i<9;i++)
@@ -131,8 +218,8 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     for(i=0;i<14;i++)
 	[aDecoder decodeValueOfObjCType:"d" at:&myTonalityDist[i/7][i%7]];
     
-    for(i=0;i<MAX_LOCUS*MAX_LOCUS;i++)
-	[aDecoder decodeValueOfObjCType:"d" at:&myDistanceMatrix[i/MAX_LOCUS][i%MAX_LOCUS]];
+    for(i=0;i<VAL_MAX_LOCUS*VAL_MAX_LOCUS;i++)
+	[aDecoder decodeValueOfObjCType:"d" at:&myDistanceMatrix[i/VAL_MAX_LOCUS][i%VAL_MAX_LOCUS]];
 	
     [aDecoder decodeValueOfObjCType:"d" at:&myPitchReference];
     [aDecoder decodeValueOfObjCType:"d" at:&mySemitoneUnit];
@@ -171,16 +258,21 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
-{
+{ // NEWHARMO add fsBlocks?
     int i, j;
 //    [super encodeWithCoder:aCoder];
     /* class-specific archiving code goes here */
-    
-    [aCoder encodeObject:myChords];
+
+  if ([aCoder versionForClassName:@"ChordSequence"]>=2) {
+    [aCoder encodeValueOfObjCType:"i" at:&maxFunction];
+    [aCoder encodeValueOfObjCType:"i" at:&maxTonality];
+  }
+
+  [aCoder encodeObject:myChords];
     
     /* write Riemann Function Values */
-    for(i=0;i<MAX_LOCUS;i++) {
-	[aCoder encodeValueOfObjCType:"d" at:&myFunctionScale[i/MAX_TONALITY][i%MAX_TONALITY]];
+    for(i=0;i<VAL_MAX_LOCUS;i++) {
+	[aCoder encodeValueOfObjCType:"d" at:&myFunctionScale[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
 	[aCoder encodeValueOfObjCType:"c" at:&myUseFunctionList[i]];
     }
     for(i=0;i<9;i++)
@@ -194,8 +286,8 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     for(i=0;i<14;i++)
 	[aCoder encodeValueOfObjCType:"d" at:&myTonalityDist[i/7][i%7]];
     
-    for(i=0;i<MAX_LOCUS*MAX_LOCUS;i++)
-	[aCoder encodeValueOfObjCType:"d" at:&myDistanceMatrix[i/MAX_LOCUS][i%MAX_LOCUS]];
+    for(i=0;i<VAL_MAX_LOCUS*VAL_MAX_LOCUS;i++)
+	[aCoder encodeValueOfObjCType:"d" at:&myDistanceMatrix[i/VAL_MAX_LOCUS][i%VAL_MAX_LOCUS]];
 	
     [aCoder encodeValueOfObjCType:"d" at:&myPitchReference];
     [aCoder encodeValueOfObjCType:"d" at:&mySemitoneUnit];
@@ -261,12 +353,19 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     return self;
 }
 
+
 - resetRiemannDefaultValues;
 {
     int i;
 
-    for(i=0;i<MAX_LOCUS;i++) {
-	myFunctionScale[i/MAX_TONALITY][i%MAX_TONALITY] = funScale[i/MAX_TONALITY][i%MAX_TONALITY];
+  maxTonality=MAX_TONALITY;
+  maxFunction=MAX_FUNCTION;
+  maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+
+  [self allocFunctionScale:NULL useFunctionList:NULL distanceMatrix:NULL doInit:YES];
+
+  for(i=0;i<VAL_MAX_LOCUS;i++) {
+	myFunctionScale[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY] = funScale[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY];
 	myUseFunctionList[i] = YES;
     }
 
@@ -479,16 +578,16 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 - (double)scaleValueAt:(int)function:(int)tone;
 {
     
-    function = mod(function, MAX_FUNCTION);
-    tone = mod(tone, MAX_TONALITY);
+    function = mod(function, VAL_MAX_FUNCTION);
+    tone = mod(tone, VAL_MAX_TONALITY);
     return myFunctionScale[function][tone];
 }
 
 - setScaleValue:(double)value at:(int)function:(int)tone;
 {
     if([self scaleValueAt:function:tone] != value){
-	function = mod(function, MAX_FUNCTION);
-	tone = mod(tone, MAX_TONALITY);
+	function = mod(function, VAL_MAX_FUNCTION);
+	tone = mod(tone, VAL_MAX_TONALITY);
 	myFunctionScale[function][tone]=value;
 	[self invalidate];
     }
@@ -564,14 +663,14 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 
 - (BOOL)useFunctionAtLocus:(int)locus;
 {
-    if (locus<MAX_LOCUS)
+    if (locus<VAL_MAX_LOCUS)
 	return myUseFunctionList[locus];
     return NO;
 }
 
 - setUseFunction:(BOOL)flag atLocus:(int)locus;
 {
-    if (locus<MAX_LOCUS) {
+    if (locus<VAL_MAX_LOCUS) {
 	if (myUseFunctionList[locus]!=flag) {
 	    myUseFunctionList[locus] = flag;
 	    isLevelCalculated = NO; 
@@ -604,12 +703,30 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     return self;
 }
 
+#define NUMBER(i) [NSClassFromString(@"Number") numberWithDouble:(double)(i)]
 /* generating the Riemann logic background if necessary */
 - generateRiemannLogic;
 {
     int i, j, c = [myChords count];
     
     if(!isRiemannCalculated){
+        // NEWHARMO
+      Block *block=[fsBlocks objectForKey:@"HarmonicProfileValueForFunction:tonic:pc:"];
+      if (block) {
+        int i,j,k;
+        if (harmonicProfile)
+          free(harmonicProfile);
+        MALLOC3(harmonicProfile,maxFunction,maxTonality,12,double);
+        for (i=0; i<maxFunction; i++)
+          for (j=0; j<maxTonality; j++)
+            for (k=0; k<12; k++) {
+              id blockVal=[block value:NUMBER(i) value:NUMBER(j) value:NUMBER(k)];
+              if ([blockVal respondsToSelector:@selector(doubleValue)])
+                harmonicProfile[i][j][k]=[blockVal doubleValue];
+              else
+                harmonicProfile[i][j][k]=0.0;
+            }
+      }
 	[self calcNollMatrix];
 	for(i=0; i<c; i++)
 	    [[myChords objectAt:i] calcRiemannMatrix];
@@ -628,15 +745,15 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 	    lLevel = [iChord maxRiemannValue];
 	    lLevel = (myLocalLevel/100)*lLevel;
 	    [iChord calcLevelMatrixWithLevel:(gLevel>lLevel ? gLevel : lLevel)];
-	    for (j=0; j<MAX_LOCUS; j++)
+	    for (j=0; j<VAL_MAX_LOCUS; j++)
 		if (!myUseFunctionList[j])
 		    [iChord restrictLevelMatrixAtLocus:j];
 	}
 	isLevelCalculated = YES;
     }
     if(!isDistanceCalculated){
-	for(i=0;i<MAX_LOCUS;i++){
-	    for(j=0;j<MAX_LOCUS;j++)
+	for(i=0;i<VAL_MAX_LOCUS;i++){
+	    for(j=0;j<VAL_MAX_LOCUS;j++)
 		myDistanceMatrix[i][j] = [self calcDistanceFrom:i to:j];
 	}
 	isDistanceCalculated = YES;
@@ -883,7 +1000,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     if (sequenceIndex<[myChords count])
 	return [[myChords objectAt:sequenceIndex] workLocus];
-    return MAX_LOCUS;
+    return VAL_MAX_LOCUS;
 }
 
 /* distance calculation between two points in function-mode-tonality 3x2x12 space */
@@ -935,7 +1052,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 - (int)firstIndex;
 {
     int i, c = [myChords count];
-    for(i=0; i<c && [[myChords objectAt:i] supportStart]==MAX_LOCUS; i++);
+    for(i=0; i<c && [[myChords objectAt:i] supportStart]==VAL_MAX_LOCUS; i++);
     return i;
 }
 
@@ -943,7 +1060,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 - (int)lastIndex;
 {
     int i, c = [myChords count];
-    for(i=c-1; i>=0 && [[myChords objectAt:i] supportStart]==MAX_LOCUS; i--);
+    for(i=c-1; i>=0 && [[myChords objectAt:i] supportStart]==VAL_MAX_LOCUS; i--);
     return i;
 }
 
@@ -1003,7 +1120,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     int i, inc = -1, c = [myChords count];
     sequenceIndex = mod(sequenceIndex,c);
-    if(MAX_LOCUS!=[[myChords objectAt:sequenceIndex] supportStart]){
+    if(VAL_MAX_LOCUS!=[[myChords objectAt:sequenceIndex] supportStart]){
 	int last = MIN(c-1, sequenceIndex+myFinalDepth),
 	    first = MAX(0, sequenceIndex-myCausalDepth);
     
@@ -1034,7 +1151,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     id iChord;
     [self invalidateWeights];
     iChord = [myChords objectAt:sequenceIndex];
-    if([iChord supportStart]<MAX_LOCUS){
+    if([iChord supportStart]<VAL_MAX_LOCUS){
 	/* reset the relevant work path data after working on them */
 	[self setWorkPathToSupportStartAround:sequenceIndex];
 	bestLocus = [iChord workLocus]; 
@@ -1165,7 +1282,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     int i, c = [myChords count];
     double weight = 0.0;
-    for(i=0; i<c && [[myChords objectAt:i] supportStart]==MAX_LOCUS; i++);
+    for(i=0; i<c && [[myChords objectAt:i] supportStart]==VAL_MAX_LOCUS; i++);
     if(i<c)
     weight = [[myChords objectAt:i] levelAtPath:0];
     return weight;
@@ -1175,7 +1292,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     int i, c = [myChords count];
     double weight = 0.0;
-    for(i=c-1; i>=0 && [[myChords objectAt:i] supportStart]==MAX_LOCUS; i--);
+    for(i=c-1; i>=0 && [[myChords objectAt:i] supportStart]==VAL_MAX_LOCUS; i--);
     if(i>=0)
     weight = [[myChords objectAt:i] levelAtPath:0];
     return weight;
@@ -1185,7 +1302,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     double norm = 1.0;
     sequenceIndex = mod(sequenceIndex,[myChords count]);
-    if([self locusStartAt:sequenceIndex]!=MAX_LOCUS && myStartWeight && myEndWeight){
+    if([self locusStartAt:sequenceIndex]!=VAL_MAX_LOCUS && myStartWeight && myEndWeight){
 	/* second condition only for security reasons */
 	int fI = (double)[self firstIndex],
 	lI = (double)[self lastIndex];
@@ -1212,7 +1329,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     sequenceIndex = mod(sequenceIndex,[myChords count]);
 
-    if([self locusStartAt:sequenceIndex]!=MAX_LOCUS)
+    if([self locusStartAt:sequenceIndex]!=VAL_MAX_LOCUS)
 	return [self normalizeFactorAt:sequenceIndex]*[self bestPathWeightAt:sequenceIndex];
 
     return 0.0;
@@ -1221,7 +1338,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 - (double)relativeWeightAt:(int)sequenceIndex:(int)toneIndex;
 {
     id indexChord = [myChords objectAt:sequenceIndex];
-    if([indexChord supportStart]!=MAX_LOCUS){
+    if([indexChord supportStart]!=VAL_MAX_LOCUS){
 	int bestLocus = [indexChord locusOfPath:0];
 	
 	return [self normalizedbestPathWeightAt:sequenceIndex]*
@@ -1439,4 +1556,14 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     return (double ***)myNollMatrix;
 }
 
+
+- (void)setFunctionCount:(int)fuCount tonalityCount:(int)tonCount; // NEWHARMO
+{
+#warning todo
+  // jg NEWHARMO ToDo
+}
+- (NSMutableDictionary *)fsBlocks;
+{
+  return fsBlocks;
+}
 @end

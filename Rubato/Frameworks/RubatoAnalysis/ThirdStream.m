@@ -177,9 +177,13 @@ thirdList theBigThirdList[211] =
     return modTwelve(tonei);
 }
 
-
+// the definition of functionScale in ChordSeq and the definition of this method must correspond!
+#ifdef CHORDSEQ_DYN
+- (double)riemannWeightWithFunctionScale:(const double **)functionScale atFunction:(int)function andTonic:(int)tonic;
+#else
 - (double)riemannWeightWithFunctionScale:(const double [6][12])functionScale atFunction:(int)function andTonic:(int)tonic;
-/*
+#endif
+  /*
 {
     int i, tonei;
     double valuei = 0.0, circle;
@@ -204,14 +208,14 @@ thirdList theBigThirdList[211] =
     double valuei = 0.0, fui;
     function = mod(function,6);
     tonei = modTwelve(myBasis-tonic);
-    if(fui=functionScale[function][tonei])
-    valuei = exp(fui*EXPONENT);
+    if(fui=functionScale[function][tonei]) // ? why if?
+      valuei = exp(fui*EXPONENT); // add flag for NEWHARMO
 
     if(myThirdList->length){
 	for(i=0; i<myThirdList->length; i++){
 	    tonei = (myThirdList->thirdBitList & 1<<i) ? modTwelve(tonei+4) : modTwelve(tonei+3);
-	    if(fui=functionScale[function][tonei])
-	    valuei += exp(fui*EXPONENT);
+	    if(fui=functionScale[function][tonei]) // ? why if?
+	      valuei += exp(fui*EXPONENT); // add flag for NEWHARMO
 	}
     }
     return valuei; 

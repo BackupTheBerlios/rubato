@@ -79,7 +79,7 @@
 //- (int)browser:sender fillMatrix:matrix inColumn:(int)column;
 - (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(int)row column:(int)column;
 //- (const char *)browser:sender titleOfColumn:(int)column;
-- (BOOL)browser:sender selectCellWithString:(NSString *)title inColumn:(int)column;
+//- (BOOL)browser:sender selectCellWithString:(NSString *)title inColumn:(int)column;
 - (BOOL)browser:(NSBrowser *)sender isColumnValid:(int)column;
 
 - (void)addSubDocumentsBrowser:(id)sender;

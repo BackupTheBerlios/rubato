@@ -34,7 +34,7 @@
                 saveMenuCell = id; 
                 undoMenuCell = id; 
             }; 
-            SUPERCLASS = Object; 
+            SUPERCLASS = NSObject; 
         }, 
         {
             ACTIONS = {revertToSaved = id; save = id; saveAs = id; }; 
@@ -67,7 +67,7 @@
                 typeMenu = id; 
                 valueInspector = id; 
             }; 
-            SUPERCLASS = Object; 
+            SUPERCLASS = NSObject; 
         }, 
         {
             ACTIONS = {
@@ -96,7 +96,7 @@
                 selected = id; 
                 selectedCell = id; 
             }; 
-            SUPERCLASS = Object; 
+            SUPERCLASS = NSObject; 
         }
     ); 
     IBVersion = 1; 

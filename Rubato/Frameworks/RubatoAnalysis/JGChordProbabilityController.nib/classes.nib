@@ -28,6 +28,16 @@
                 window = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = JGTitledScrollView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                horizontalTitleView = id; 
+                reflectScrolledClipViewDelegate = id; 
+                verticalTitleView = id; 
+            }; 
+            SUPERCLASS = NSScrollView; 
         }
     ); 
     IBVersion = 1; 

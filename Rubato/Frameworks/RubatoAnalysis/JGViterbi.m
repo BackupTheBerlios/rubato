@@ -533,7 +533,7 @@ NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
   context->useLevelMatrix=useLevelMatrix;
 
   // set counts
-  vit->N=MAX_FUNCTION*MAX_TONALITY;
+  vit->N=maxFunction*MAX_TONALITY;
   vit->T=[myChords count];
   // collect the symbols (for the number L)
   [myChords makeObjectsPerformSelector:@selector(addSymbolsToViterbiSymbols:) withObject:symbols];
@@ -685,8 +685,8 @@ NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
     state=0;
     // semantics of index state in b_at(state,symbolNr):
     // first the tonality changes, then the function. (same as i in myDistanceMatrix[i][j])
-    for(i=0; i<MAX_FUNCTION; i++) {
-      for(j=0; j<MAX_TONALITY; j++) {
+    for(i=0; i<myOwnerSequence->maxFunction; i++) {
+      for(j=0; j<myOwnerSequence->maxTonality; j++) {
         double val;
         if (usePointer)
           val=pointer[i][j];

@@ -559,11 +559,17 @@
 	case 0: 
 	{
 	    if (row<=[myChordSequence count]) {
-		[myConverter setStringValue:@"Chord ("];
+#if 0
+              // Harmo1
+                [myConverter setStringValue:@"Chord ("];
                 [myConverter concatInt:row+1];
                 [myConverter concat:")"];
-		[cell setLoaded:YES];
 		[cell setStringValue:[myConverter stringValue]];
+#else
+                // Harmo2
+                [cell setStringValue:[NSString stringWithFormat:@"%d: %@",row+1,[[myChordSequence chordAt:row] pitchListString]]];
+#endif
+		[cell setLoaded:YES];
 		[cell setLeaf:NO];
 	    }
 	    break;

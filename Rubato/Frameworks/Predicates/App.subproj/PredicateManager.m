@@ -31,6 +31,8 @@
 #undef jgShowPredibase
 #define jgShowPredibaseVal 0
 
+#undef USE_BROWSER_MATRIX
+
 @implementation PredicateManager
 
 /* standard class methods to be overridden */
@@ -400,12 +402,17 @@
     }
 
   if ([obj=[self selectedInColumn:oldCol-1] hasPredicate:selectedPredicate]&&[obj hasPredicate:aPredicate]) {
+#ifdef USE_BROWSER_MATRIX
 	[[[self browser] matrixInColumn:newCol] selectCellAtRow:newRow column:0];
 	[[[self browser] matrixInColumn:newCol] sendAction];
+#else
+	[[self browser] selectRow:newRow inColumn:0];
+	[[self browser] sendAction];
+#endif        
     }
     else if (newRow>-1 && newCol>-1) {
 	int row, col, cols, *rowList = NULL;
-	id colMatrix, rowPred, predicate = [self rootPredicate];
+	id rowPred, predicate = [self rootPredicate];
 	
 	/* get the row for every column, i.e. path to aPredicate */
 	for (cols=0; [predicate hasPredicate:aPredicate]  && (predicate!=aPredicate); cols++) {
@@ -424,16 +431,26 @@
 	//[browser loadColumnZero];
 	
 	for (col=0; col<cols; col++) {
-	    colMatrix = [[self browser] matrixInColumn:col];
+#ifdef USE_BROWSER_MATRIX
+	    id colMatrix = [[self browser] matrixInColumn:col];
 	    if ([colMatrix selectedRow]!=rowList[col]) {
 		[colMatrix selectCellAtRow:rowList[col] column:0];
 		[colMatrix sendAction];
 	    }
-	}
+#else
+            if ([[self browser] selectedRowInColumn:col]!=rowList[col]) {
+              [[self browser] selectRow:rowList[col] inColumn:0];
+              [[self browser] sendAction];
+            }              
+#endif
+        }
     } else
 	[[self browser] loadColumnZero];
-    
+#ifdef USE_BROWSER_MATRIX    
     [self setNewSelectedCell:[[[self browser] matrixInColumn:newCol] selectedCell]];
+#else
+    [self setNewSelectedCell:[[self browser] selectedCellInColumn:newCol]];
+#endif
 
     browserIsValid = browserIsValid && (newCol<=oldCol);
     [self setSelectedPredicateAndNotify:((newRow>-1) ? aPredicate : nil)];
@@ -450,6 +467,12 @@
 //    if ([inspector manager]=self)
     [[self document] setSelected:selectedPredicate];
     [[[self distributor] globalInspector] setSelected: selectedPredicate];
+    {
+      static BOOL makeFocus=YES;
+      if (makeFocus) {
+        [[sender window] makeKeyWindow];
+      }
+    }
 }
 
 - (void)setSelectedPredicate:(id)newPredicate;
@@ -502,7 +525,11 @@
     } else {
       predicate=[self rootPredicate];
       for (col=0; col<=column; col++) {
+#ifdef USE_BROWSER_MATRIX
 	predicate = [predicate getValueAt:[[[self browser] matrixInColumn:col] selectedRow]];
+#else
+    	predicate = [predicate getValueAt:[[self browser] selectedRowInColumn:col]];    
+#endif
       }
      return predicate;
    }    
@@ -510,7 +537,11 @@
  
  - browser:sender selectedInColumn:(int)column;
 {
+#ifdef USE_BROWSER_MATRIX
     return [self browser:sender predicateAtRow:[[sender matrixInColumn:column] selectedRow] inColumn:column];
+#else
+    return [self browser:sender predicateAtRow:[sender selectedRowInColumn:column] inColumn:column];
+#endif        
 }
 
 
@@ -661,6 +692,11 @@
 }
 */
 
+#ifdef USE_BROWSER_MATRIX
+// this is a browser delegate method.
+// the way it is implemented here seems not to have the right semantics.
+// will not work with setPath:!
+// Removing with #ifdef might work (invoke the standard methode of browser)?
 //- (const char *)browser:sender titleOfColumn:(int)column;
 - (BOOL)browser:sender selectCellWithString:(NSString *)title inColumn:(int)column;
 {
@@ -682,6 +718,7 @@
     } else
 	return NO;
 }
+#endif
 
 - (BOOL)browser:(NSBrowser *)sender isColumnValid:(int)column;
 {
@@ -694,7 +731,9 @@
 //#error ViewConversion: '-focusView' in NSApplication has been replaced by '+focusView' in NSView
 // jg??: problem: changing s.th. in path to selected does not result in redisplaying.
 // but also s.o.
-    if (([NSView focusView] == [sender matrixInColumn:column]) || column<selCol || browserIsValid)
+    if ([NSView focusView] == [sender matrixInColumn:column])
+      return YES;
+    else if( (column<selCol) || browserIsValid)
 	return YES; 
     else {
 	if (column>selCol) {
@@ -775,15 +814,25 @@
 
 - (void)windowDidBecomeMain:(NSNotification *)notification;
 {
+//  NSLog(@"windowDidBecomeMain");
   [self predicateManagerDidBecomeActive];
 }
 - (void)windowDidBecomeKey:(NSNotification *)notification;
 {
+//  NSLog(@"windowDidBecomeKey");
   [self predicateManagerDidBecomeActive];
+}
+- (void)windowDidResignKey:(NSNotification *)notification;
+{
+//  NSLog(@"windowDidResignKey");
 }
 - (void)windowDidLoad; // jg 14.6.
 {
   [super windowDidLoad];
+  [browser setTarget:self];
+  [browser setAction:@selector(setSelectedFrom:)];
+  [browser setAcceptsArrowKeys:YES];
+  [browser setSendsActionOnArrowKeys:YES];
   [self setBrowserIsValid:NO];
   [[self document] setSelected:nil];
   [self setSelectedPredicate:nil];
@@ -795,6 +844,7 @@
 - (void)windowWillLoad; // jg 14.6.
 {
   [super windowWillLoad];
+  // need to invoke [browser setAction:]?
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName;

@@ -3,6 +3,8 @@
 #import <Rubato/Inspectable.h>
 #import "ChordSequence.h"
 
+#define CHORD_DYN
+
 @interface Chord:JgRefCountObject <Ordering, Inspectable>
 {
     ChordSequence *myOwnerSequence; /* the ChordSequence Object, that contains this Chord instance */
@@ -11,19 +13,29 @@
     unsigned short myPitchClasses; /* bit sequence 0,1,...,11 from the right as usual */
     double myOnset;
     id myThirdStreamList; /* list of ThirdStream objects of the chord */
-    double myRiemannMatrix[MAX_FUNCTION][MAX_TONALITY]; /* a numeric 6x12 matrix */
-    double myLevelMatrix[MAX_FUNCTION][MAX_TONALITY]; /* level 6x12 Matrix for the level sensitivity for the calculation of paths */
+    int maxFunction,maxTonality,maxLocus; // non inclusive
+#ifdef CHORD_DYN
+    double **myRiemannMatrix; /* [MAX_FUNCTION][MAX_TONALITY] a numeric 6x12 matrix */
+    double **myLevelMatrix; /* [MAX_FUNCTION][MAX_TONALITY] level 6x12 Matrix for the level sensitivity for the calculation of paths */
+#else
+    double myRiemannMatrix[MAX_FUNCTION][MAX_TONALITY];
+    double myLevelMatrix[MAX_FUNCTION][MAX_TONALITY];
+#endif
     short mySupportStart; /*first non-zero locus (=index) of myLevelMatrix, is 72 iff all are zero */
     short myLocus[PATHNUMBER+1]; /* array of integers for the best PATHNUMBER paths,
     				the last entry is free for calculations, it©s the workpath */
-				
+
+#ifdef CHORD_DYN				
+    double *myPitchClassWeights; /*[MAX_TONALITY]*/
+#else
     double myPitchClassWeights[MAX_TONALITY];
+#endif  
     double myWeight;
     BOOL isWeightCalculated;
 }
 
-- init;
-- initOwner:aChordSequence;
+// Designated Initializer
+- (id)initOwner:(id)aChordSequence;
 - (void)dealloc;
 - copyWithZone:(NSZone*)zone;
 - (id)initWithCoder:(NSCoder *)aDecoder;
@@ -114,6 +126,8 @@
 		
 /* relative weights of tones of a chord */
 - (double)relativeWeightOfTone:(int)toneIndex atLocus:(int)locus;
-		
-		
+
+// additionals
+- (NSString *)pitchListString; // as integers separated by ","
+- (NSString *)pitchListStringWithPitchFormat:(NSString *)pf delimiter:(NSString *)delimiter asInt:(BOOL)asInt;
 @end
