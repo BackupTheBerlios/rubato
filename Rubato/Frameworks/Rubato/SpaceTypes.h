@@ -13,7 +13,8 @@ typedef struct{
 	double origin;
 	double end;
 }Space_Frame;
-// jg: NSRect enthÙlt NSPoint origin; NSSize size;
+// jg: for comparision: Cocoa uses NSRect for graphical frames.
+// NSRect consists of NSPoint origin; NSSize size;
 
 
 typedef unsigned char spaceIndex;
