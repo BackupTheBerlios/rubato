@@ -7,19 +7,6 @@
 			97D750C0034C5F4900951B37,
 		);
 		breakpoints = (
-			97EB083202ED962700951B37,
-			97EB083302EDA8C100951B37,
-			97AFB7C9031D60DB00951B37,
-			97AFB7CC031D792900951B37,
-			9784796803424A2200951B37,
-			97E1E30903446DE600951B37,
-			97E1E3100344CE1A00951B37,
-			97E1E3110344CE7700951B37,
-			9753C775034A460400951B37,
-			97D750D4034E122C00951B37,
-			97D750D9034E679000951B37,
-			97D750DC034E6BB600951B37,
-			97D750DE034E74F200951B37,
 		);
 		perUserDictionary = {
 			PBXWorkspaceConfiguration = {
@@ -249,12 +236,6 @@
 		vrLen = 416;
 		vrLoc = 4447;
 	};
-	9753C775034A460400951B37 = {
-		fileReference = 03FEE1C500906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 790;
-		state = 2;
-	};
 	97709A24017C925000000001 = {
 		activeExec = 0;
 		customExecs = {
@@ -306,12 +287,6 @@
 		rType = 0;
 		vrLen = 840;
 		vrLoc = 4474;
-	};
-	9784796803424A2200951B37 = {
-		fileReference = 97AFB7BF031CE7D700951B37;
-		isa = PBXFileBreakpoint;
-		lineNumber = 248;
-		state = 1;
 	};
 	978FC35C010327C300000001 = {
 		activeExec = 0;
@@ -393,18 +368,6 @@
 		customExecs = {
 		};
 	};
-	97AFB7C9031D60DB00951B37 = {
-		fileReference = 97AFB7BF031CE7D700951B37;
-		isa = PBXFileBreakpoint;
-		lineNumber = 115;
-		state = 2;
-	};
-	97AFB7CC031D792900951B37 = {
-		fileReference = 97AFB7BF031CE7D700951B37;
-		isa = PBXFileBreakpoint;
-		lineNumber = 270;
-		state = 2;
-	};
 	97C863A901A036AC00951B37 = {
 		activeExec = 0;
 		customExecs = {
@@ -415,64 +378,10 @@
 		customExecs = {
 		};
 	};
-	97D750D4034E122C00951B37 = {
-		fileReference = 978FC498010332C100000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 393;
-		state = 2;
-	};
-	97D750D9034E679000951B37 = {
-		fileReference = 03FEE1C400906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 577;
-		state = 2;
-	};
-	97D750DC034E6BB600951B37 = {
-		fileReference = 03FEE1C800906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 210;
-		state = 2;
-	};
-	97D750DE034E74F200951B37 = {
-		fileReference = 03FEE1C500906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 785;
-		state = 2;
-	};
 	97E07781019C334300951B37 = {
 		activeExec = 0;
 		customExecs = {
 		};
-	};
-	97E1E30903446DE600951B37 = {
-		fileReference = 03FEE14500906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 510;
-		state = 1;
-	};
-	97E1E3100344CE1A00951B37 = {
-		fileReference = 03FEE14500906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 152;
-		state = 1;
-	};
-	97E1E3110344CE7700951B37 = {
-		fileReference = 03FEE14500906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 472;
-		state = 2;
-	};
-	97EB083202ED962700951B37 = {
-		fileReference = 03FEE0A000906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 91;
-		state = 2;
-	};
-	97EB083302EDA8C100951B37 = {
-		fileReference = 03FEE18C00906EAA7F000001;
-		isa = PBXFileBreakpoint;
-		lineNumber = 753;
-		state = 2;
 	};
 	97EB084802EF12EF00951B37 = {
 		activeExec = 0;

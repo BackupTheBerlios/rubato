@@ -5546,6 +5546,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
+				9751D5690354867900951B37,
 				97D750D0034E08C900951B37,
 				97D750D1034E08C900951B37,
 			);
@@ -6192,6 +6193,10 @@
 			name = MPWFoundation.framework;
 			path = /Library/Frameworks/MPWFoundation.framework;
 			refType = 0;
+		};
+		9751D5690354867900951B37 = {
+			isa = PBXTargetDependency;
+			target = 03FEE26000906EAA7F000001;
 		};
 		9753C777034B599500951B37 = {
 			isa = PBXFileReference;
@@ -7241,7 +7246,6 @@
 				978FC496010332C100000001,
 				978FC497010332C100000001,
 				978FC498010332C100000001,
-				97E1E3030344542000951B37,
 			);
 			isa = PBXGroup;
 			path = HarmoRubette;
@@ -11255,7 +11259,6 @@
 			);
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/Rubato/build;
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -11688,21 +11691,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		97E1E3030344542000951B37 = {
-			children = (
-				97E1E3040344542000951B37,
-			);
-			isa = PBXVariantGroup;
-			name = HarmoRubette2.nib;
-			path = "";
-			refType = 4;
-		};
-		97E1E3040344542000951B37 = {
-			isa = PBXFileReference;
-			name = English;
-			path = English.lproj/HarmoRubette2.nib;
-			refType = 4;
 		};
 		97E46E0C01BE3F4700951B37 = {
 			fileRef = 97EB1C2701A003B400951B37;
