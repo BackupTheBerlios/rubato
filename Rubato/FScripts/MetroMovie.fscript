@@ -2,8 +2,7 @@
 fileName:='/Users/jg/scores/bach/chorales/chor024.score'.
 documentController:=NSDocumentController sharedDocumentController.
 documentController openDocumentWithContentsOfFile:fileName display:YES.
-documents:= documentController documents.
-document:= documents at:0.
+document:= documentController documentForFileName:(fileName stringByResolvingSymlinksInPath).
 distributor:=document distributor.
 distributor loadRubetteByFilename: (((NSBundle mainBundle)  builtInPlugInsPath) stringByAppendingPathComponent:'Metro.rubette').
 rubetteDriversDictionary:=distributor toolDictionary.
@@ -26,7 +25,12 @@ RecalcWithProfile:=[:profValue |
 RecalcWithProfile value:@(10 iota).
 
 imageView := (NSImageView alloc initWithFrame:rect).
-imageWindow := NSWindow alloc initWithContentRect:rect styleMask:NSTitledWindowMask+NSClosableWindowMask backing:NSBackingStoreBuffered defer:false.imageWindow setTitle:'Weights'.imageWindow orderFront:nil.imageWindow contentView addSubview: imageView.
+imageWindow := NSWindow alloc initWithContentRect:rect
+ styleMask:NSTitledWindowMask+NSClosableWindowMask backing:NSBackingStoreBuffered
+ defer:false.
+imageWindow setTitle:'Weights'.
+imageWindow orderFront:nil.
+imageWindow contentView addSubview: imageView.
 
 "imageView setImage:(images at:0)."
 
