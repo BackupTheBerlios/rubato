@@ -1,0 +1,65 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = JGScrollViewController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {documentView = NSView; scrollView = NSScrollView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {changeDone = id; }; 
+            CLASS = JGScrollViewRulerController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                controllerView = NSView; 
+                hasHorizontalRulerSwitch = NSButton; 
+                hasVerticalRulerSwitch = NSButton; 
+                horizontalConversionFactorTextField = NSTextField; 
+                horizontalOriginOffsetTextField = NSTextField; 
+                horizontalStepDownCycleTextField = NSTextField; 
+                horizontalStepUpCycleTextField = NSTextField; 
+                okButton = NSButton; 
+                okSwitch = NSButton; 
+                scrollView = NSScrollView; 
+                showRulersSwitch = NSButton; 
+                verticalConversionFactorTextField = NSTextField; 
+                verticalOriginOffsetTextField = NSTextField; 
+                verticalStepDownCycleTextField = NSTextField; 
+                verticalStepUpCycleTextField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                changeValueAction = id; 
+                orgCurrentSwitchAction = id; 
+                resetAction = id; 
+                sliderAction = id; 
+            }; 
+            CLASS = JGViewSizeController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                absRelSwitch = NSButton; 
+                boundsFrameSwitch = NSButton; 
+                controllerView = NSView; 
+                okButton = NSButton; 
+                okSwitch = NSButton; 
+                orgCurrentSwitch = NSButton; 
+                targetView = NSView; 
+                xSlider = NSSlider; 
+                xTextField = NSTextField; 
+                ySlider = NSSlider; 
+                yTextField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {jgShowZoomController = id; }; 
+            CLASS = NSView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSResponder; 
+        }
+    ); 
+    IBVersion = 1; 
+}

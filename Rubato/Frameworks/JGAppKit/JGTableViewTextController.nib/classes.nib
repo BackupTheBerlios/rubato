@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {okPressed = id; revertPressed = id; testPressed = id; }; 
+            CLASS = JGTableViewTextController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                fieldSeparatorTextView = NSTextView; 
+                recordSeparatorTextView = NSTextView; 
+                sampleTableData = id; 
+                sampleTextView = NSTextView; 
+                sampleTextViewInfoTextField = NSTextField; 
+                tableDataViewController = id; 
+                textWithTitlesSwitch = NSButton; 
+                textWithUnderlineSwitch = NSButton; 
+                textWithUnderlineTextField = NSTextField; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

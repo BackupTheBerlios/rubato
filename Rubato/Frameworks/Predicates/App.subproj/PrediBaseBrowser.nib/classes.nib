@@ -1,0 +1,126 @@
+{
+    IBClasses = (
+        {CLASS = DTXDocument; LANGUAGE = ObjC; SUPERCLASS = SubDocument; }, 
+        {
+            ACTIONS = {
+                openFile = id; 
+                saveAll = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = Object; 
+        }, 
+        {
+            ACTIONS = {revertToSaved = id; save = id; saveAs = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {revertToSaved = id; save = id; saveAs = id; }; 
+            CLASS = PrediBaseDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                currentPredicateManager = id; 
+                formManager = id; 
+                myFormList = id; 
+                myPredicateList = id; 
+                myRubetteList = id; 
+                myWeightList = id; 
+            }; 
+            SUPERCLASS = DTXDocument; 
+        }, 
+        {
+            ACTIONS = {
+                addPredicate = id; 
+                deselect = id; 
+                displayPredicate = id; 
+                doCanChangeType = id; 
+                doChangeType = id; 
+                newPredicate = id; 
+                removePredicate = id; 
+                setName = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = PredicateInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inspector = id; 
+                inspectorBox = id; 
+                manager = id; 
+                nameField = id; 
+                patient = id; 
+                selected = id; 
+                typeField = id; 
+                typeMenu = id; 
+                valueInspector = id; 
+            }; 
+            SUPERCLASS = Object; 
+        }, 
+        {
+            ACTIONS = {
+                addPredicateBrowser = id; 
+                addSubDocumentsBrowser = id; 
+                copy = id; 
+                cut = id; 
+                paste = id; 
+                revertToSaved = id; 
+                save = id; 
+                saveAs = id; 
+                setSelectedCell = id; 
+                setSelectedFrom = id; 
+            }; 
+            CLASS = PredicateManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                browser = id; 
+                browserWindow = id; 
+                owner = id; 
+                selected = id; 
+                selectedCell = id; 
+                theDocument = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            ACTIONS = {
+                addDocument = id; 
+                addSubDocumentsBrowser = id; 
+                closeSelfAndSubDocuments = id; 
+                closeSubDocuments = id; 
+            }; 
+            CLASS = SubDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {childDocuments = id; parentDocument = id; }; 
+            SUPERCLASS = NSDocument; 
+        }
+    ); 
+    IBVersion = 1; 
+}

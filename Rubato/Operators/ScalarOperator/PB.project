@@ -1,0 +1,32 @@
+{
+    APPCLASS = ScalarOperator; 
+    BUNDLE_EXTENSION = operator; 
+    FILESTABLE = {
+        CLASSES = (ScalarOperator.m, ScalarOperatorApplicator.m, ScalarOperatorInspector.m); 
+        English_INTERFACES = (ScalarOperatorInspector.nib); 
+        FRAMEWORKS = (MathMatrixKit.framework); 
+        HEADERSEARCH = (/Net/flowerpop/NextDeveloper/OpenStepConversion/3.3Headers); 
+        H_FILES = (ScalarOperator.h, ScalarOperatorApplicator.h, ScalarOperatorInspector.h); 
+        INTERFACES = (); 
+        OTHER_SOURCES = (Makefile.preamble, Makefile, Makefile.postamble); 
+        SUBPROJECTS = (); 
+    }; 
+    GENERATEMAIN = YES; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(NEXT_ROOT)/NextDeveloper/Makefiles/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-Dselfvoid=id"; 
+    NEXTSTEP_DOCUMENTEXTENSIONS = (); 
+    NEXTSTEP_INSTALLDIR = /Library/Rubato/Operators; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_INSTALLDIR = "$(HOME)/Library/Rubato/Operators"; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = Scalar; 
+    PROJECTTYPE = Bundle; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_INSTALLDIR = "$(HOME)/Library/Rubato/Operators"; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

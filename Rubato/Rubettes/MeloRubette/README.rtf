@@ -1,0 +1,120 @@
+{\rtf0\ansi{\fonttbl\f0\fnil Times-Roman;\f1\ftech Symbol;\f2\fswiss Helvetica;\f3\fmodern Courier;\f4\fmodern Ohlfs;}
+\paperw17700
+\paperh9000
+\margl120
+\margr120
+{\colortbl;\red0\green0\blue0;}
+\pard\tx480\tx960\tx1460\tx1940\tx2440\tx2920\tx3420\tx3900\tx4400\tx4880\f0\b0\i0\ulnone\fs24\fc0\cf0 Release 0.9 Beta  Copyright 
+\f1 ã
+\f0 1995 by Guerino Mazzola.  All Rights Reserved.\
+
+\f2\b\qc\fs28 \
+\
+How melo C routines work\
+
+\ql \
+
+\pard\tx1040\tx2100\tx3160\tx4220\tx5280\tx6320\tx7380\tx8440\tx9500\tx10560\fc0\cf0 \
+\
+melomath.c\
+
+\b0\fs24 This file defines the auxiliary functions of general mathematical type like set-theoretic constructions.
+\b\fs28 \
+
+\b0\fs24 \
+\
+
+\b\fs28 General procedure:\
+
+\b0\fs24 We are given the following data which is defined in melomain.c:\
+
+\fs28 \
+
+\f3\fs24 2D_compList composition;	/*A "melody" predicate containing \
+				 *double-parametrized 2D resp. onset-pitch points. \
+				 *The list contains its points only once, and, \
+				 *if possible, but not necessarily, ordered according to\
+				 *the lexicographic order of (onset,pitch).\
+				 */\
+M2D_powcomList BigMeloList 	/*A list of "melody" predicates*/\
+double epsilon;		/*The neighborhood radius*/\
+int paradigm;			/*The integer representing one of the three types of shape and distance.\
+				 *1 = diastematic index, 2 = elastic, 3 = rigid.*/\
+int group;			/*Ond of the usual subgroups of the counterpoint group:\
+				 *'I' = identity, \
+				 *'K' = <retrograde>, \
+				 *'U' = <inversion>, \
+				 *'KU' = full counterpoint group*/ \
+int card;			/*The lower limit of cardinality of motifs to be considered, card= 2 is default*/\
+double span;			/*The upper limit of distance between first and last onset of a motif©s point*/\
+
+\f2\fs28 \
+
+\fs24 The special types are declared in melo.h\
+\
+According to GLP and GLPII, the weight \
+\
+
+\f3 melMotifWeight(2D_compList motif, 2D_comList composition, double span\
+				double epsilon, int paradigm, int group, int card)\
+
+\f2 \
+\
+of each 
+\f3 motif
+\f2  of 
+\f3 meloList
+\f2  is calculated as a function of the neighborhood 
+\f3 epsilon
+\f2 , the gestalt type 
+\f3 paradigm
+\f2 , the counterpoint-subgroup 
+\f3 group
+\f2 , the minimal cardinality 
+\f3 card
+\f2  of considered motifs and the maximal allowed distance 
+\f3 span
+\f2  between the first and the last note of a motif.\
+\
+This motif©s weight is the product\
+\
+
+\f3 content * presence\
+
+\f2 \
+of the motif©s content and presence. They are weighted sums of the given members of admitted sub- resp. supermotifs of the motif which relate to its epsilon neighborhood with regard to the selected paradigm and group.\
+\
+Next, the weight \
+\
+
+\f3 double melPtWeight(2D_Point P, 2D_compList composition, double epsilon, double span, int paradigm, int group, int card) \
+
+\f2 \
+of each point 
+\f3 P
+\f2  is given as the sum of the weights of the admissible motifs (list  built from 
+\f3 compositon
+\f2 ) containing that point.\
+\
+This approach generalizes the GLPII implementation in so far as the 
+\f3 composition
+\f2  need no longer be a melody. It may be any set of onset-pitch-defined sounds. More generally, it may be any set of 2D-sounds. This means that in reality, this analysis also works for any couple of 
+\f3\fc1\cf1 double
+\f2\fc0\cf0  coordinates, i.e. the melody may live within any 2D-space! Thus, one may do "articulation melody analysis". However, the meaning of such an analysis is not straightforward.\
+\
+Finally, the weight \
+\
+
+\f3\fc1\cf1 M2D_weightList  BigMeloWeightList(M2D_powcomList BigMeloList,
+\fc0\cf0  double epsilon, double span, int paradigm, int group, int card)
+\f2 \
+\
+of a list 
+\f3\fc1\cf1 BigMeloList 
+\f2 of melodies is calculated as being the union of the individual weight lists, but with each point with added weights for all melodies where it belongs to.
+\fc0\cf0 \
+\
+\
+\
+
+}

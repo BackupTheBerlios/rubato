@@ -1,0 +1,22 @@
+"DirectedOperatorApplicator" = {
+    ACTIONS = {"collectValues:" = id; "displayValues:" = id; "takeDistributionFrom:" = id; }; 
+    OUTLETS = {directionMatrix = id; distributionMatrix = id; }; 
+    SUPERCLASS = GenericOperatorApplicator; 
+};
+"FirstResponder" = {ACTIONS = {}; OUTLETS = {}; SUPERCLASS = NSObject; };
+"GenericOperatorApplicator" = {
+    ACTIONS = {
+        "cancel:" = id; 
+        "collectValues:" = id; 
+        "displayValues:" = id; 
+        "ok:" = id; 
+        "takeNameFrom:" = id; 
+    }; 
+    OUTLETS = {myDialogPanel = id; myNameField = id; myNameString = id; myOperator = id; }; 
+    SUPERCLASS = Object; 
+};
+"GenericSplitterApplicator" = {
+    ACTIONS = {"collectValues:" = id; "takeSplitFrameFrom:" = id; }; 
+    OUTLETS = {myFinalActivMatrix = id; myInitialActivMatrix = id; mySplitFrameMatrix = id; }; 
+    SUPERCLASS = DirectedOperatorApplicator; 
+};

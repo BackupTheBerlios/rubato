@@ -1,0 +1,42 @@
+{
+    APPCLASS = MetroRubetteDriver; 
+    BUNDLE_EXTENSION = rubette; 
+    FILESTABLE = {
+        CLASSES = (MetroRubetteDriver.m, MetroWeightView.m, MetroRubette.m); 
+        C_FILES = (); 
+        English_INTERFACES = (MetroRubette.nib); 
+        FRAMEWORKS = (
+            AppKit.framework, 
+            Foundation.framework, 
+            RubatoAnalysis.framework, 
+            Rubette.framework
+        ); 
+        FRAMEWORKSEARCH = (); 
+        H_FILES = (MetroRubetteDriver.h, MetroWeightView.h, MetroRubette.h); 
+        IMAGES = (); 
+        INTERFACES = (); 
+        OTHER_LINKED = (); 
+        OTHER_SOURCES = (Makefile.preamble, Makefile, Makefile.postamble, README); 
+        PRECOMPILED_HEADERS = (); 
+        PROJECT_HEADERS = (); 
+        PUBLIC_HEADERS = (); 
+        SUBPROJECTS = (); 
+    }; 
+    GENERATEMAIN = YES; 
+    LANGUAGE = English; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-Wno-precomp -DWITH_PS -DWITHMUSICKIT -Dselfvoid=id"; 
+    NEXTSTEP_DOCUMENTEXTENSIONS = (); 
+    NEXTSTEP_INSTALLDIR = /Library/Rubato/Rubettes; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_INSTALLDIR = "$(HOME)/Library/Rubato/Rubettes"; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = Metro; 
+    PROJECTTYPE = Bundle; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_INSTALLDIR = "$(HOME)/Library/Rubato/Rubettes"; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

@@ -1,0 +1,40 @@
+Source code documentation with autodoc or headerdoc
+
+Rubato Frame/External:
+======================
+Have a look at current versions of XMLRPC Framework (mulle-kybernetic.com, GPL). It might be a good way of communicating with java and other processes (e.g. OpenMusic).
+And perhaps MPWs Objective XML Archiver.
+
+Remove Compile/Link- Dependencies
+==================================
+E.g: Rubette depends now on JGAppKit ab, but the dependency exists only in one class name, which is hard wired in .m code. 
+Replace with  NSClassFromString(JGSubDocument), that will calm down the linker. And keep imports. That calms down the compiler. 
+Anyhow link with JGAppKit, to be sure, that at runtime the class exists.
+
+PrediBaseDocument links Rubette.framework, because it uses Praedikate class.
+This should be replaced by a Score-Rubette, which does this.
+How should I install a KV-Browser for the user.
+-selectedPredicate might be a category method, which returns a wrapper.
+
+Dependencies:
+===============
+Predicates - JGFoundation, JGAppKit, CommonKit, Rubato
+
+RubatoAnalysis: RubatoDeprecated, Rubato, MathMatrixKit, Predicates, Rubette
+PerformanceScore: Rubato, MathMatrixKit, (RubatoDeprecated, Predicates, Rubette)
+                  RubatoAnalysis
+Metro: RubatoDeprecated, Rubato, Predicates. Rubette, RubatoAnalysis
+Melo: RubatoDeprecated, Rubato, Predicates. Rubette, RubatoAnalysis, MathMatrixKit
+Harmo: RubatoDeprecated, Rubato, Predicates. Rubette, RubatoAnalysis, MathMatrixKit
+PrimaVista: RubatoDeprecated, Rubato, Predicates. Rubette
+Performance: RubatoDeprecated, Rubato, Predicates. Rubette, RubatoAnalysis, MathMatrixKit, PerformanceScore
+FScript-Rubette: RubatoDeprecated, JGFoundation, JGAppKit, Rubato, MathMatrixKit, Predicates, Rubette
+
+Physical: RubatoDeprecated, Rubato, Rubette, PerformanceScore
+Scalar: RubatoDeprecated, Rubato, Rubette, PerformanceScore, MathMatrixKit, Predicates
+Tempo: RubatoDeprecated, Rubato, Rubette, PerformanceScore, MathMatrixKit, RubatoAnalysis
+Split: RubatoDeprecated, Rubato, Rubette, PerformanceScore, RubatoAnalysis
+Symbolic: RubatoDeprecated, Rubato, Rubette, PerformanceScore
+
+
+

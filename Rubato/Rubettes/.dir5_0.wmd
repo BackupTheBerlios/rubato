@@ -1,0 +1,6 @@
+{
+    RootNode = "~/Konversion/rubato/final/rubato/Rubettes"; 
+    Toolbar = No; 
+    ViewName = Browser; 
+    WindowFrame = "{{52, 292}, {596, 440}}"; 
+}

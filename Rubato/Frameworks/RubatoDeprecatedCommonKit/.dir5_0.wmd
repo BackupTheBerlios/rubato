@@ -1,0 +1,6 @@
+{
+    RootNode = /Local/Users/jg/rubato/RubatoFrameworks/CommonKit.fproj; 
+    Toolbar = No; 
+    ViewName = Browser; 
+    WindowFrame = "{{297, 140}, {596, 440}}"; 
+}

@@ -1,0 +1,19 @@
+{
+    NSInfoPlistVersion = "5.0";
+    NSAppVersion = "jg4711";
+    NSHumanReadableShortName = "JGApp";
+    NSHumanReadableCompleteName = "JG Application.";
+    NSHumanReadableCopyright = "Copyright (c) 2000, JG Software, Inc.";
+    NSTypes = (
+	{
+	    NSName = "JGActivationSubDocument";
+	    NSHumanReadableName = "Rubette or Distributor file type.";
+	    NSUnixExtensions = ("rubette");
+	    NSDOSExtensions = ("rbt");
+	    NSRole = Editor;
+	    NSDocumentClass = JGActivationSubDocument;
+	}
+    );
+}
+
+ 	

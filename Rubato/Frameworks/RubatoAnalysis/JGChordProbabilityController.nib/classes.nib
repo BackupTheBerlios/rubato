@@ -1,0 +1,34 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                probabilityMatrixChanged = id; 
+                recalculatePressed = id; 
+                restrictOnsetPressed = id; 
+                selectionChanged = id; 
+                setAllEntriesToDefaultPressed = id; 
+                unrestrictOnsetPressed = id; 
+            }; 
+            CLASS = JGChordProbabilityController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                allOnsetsComboBox = NSComboBox; 
+                defaultValueTextField = NSTextField; 
+                definitionsButtonCell = NSButtonCell; 
+                definitionsResultsRadioMatrix = NSMatrix; 
+                harmoRubetteDriver = id; 
+                probabilityMatrix = NSMatrix; 
+                recalculateButton = NSButton; 
+                restrictOnsetButton = NSButton; 
+                restrictedOnsetsComboBox = NSComboBox; 
+                resultsButtonCell = NSButtonCell; 
+                setAllEntriesToDefaultButton = NSButton; 
+                unrestrictOnsetButton = NSButton; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

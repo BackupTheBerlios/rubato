@@ -1,0 +1,83 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                loadRubette = id; 
+                openFile = id; 
+                saveAll = id; 
+                setActiveRubette = id; 
+                setPredicateManager = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                showPredicateInspector = id; 
+                signInRubette = id; 
+                signOutRubette = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                activeRubette = id; 
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                myRubetteList = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                browser = id; 
+                copy = id; 
+                cut = id; 
+                deleteForm = id; 
+                newForm = id; 
+                paste = id; 
+                pasteboard = id; 
+                revertToSaved = id; 
+                save = id; 
+                saveAs = id; 
+                setSelectedCell = id; 
+                setSelectedFrom = id; 
+            }; 
+            CLASS = FormManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                X = id; 
+                Y = id; 
+                browser = id; 
+                browserWindow = id; 
+                inspector = id; 
+                manager = id; 
+                myFormList = id; 
+                owner = id; 
+                selected = id; 
+                selectedCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,32 @@
+How to make Rubato.app faster in development phase by symbolic links within the Rubato.app package (This does not work)
+===================
+rm -r Rubato.app/Contents/Frameworks/*
+rm -r Rubato.app/Contents/PlugIns/*
+cd Rubato.app/Contents/Frameworks
+ln -s ../../../*.framework .
+cd ../PlugIns
+ln -s ../../../*.rubette .
+ln -s ../../../*.operator .
+
+How to find Comments:
+=======================
+cd RubatoFrameworks
+mv build ..
+FILES=`find . -name "*.[hmc]"`
+for i in $FILES ; do echo "FILE: $i" ; grep "//" $i ; done >/tmp/comments.txt
+mv ../build .
+open /tmp/comments.txt
+
+How to removed strange control chars example
+=============================================
+tr -c "[:graph:] \n" " " <SDTableView.hctrl >SDTableView.h
+tr -c "[:graph:] \n" " " <SDTableView.mctrl >SDTableView.m
+tr -c "[:graph:] \n" " " <SDTableView.mctrl | less
+
+How to build and install:
+==========================
+cd ~/rubato/RubatoFrameworks
+pbxbuild install -alltargets
+pbxbuild install -target MetroRubette.framework
+pbxbuild install -target MetroRubette.rubette
+

@@ -1,0 +1,98 @@
+"Distributor" = {
+    ACTIONS = {
+        "openFile:" = id; 
+        "saveAll:" = id; 
+        "showAlertPanel:" = id; 
+        "showEditWindow:" = id; 
+        "showFormBrowser:" = id; 
+        "showInfoPanel:" = id; 
+        "showMakroPalette:" = id; 
+        "showPredicateBrowser:" = id; 
+        "showPredicateFinder:" = id; 
+        "showPredicateInspector:" = id; 
+    }; 
+    OUTLETS = {
+        alertPanel = id; 
+        documentMenuCell = id; 
+        editMenuCell = id; 
+        editWindow = id; 
+        formatBox = id; 
+        formatRadio = id; 
+        globalFormBrowser = id; 
+        globalFormManager = id; 
+        infoPanel = id; 
+        makroPalette = id; 
+        predicateBrowser = id; 
+        predicateFinder = id; 
+        predicateInspector = id; 
+        predicateManager = id; 
+        redoMenuCell = id; 
+        revertToSavedMenuCell = id; 
+        rubettesMenuCell = id; 
+        saveAsMenuCell = id; 
+        saveMenuCell = id; 
+        undoMenuCell = id; 
+    }; 
+    SUPERCLASS = Object; 
+};
+"FindRubetteDriver" = {
+    ACTIONS = {"doSearch:" = id; "getStringOfFound:" = id; "initSearch:" = id; }; 
+    OUTLETS = {
+        end = id; 
+        fieldDelimiter = id; 
+        fieldEnd = id; 
+        fieldStart = id; 
+        indent = id; 
+        myPreferencesPanel = id; 
+        myText = id; 
+        new = id; 
+        showForm = id; 
+        showName = id; 
+        showType = id; 
+        showValue = id; 
+        start = id; 
+    }; 
+    SUPERCLASS = RubetteDriver; 
+};
+"FirstResponder" = {ACTIONS = {}; OUTLETS = {}; SUPERCLASS = NSObject; };
+"RubetteDriver" = {
+    ACTIONS = {
+        "changeFindLevels:" = id; 
+        "closeRubette:" = id; 
+        "doReadData:" = id; 
+        "doSearch:" = id; 
+        "doWriteData:" = id; 
+        "hideWindow:" = id; 
+        "initSearch:" = id; 
+        "removeInput:" = id; 
+        "removeOutput:" = id; 
+        "rubetteChanged:" = id; 
+        "setCascadeSearch:" = id; 
+        "setInput:" = id; 
+        "setOutput:" = id; 
+        "showRubetteHelpPanel:" = id; 
+        "showRubetteInfoPanel:" = id; 
+        "showWindow:" = id; 
+        "windowDidBecomeKey:" = id; 
+        "windowDidResignKey:" = id; 
+        "windowWillClose:" = id; 
+    }; 
+    OUTLETS = {
+        findHow = id; 
+        findLevels = id; 
+        findLevelsMenu = id; 
+        findName = id; 
+        findWhat = id; 
+        foundPredicates = id; 
+        input = id; 
+        lastFoundPredicates = id; 
+        manager = id; 
+        myInfoPanel = id; 
+        myMenu = id; 
+        myWindow = id; 
+        output = id; 
+        owner = id; 
+        rubetteData = id; 
+    }; 
+    SUPERCLASS = Object; 
+};

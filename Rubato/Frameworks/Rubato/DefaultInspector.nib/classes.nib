@@ -1,0 +1,46 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                displayPatient = id; 
+                revert = id; 
+                selectInspectorSubview = id; 
+                setValue = id; 
+                showObjectInspector = id; 
+            }; 
+            CLASS = GenericObjectInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                currentView = id; 
+                defaultView = id; 
+                insertButton = id; 
+                loadedButton = id; 
+                newButton = id; 
+                owner = id; 
+                panel = id; 
+                patient = id; 
+                removeButton = id; 
+                revertButton = id; 
+                savedPatient = id; 
+                subviewContainer = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {deselect = id; displayPatient = id; revert = id; showInspectorPanel = id; }; 
+            CLASS = ObjectInspectorDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inspectorBox = id; 
+                inspectorPanel = id; 
+                manager = id; 
+                objectInspector = id; 
+                owner = id; 
+                selected = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

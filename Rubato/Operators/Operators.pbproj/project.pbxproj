@@ -1,0 +1,1598 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 32;
+	objects = {
+		00FC96CF00A2B5CD7F000001 = {
+			fileRef = 011FD78500A021F182951B35;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		00FC96D000A2B66E7F000001 = {
+			fileRef = 011FD78500A021F182951B35;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//000
+//001
+//002
+//003
+//004
+//010
+//011
+//012
+//013
+//014
+		011FD78400A021F182951B35 = {
+			isa = PBXFrameworkReference;
+			name = MathMatrixKit.framework;
+			path = /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build/MathMatrixKit.framework;
+			refType = 0;
+		};
+		011FD78500A021F182951B35 = {
+			isa = PBXFrameworkReference;
+			name = PerformanceScore.framework;
+			path = /Network/Servers/cooljazz/Local/Users/jg/rubato/Rubettes/build/PerformanceScore.framework;
+			refType = 0;
+		};
+		011FD78700A021F182951B35 = {
+			fileRef = 011FD78400A021F182951B35;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//010
+//011
+//012
+//013
+//014
+//030
+//031
+//032
+//033
+//034
+		03FEE3B60090B6497F000001 = {
+			buildStyles = (
+				0B086FEC0090EFDC7F000001,
+				0B086FED0090EFDC7F000001,
+			);
+			isa = PBXProject;
+			mainGroup = 03FEE3B70090B6497F000001;
+			productRefGroup = 03FEE4060090B6497F000001;
+			projectDirPath = "";
+			targets = (
+				03FEE40C0090B6497F000001,
+				03FEE40E0090B6497F000001,
+				03FEE4190090B6497F000001,
+				03FEE4280090B6497F000001,
+				03FEE4310090B6497F000001,
+				03FEE43B0090B6497F000001,
+			);
+		};
+		03FEE3B70090B6497F000001 = {
+			children = (
+				03FEE3B80090B6497F000001,
+				03FEE3BC0090B6497F000001,
+				03FEE4000090B6497F000001,
+				03FEE4050090B6497F000001,
+				03FEE4060090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Operators;
+			refType = 4;
+		};
+		03FEE3B80090B6497F000001 = {
+			children = (
+				03FEE3B90090B6497F000001,
+				03FEE3BA0090B6497F000001,
+				03FEE3BB0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = "Supporting Files";
+			refType = 4;
+		};
+		03FEE3B90090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.preamble;
+			refType = 4;
+		};
+		03FEE3BA0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile;
+			refType = 4;
+		};
+		03FEE3BB0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.postamble;
+			refType = 4;
+		};
+		03FEE3BC0090B6497F000001 = {
+			children = (
+				03FEE3BD0090B6497F000001,
+				03FEE3C90090B6497F000001,
+				03FEE3D90090B6497F000001,
+				03FEE3E20090B6497F000001,
+				03FEE3EE0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Subprojects;
+			refType = 4;
+		};
+		03FEE3BD0090B6497F000001 = {
+			children = (
+				03FEE3BE0090B6497F000001,
+				03FEE3C00090B6497F000001,
+				03FEE3C20090B6497F000001,
+				03FEE3C50090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Physical;
+			path = PhysicalOperator;
+			refType = 4;
+		};
+		03FEE3BE0090B6497F000001 = {
+			children = (
+				03FEE3BF0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+		03FEE3BF0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = PhysicalOperator.m;
+			refType = 4;
+		};
+		03FEE3C00090B6497F000001 = {
+			children = (
+				03FEE3C10090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Headers;
+			refType = 4;
+		};
+		03FEE3C10090B6497F000001 = {
+			isa = PBXFileReference;
+			path = PhysicalOperator.h;
+			refType = 4;
+		};
+		03FEE3C20090B6497F000001 = {
+			children = (
+				03FEE3C30090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Interfaces;
+			refType = 4;
+		};
+		03FEE3C30090B6497F000001 = {
+			children = (
+				03FEE3C40090B6497F000001,
+			);
+			isa = PBXVariantGroup;
+			name = PhysicalOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3C40090B6497F000001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/PhysicalOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3C50090B6497F000001 = {
+			children = (
+				03FEE3C60090B6497F000001,
+				03FEE3C70090B6497F000001,
+				03FEE3C80090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = "Supporting Files";
+			refType = 4;
+		};
+		03FEE3C60090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.preamble;
+			refType = 4;
+		};
+		03FEE3C70090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile;
+			refType = 4;
+		};
+		03FEE3C80090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.postamble;
+			refType = 4;
+		};
+		03FEE3C90090B6497F000001 = {
+			children = (
+				03FEE3CA0090B6497F000001,
+				03FEE3CE0090B6497F000001,
+				03FEE3D20090B6497F000001,
+				03FEE3D50090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Scalar;
+			path = ScalarOperator;
+			refType = 4;
+		};
+		03FEE3CA0090B6497F000001 = {
+			children = (
+				03FEE3CB0090B6497F000001,
+				03FEE3CC0090B6497F000001,
+				03FEE3CD0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+		03FEE3CB0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = ScalarOperator.m;
+			refType = 4;
+		};
+		03FEE3CC0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = ScalarOperatorApplicator.m;
+			refType = 4;
+		};
+		03FEE3CD0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = ScalarOperatorInspector.m;
+			refType = 4;
+		};
+		03FEE3CE0090B6497F000001 = {
+			children = (
+				03FEE3CF0090B6497F000001,
+				03FEE3D00090B6497F000001,
+				03FEE3D10090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Headers;
+			refType = 4;
+		};
+		03FEE3CF0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = ScalarOperator.h;
+			refType = 4;
+		};
+		03FEE3D00090B6497F000001 = {
+			isa = PBXFileReference;
+			path = ScalarOperatorApplicator.h;
+			refType = 4;
+		};
+		03FEE3D10090B6497F000001 = {
+			isa = PBXFileReference;
+			path = ScalarOperatorInspector.h;
+			refType = 4;
+		};
+		03FEE3D20090B6497F000001 = {
+			children = (
+				03FEE3D30090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Interfaces;
+			refType = 4;
+		};
+		03FEE3D30090B6497F000001 = {
+			children = (
+				03FEE3D40090B6497F000001,
+			);
+			isa = PBXVariantGroup;
+			name = ScalarOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3D40090B6497F000001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/ScalarOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3D50090B6497F000001 = {
+			children = (
+				03FEE3D60090B6497F000001,
+				03FEE3D70090B6497F000001,
+				03FEE3D80090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = "Supporting Files";
+			refType = 4;
+		};
+		03FEE3D60090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.preamble;
+			refType = 4;
+		};
+		03FEE3D70090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile;
+			refType = 4;
+		};
+		03FEE3D80090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.postamble;
+			refType = 4;
+		};
+		03FEE3D90090B6497F000001 = {
+			children = (
+				03FEE3DA0090B6497F000001,
+				03FEE3DC0090B6497F000001,
+				03FEE3DE0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Split;
+			path = SplitOperator;
+			refType = 4;
+		};
+		03FEE3DA0090B6497F000001 = {
+			children = (
+				03FEE3DB0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+		03FEE3DB0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = SplitOperator.m;
+			refType = 4;
+		};
+		03FEE3DC0090B6497F000001 = {
+			children = (
+				03FEE3DD0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Headers;
+			refType = 4;
+		};
+		03FEE3DD0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = SplitOperator.h;
+			refType = 4;
+		};
+		03FEE3DE0090B6497F000001 = {
+			children = (
+				03FEE3DF0090B6497F000001,
+				03FEE3E00090B6497F000001,
+				03FEE3E10090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = "Supporting Files";
+			refType = 4;
+		};
+		03FEE3DF0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.preamble;
+			refType = 4;
+		};
+		03FEE3E00090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile;
+			refType = 4;
+		};
+		03FEE3E10090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.postamble;
+			refType = 4;
+		};
+		03FEE3E20090B6497F000001 = {
+			children = (
+				03FEE3E30090B6497F000001,
+				03FEE3E50090B6497F000001,
+				03FEE3E70090B6497F000001,
+				03FEE3EA0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Symbolic;
+			path = SymbolicOperator;
+			refType = 4;
+		};
+		03FEE3E30090B6497F000001 = {
+			children = (
+				03FEE3E40090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+		03FEE3E40090B6497F000001 = {
+			isa = PBXFileReference;
+			path = SymbolicOperator.m;
+			refType = 4;
+		};
+		03FEE3E50090B6497F000001 = {
+			children = (
+				03FEE3E60090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Headers;
+			refType = 4;
+		};
+		03FEE3E60090B6497F000001 = {
+			isa = PBXFileReference;
+			path = SymbolicOperator.h;
+			refType = 4;
+		};
+		03FEE3E70090B6497F000001 = {
+			children = (
+				03FEE3E80090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Interfaces;
+			refType = 4;
+		};
+		03FEE3E80090B6497F000001 = {
+			children = (
+				03FEE3E90090B6497F000001,
+			);
+			isa = PBXVariantGroup;
+			name = SymbolicOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3E90090B6497F000001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/SymbolicOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3EA0090B6497F000001 = {
+			children = (
+				03FEE3EB0090B6497F000001,
+				03FEE3EC0090B6497F000001,
+				03FEE3ED0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = "Supporting Files";
+			refType = 4;
+		};
+		03FEE3EB0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.preamble;
+			refType = 4;
+		};
+		03FEE3EC0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile;
+			refType = 4;
+		};
+		03FEE3ED0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.postamble;
+			refType = 4;
+		};
+		03FEE3EE0090B6497F000001 = {
+			children = (
+				03FEE3EF0090B6497F000001,
+				03FEE3F30090B6497F000001,
+				03FEE3F70090B6497F000001,
+				03FEE3FC0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Tempo;
+			path = TempoOperator;
+			refType = 4;
+		};
+		03FEE3EF0090B6497F000001 = {
+			children = (
+				03FEE3F00090B6497F000001,
+				03FEE3F10090B6497F000001,
+				03FEE3F20090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+		03FEE3F00090B6497F000001 = {
+			isa = PBXFileReference;
+			path = TempoOperator.m;
+			refType = 4;
+		};
+		03FEE3F10090B6497F000001 = {
+			isa = PBXFileReference;
+			path = TempoOperatorApplicator.m;
+			refType = 4;
+		};
+		03FEE3F20090B6497F000001 = {
+			isa = PBXFileReference;
+			path = TempoOperatorInspector.m;
+			refType = 4;
+		};
+		03FEE3F30090B6497F000001 = {
+			children = (
+				03FEE3F40090B6497F000001,
+				03FEE3F50090B6497F000001,
+				03FEE3F60090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Headers;
+			refType = 4;
+		};
+		03FEE3F40090B6497F000001 = {
+			isa = PBXFileReference;
+			path = TempoOperator.h;
+			refType = 4;
+		};
+		03FEE3F50090B6497F000001 = {
+			isa = PBXFileReference;
+			path = TempoOperatorApplicator.h;
+			refType = 4;
+		};
+		03FEE3F60090B6497F000001 = {
+			isa = PBXFileReference;
+			path = TempoOperatorInspector.h;
+			refType = 4;
+		};
+		03FEE3F70090B6497F000001 = {
+			children = (
+				03FEE3F80090B6497F000001,
+				03FEE3FA0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Interfaces;
+			refType = 4;
+		};
+		03FEE3F80090B6497F000001 = {
+			children = (
+				03FEE3F90090B6497F000001,
+			);
+			isa = PBXVariantGroup;
+			name = TempoOperatorApplicator.nib;
+			refType = 4;
+		};
+		03FEE3F90090B6497F000001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/TempoOperatorApplicator.nib;
+			refType = 4;
+		};
+		03FEE3FA0090B6497F000001 = {
+			children = (
+				03FEE3FB0090B6497F000001,
+			);
+			isa = PBXVariantGroup;
+			name = TempoOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3FB0090B6497F000001 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/TempoOperatorInspector.nib;
+			refType = 4;
+		};
+		03FEE3FC0090B6497F000001 = {
+			children = (
+				03FEE3FD0090B6497F000001,
+				03FEE3FE0090B6497F000001,
+				03FEE3FF0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = "Supporting Files";
+			refType = 4;
+		};
+		03FEE3FD0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.preamble;
+			refType = 4;
+		};
+		03FEE3FE0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile;
+			refType = 4;
+		};
+		03FEE3FF0090B6497F000001 = {
+			isa = PBXFileReference;
+			path = Makefile.postamble;
+			refType = 4;
+		};
+		03FEE4000090B6497F000001 = {
+			children = (
+				03FEE4010090B6497F000001,
+				03FEE4040090B6497F000001,
+				011FD78400A021F182951B35,
+				011FD78500A021F182951B35,
+				05AB968100A2B7FF7F000001,
+				05AB968200A2B7FF7F000001,
+				05AB968300A2B7FF7F000001,
+			);
+			isa = PBXGroup;
+			name = "External Frameworks and Libraries";
+			refType = 4;
+		};
+		03FEE4010090B6497F000001 = {
+			isa = PBXFrameworkReference;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+		};
+		03FEE4040090B6497F000001 = {
+			isa = PBXFrameworkReference;
+			name = AppKit.framework;
+			path = /System/Library/Frameworks/AppKit.framework;
+			refType = 0;
+		};
+		03FEE4050090B6497F000001 = {
+			isa = PBXFileReference;
+			name = "Import Log.rtf";
+			path = "/Network/Servers/cooljazz/Local/Users/jg/rubato/Operators/Import Log.rtf";
+			refType = 0;
+		};
+		03FEE4060090B6497F000001 = {
+			children = (
+				03FEE4070090B6497F000001,
+				03FEE4080090B6497F000001,
+				03FEE4090090B6497F000001,
+				03FEE40A0090B6497F000001,
+				03FEE40B0090B6497F000001,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+		};
+		03FEE4070090B6497F000001 = {
+			isa = PBXBundleReference;
+			path = Physical.operator;
+			refType = 3;
+		};
+		03FEE4080090B6497F000001 = {
+			isa = PBXBundleReference;
+			path = Scalar.operator;
+			refType = 3;
+		};
+		03FEE4090090B6497F000001 = {
+			isa = PBXBundleReference;
+			path = Split.operator;
+			refType = 3;
+		};
+		03FEE40A0090B6497F000001 = {
+			isa = PBXBundleReference;
+			path = Symbolic.operator;
+			refType = 3;
+		};
+		03FEE40B0090B6497F000001 = {
+			isa = PBXBundleReference;
+			path = Tempo.operator;
+			refType = 3;
+		};
+		03FEE40C0090B6497F000001 = {
+			buildPhases = (
+				03FEE44B0090B6497F000001,
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Operators;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+				03FEE40D0090B6497F000001,
+				03FEE4180090B6497F000001,
+				03FEE4270090B6497F000001,
+				03FEE4300090B6497F000001,
+				03FEE43A0090B6497F000001,
+			);
+			isa = PBXAggregateTarget;
+			name = "Operators (Aggregate)";
+			productName = "Operators (Aggregate)";
+			shouldUseHeadermap = 0;
+		};
+		03FEE40D0090B6497F000001 = {
+			isa = PBXTargetDependency;
+			target = 03FEE40E0090B6497F000001;
+		};
+		03FEE40E0090B6497F000001 = {
+			buildPhases = (
+				03FEE40F0090B6497F000001,
+				03FEE4110090B6497F000001,
+				03FEE4130090B6497F000001,
+				03FEE4150090B6497F000001,
+				03FEE4170090B6497F000001,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "\"@executable_path/../Frameworks\" /Network/Servers/cooljazz/Local/Users/jg/rubato/Rubettes/build /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /Rubato/Operators;
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "-Dselfvoid=id";
+				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Physical;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = operator;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Physical (Bundle)";
+			productInstallPath = "/Library/Application Support/Rubato/Operators";
+			productName = "Physical (Bundle)";
+			productReference = 03FEE4070090B6497F000001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Physical</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSExtensions</key>
+	<dict/>
+	<key>NSPrincipalClass</key>
+	<string>PhysicalOperator</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		03FEE40F0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4100090B6497F000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		03FEE4100090B6497F000001 = {
+			fileRef = 03FEE3C10090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4110090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4120090B6497F000001,
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		03FEE4120090B6497F000001 = {
+			fileRef = 03FEE3C30090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4130090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4140090B6497F000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		03FEE4140090B6497F000001 = {
+			fileRef = 03FEE3BF0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4150090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				093247DD00A09CF082951B35,
+				093247DE00A09E4282951B35,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		03FEE4170090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		03FEE4180090B6497F000001 = {
+			isa = PBXTargetDependency;
+			target = 03FEE4190090B6497F000001;
+		};
+		03FEE4190090B6497F000001 = {
+			buildPhases = (
+				03FEE41A0090B6497F000001,
+				03FEE41E0090B6497F000001,
+				03FEE4200090B6497F000001,
+				03FEE4240090B6497F000001,
+				03FEE4260090B6497F000001,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "/Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build /Network/Servers/cooljazz/Local/Users/jg/rubato/Rubettes/build";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /Rubato/Operators;
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "-Dselfvoid=id";
+				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Scalar;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = operator;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Scalar (Bundle)";
+			productInstallPath = /Rubato/Operators;
+			productName = "Scalar (Bundle)";
+			productReference = 03FEE4080090B6497F000001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Scalar</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSExtensions</key>
+	<dict/>
+	<key>NSPrincipalClass</key>
+	<string>ScalarOperator</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		03FEE41A0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE41B0090B6497F000001,
+				03FEE41C0090B6497F000001,
+				03FEE41D0090B6497F000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		03FEE41B0090B6497F000001 = {
+			fileRef = 03FEE3CF0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE41C0090B6497F000001 = {
+			fileRef = 03FEE3D00090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE41D0090B6497F000001 = {
+			fileRef = 03FEE3D10090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE41E0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE41F0090B6497F000001,
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		03FEE41F0090B6497F000001 = {
+			fileRef = 03FEE3D30090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4200090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4210090B6497F000001,
+				03FEE4220090B6497F000001,
+				03FEE4230090B6497F000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		03FEE4210090B6497F000001 = {
+			fileRef = 03FEE3CB0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4220090B6497F000001 = {
+			fileRef = 03FEE3CC0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4230090B6497F000001 = {
+			fileRef = 03FEE3CD0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4240090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				011FD78700A021F182951B35,
+				00FC96CF00A2B5CD7F000001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		03FEE4260090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		03FEE4270090B6497F000001 = {
+			isa = PBXTargetDependency;
+			target = 03FEE4280090B6497F000001;
+		};
+		03FEE4280090B6497F000001 = {
+			buildPhases = (
+				03FEE4290090B6497F000001,
+				03FEE42B0090B6497F000001,
+				03FEE42C0090B6497F000001,
+				03FEE42E0090B6497F000001,
+				03FEE42F0090B6497F000001,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "/Network/Servers/cooljazz/Local/Users/jg/rubato/Rubettes/build /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /Rubato/Operators;
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "-Dselfvoid=id";
+				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Split;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = operator;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Split (Bundle)";
+			productInstallPath = /Rubato/Operators;
+			productName = "Split (Bundle)";
+			productReference = 03FEE4090090B6497F000001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Split</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSExtensions</key>
+	<dict/>
+	<key>NSPrincipalClass</key>
+	<string>SplitOperator</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		03FEE4290090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE42A0090B6497F000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		03FEE42A0090B6497F000001 = {
+			fileRef = 03FEE3DD0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE42B0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		03FEE42C0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE42D0090B6497F000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		03FEE42D0090B6497F000001 = {
+			fileRef = 03FEE3DB0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE42E0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				00FC96D000A2B66E7F000001,
+				05AB968400A2B7FF7F000001,
+				05AB968500A2B7FF7F000001,
+				05AB968600A2B7FF7F000001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		03FEE42F0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		03FEE4300090B6497F000001 = {
+			isa = PBXTargetDependency;
+			target = 03FEE4310090B6497F000001;
+		};
+		03FEE4310090B6497F000001 = {
+			buildPhases = (
+				03FEE4320090B6497F000001,
+				03FEE4340090B6497F000001,
+				03FEE4360090B6497F000001,
+				03FEE4380090B6497F000001,
+				03FEE4390090B6497F000001,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "/Network/Servers/cooljazz/Local/Users/jg/rubato/Rubettes/build /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /Rubato/Operators;
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "-Dselfvoid=id";
+				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Symbolic;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = operator;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Symbolic (Bundle)";
+			productInstallPath = "/Library/Application Support/Rubato/Operators";
+			productName = "Symbolic (Bundle)";
+			productReference = 03FEE40A0090B6497F000001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Symbolic</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSExtensions</key>
+	<dict/>
+	<key>NSPrincipalClass</key>
+	<string>SymbolicOperator</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		03FEE4320090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4330090B6497F000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		03FEE4330090B6497F000001 = {
+			fileRef = 03FEE3E60090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4340090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4350090B6497F000001,
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		03FEE4350090B6497F000001 = {
+			fileRef = 03FEE3E80090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4360090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4370090B6497F000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		03FEE4370090B6497F000001 = {
+			fileRef = 03FEE3E40090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4380090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				05AB967F00A2B7497F000001,
+				05AB968A00A2B8227F000001,
+				05AB968B00A2B8227F000001,
+				05AB968C00A2B8227F000001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		03FEE4390090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		03FEE43A0090B6497F000001 = {
+			isa = PBXTargetDependency;
+			target = 03FEE43B0090B6497F000001;
+		};
+		03FEE43B0090B6497F000001 = {
+			buildPhases = (
+				03FEE43C0090B6497F000001,
+				03FEE4400090B6497F000001,
+				03FEE4430090B6497F000001,
+				03FEE4470090B6497F000001,
+				03FEE44A0090B6497F000001,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "/Network/Servers/cooljazz/Local/Users/jg/rubato/Rubettes/build /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /Rubato/Operators;
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "-Dselfvoid=id";
+				OTHER_LDFLAGS = "-bundle -undefined suppress";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Tempo;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = operator;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = "Tempo (Bundle)";
+			productInstallPath = "/Library/Application Support/Rubato/Operators";
+			productName = "Tempo (Bundle)";
+			productReference = 03FEE40B0090B6497F000001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Tempo</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+	<key>NSExtensions</key>
+	<dict/>
+	<key>NSPrincipalClass</key>
+	<string>TempoOperator</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		03FEE43C0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE43D0090B6497F000001,
+				03FEE43E0090B6497F000001,
+				03FEE43F0090B6497F000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		03FEE43D0090B6497F000001 = {
+			fileRef = 03FEE3F40090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE43E0090B6497F000001 = {
+			fileRef = 03FEE3F50090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE43F0090B6497F000001 = {
+			fileRef = 03FEE3F60090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4400090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4410090B6497F000001,
+				03FEE4420090B6497F000001,
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		03FEE4410090B6497F000001 = {
+			fileRef = 03FEE3F80090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4420090B6497F000001 = {
+			fileRef = 03FEE3FA0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4430090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4440090B6497F000001,
+				03FEE4450090B6497F000001,
+				03FEE4460090B6497F000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		03FEE4440090B6497F000001 = {
+			fileRef = 03FEE3F00090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4450090B6497F000001 = {
+			fileRef = 03FEE3F10090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4460090B6497F000001 = {
+			fileRef = 03FEE3F20090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+				);
+			};
+		};
+		03FEE4470090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				03FEE4480090B6497F000001,
+				03FEE4490090B6497F000001,
+				05AB968000A2B7497F000001,
+				05AB968D00A2B8427F000001,
+				05AB968E00A2B8427F000001,
+				05AB968F00A2B8427F000001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		03FEE4480090B6497F000001 = {
+			fileRef = 03FEE4010090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4490090B6497F000001 = {
+			fileRef = 03FEE4040090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE44A0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		03FEE44B0090B6497F000001 = {
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				03FEE44C0090B6497F000001,
+				03FEE44D0090B6497F000001,
+				03FEE44E0090B6497F000001,
+				03FEE44F0090B6497F000001,
+				03FEE4500090B6497F000001,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			name = "Copy Files";
+		};
+		03FEE44C0090B6497F000001 = {
+			fileRef = 03FEE4070090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE44D0090B6497F000001 = {
+			fileRef = 03FEE4080090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE44E0090B6497F000001 = {
+			fileRef = 03FEE4090090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE44F0090B6497F000001 = {
+			fileRef = 03FEE40A0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		03FEE4500090B6497F000001 = {
+			fileRef = 03FEE40B0090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//030
+//031
+//032
+//033
+//034
+//050
+//051
+//052
+//053
+//054
+		05AB967F00A2B7497F000001 = {
+			fileRef = 011FD78500A021F182951B35;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968000A2B7497F000001 = {
+			fileRef = 011FD78500A021F182951B35;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968100A2B7FF7F000001 = {
+			isa = PBXFrameworkReference;
+			name = RubatoDeprecatedCommonKit.framework;
+			path = /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build/RubatoDeprecatedCommonKit.framework;
+			refType = 0;
+		};
+		05AB968200A2B7FF7F000001 = {
+			isa = PBXFrameworkReference;
+			name = Rubette.framework;
+			path = /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build/Rubette.framework;
+			refType = 0;
+		};
+		05AB968300A2B7FF7F000001 = {
+			isa = PBXFrameworkReference;
+			name = Rubato.framework;
+			path = /Network/Servers/cooljazz/Local/Users/jg/rubato/RubatoFrameworks/build/Rubato.framework;
+			refType = 0;
+		};
+		05AB968400A2B7FF7F000001 = {
+			fileRef = 05AB968100A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968500A2B7FF7F000001 = {
+			fileRef = 05AB968200A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968600A2B7FF7F000001 = {
+			fileRef = 05AB968300A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968A00A2B8227F000001 = {
+			fileRef = 05AB968100A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968B00A2B8227F000001 = {
+			fileRef = 05AB968200A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968C00A2B8227F000001 = {
+			fileRef = 05AB968300A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968D00A2B8427F000001 = {
+			fileRef = 05AB968100A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968E00A2B8427F000001 = {
+			fileRef = 05AB968200A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05AB968F00A2B8427F000001 = {
+			fileRef = 05AB968300A2B7FF7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//050
+//051
+//052
+//053
+//054
+//090
+//091
+//092
+//093
+//094
+		093247DD00A09CF082951B35 = {
+			fileRef = 011FD78500A021F182951B35;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		093247DE00A09E4282951B35 = {
+			fileRef = 03FEE4010090B6497F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//090
+//091
+//092
+//093
+//094
+//0B0
+//0B1
+//0B2
+//0B3
+//0B4
+		0B086FEC0090EFDC7F000001 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		0B086FED0090EFDC7F000001 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+	};
+	rootObject = 03FEE3B60090B6497F000001;
+}

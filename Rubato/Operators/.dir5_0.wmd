@@ -1,0 +1,6 @@
+{
+    RootNode = "~/rubato/Operators"; 
+    Toolbar = No; 
+    ViewName = Browser; 
+    WindowFrame = "{{315, 381}, {596, 440}}"; 
+}

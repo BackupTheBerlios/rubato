@@ -1,0 +1,12 @@
+Rubato comes with 4 folders:
+- Frameworks: contains third party Libraries. 
+Install them in one of the standard locations: that is ~/Library/Frameworks for single users, /Library/Frameworks for all users of one computer (you must be the administrator of that computer) or /Network/Library/Frameworks for all computers in a network (you must be the network administrator).
+
+- Rubato.app: The Applicaton. 
+Move it anywhere you want. Standard locations would be ~/Applications  or /Applications or /Network/Applications
+
+- Rubettes: Loadable Modules for Rubato.
+- Operators: Loadable Modules for the Performance-Rubette.
+A easy way to install the Rubettes and Operators is to move the Rubato folder containing the Rubette and Operators folders to ~/Library.
+You can set the Path to the Rubettes and Operators after starting Rubato.app with the Preferences-Menu.
+

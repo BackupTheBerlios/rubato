@@ -1,0 +1,8 @@
+readWeight in Performance-Rubette tuts nicht. (called by setManager)
+
+p [NSDocumentController sharedDocumentController]
+p [$1 currentDocument]
+
+addSubDocumentsBrowser, addPredicateBrowser:
+p [subDocumentsBrowser window]
+p [pm window]

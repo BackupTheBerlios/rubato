@@ -1,0 +1,6 @@
+{
+    RootNode = "~/rubato/RubatoFrameworks/MathMatrixKit.fproj/Weight.subproj"; 
+    Toolbar = No; 
+    ViewName = Browser; 
+    WindowFrame = "{{503, 165}, {596, 440}}"; 
+}

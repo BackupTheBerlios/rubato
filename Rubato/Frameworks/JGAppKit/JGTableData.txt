@@ -1,0 +1,60 @@
+// Test Fscript ArrayTableView:
+at:=ArrayTableView arrayTableViewWithArray:A blocks:{#location, #model}
+atv:=at valueForKey:'tableView'
+atv delegate
+
+// Test JGTableData methods
+t:=JGTableData alloc initWithTitles:{'a','b'}
+t titles
+t addFields:{'0','1','2','3','4','5'}   "geht evtl. nicht wegen Number!=NSNumber"
+t fieldsIndexForColumnIdentifier:'b' row:1
+t dictionaryWithTitlesAndFields
+t arrayWithDictionaries
+s:= NSMutableString string
+t string:s appendFields:(t fields) start:2 end:6 useRS:YES. s
+t tableTextWithTitles:YES underline:'==='
+t addFieldsFromText:'6\t7\n8\t9\n' getTitles:NO skipUnderline:NO
+t tableTextWithTitles:YES underline:'==='
+st:=t subTableWithColumns:{'b'} rows:{(NSNumber numberWithInt:1),(NSNumber numberWithInt:2)}
+"t copy:nil"
+
+t getRow:2
+t getColumn:1
+t getColumnsDictionary
+t addColumns:{{'10','12'},{'11','13'}}
+t addDictionaryOfColumns:(NSDictionary dictionaryWithObjects:{{'14','16'},{'15','17'}} forKeys:{'a','b'})
+t addRecord:(NSDictionary dictionaryWithObjects:{'18','19'} forKeys:{'a','b'})
+t addRecords:{ (NSDictionary dictionaryWithObjects:{'20','21'} forKeys:{'a','b'}),  (NSDictionary dictionaryWithObjects:{'22','23'} forKeys:{'a','b'})}
+
+
+// Test JGTableDataViewController, alternatively A or B (a or b)
+// A: easiest way: create window....
+tvc:=JGTableDataViewController controllerWithTableData:t
+tv setDelegate:tvc
+
+// B: how to manually set up a TableView with the JGTableDataViewController (a) or manually  (b)
+w := NSWindow alloc initWithContentRect:(200<>200 extent:300<>300)
+styleMask:NSTitledWindowMask+NSClosableWindowMask backing:NSBackingStoreBuffered
+defer:false.
+w setTitle:'JGTableData Test'.
+w orderFront:nil.
+sv:=(NSScrollView alloc initWithFrame:(20<>20 extent:200<>200)).
+w contentView addSubview:sv.
+tv := (NSTableView alloc initWithFrame:(0<>0 extent:200<>200)).
+sv setDocumentView:tv
+sv setHasHorizontalScroller:YES
+sv setHasVerticalScroller:YES
+tv setDataSource:t
+tv setAllowsMultipleSelection:YES
+// a) use 
+JGTableDataViewController tableView:tv setHeadersWithTableData:t
+tvc:=JGTableDataViewController controllerWithTableView:tv tableData:t
+tv setDelegate:tvc
+
+// b) manually fill the columns, if You do not use JGTableDataViewController
+tc:=(NSTableColumn alloc initWithIdentifier:'a') autorelease
+tv addTableColumn:tc
+tc:=(NSTableColumn alloc initWithIdentifier:'b') autorelease
+tv addTableColumn:tc
+tv nextResponder
+tv reloadData

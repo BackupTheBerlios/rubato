@@ -1,0 +1,308 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                appDidInit = id; 
+                appWillTerminate = id; 
+                loadRubette = id; 
+                openFile = id; 
+                saveAll = id; 
+                setActiveRubette = id; 
+                setPredicateManager = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showInspector = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                signInRubette = id; 
+                signOutRubette = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                activeRubette = id; 
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                globalInspector = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                myRubetteList = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                doRedraw = id; 
+                setKernelFrame = id; 
+                sizeViewToFrame = id; 
+                sizeViewToKernel = id; 
+            }; 
+            CLASS = KernelView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myConverter = id; 
+                myEventList = id; 
+                myFrameMatrix = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myGridSwitch = id; 
+                myLineWidthField = id; 
+                myRadiusField = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {setShowPerformedKernel = id; setViewToLPSFrame = id; }; 
+            CLASS = LPSView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myLPS = id; }; 
+            SUPERCLASS = KernelView; 
+        }, 
+        {
+            CLASS = PerformanceFieldView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myEventFieldSwitch = id; 
+                myLengthScaleField = id; 
+                xAxisPopUp = id; 
+                yAxisPopUp = id; 
+            }; 
+            SUPERCLASS = LPSView; 
+        }, 
+        {
+            ACTIONS = {
+                loadStemma = id; 
+                makePerformance = id; 
+                newStemma = id; 
+                saveMidi = id; 
+                saveMidiAs = id; 
+                saveScore = id; 
+                saveScoreAs = id; 
+                saveStemma = id; 
+                saveStemmaAs = id; 
+                takeMergePartsFrom = id; 
+                takePerformanceDepthFrom = id; 
+            }; 
+            CLASS = PerformanceManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myLPS = id; 
+                myLPSview = id; 
+                myPerformanceList = id; 
+                myScore = id; 
+                owner = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                applyOperator = id; 
+                browser = id; 
+                debugLoadAllOperators = id; 
+                deleteDaughter = id; 
+                loadAllBuildInOperators = id; 
+                loadOperator = id; 
+                loadWeight = id; 
+                newPerformanceScore = id; 
+                setKernel = id; 
+                setSelectedCell = id; 
+                showFindPredicatesWindow = id; 
+                showOperatorInspectorPanel = id; 
+                windowDidBecomeKey = id; 
+                windowDidDeminiaturize = id; 
+                windowDidMiniaturize = id; 
+                windowDidResignKey = id; 
+                windowDidUpdate = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = PerformanceRubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBrowser = id; 
+                myFieldView = id; 
+                myFieldViewPanel = id; 
+                myFindPanel = id; 
+                myGraphicPrefsPanel = id; 
+                myKernel = id; 
+                myKernelView = id; 
+                myKernelViewPanel = id; 
+                myLoadOperatorPopUpButton = id; 
+                myOperatorClassList = id; 
+                myOperatorMenu = id; 
+                myPerformButton = id; 
+                myPerformanceManager = id; 
+                myWeightListManager = id; 
+                myWeightWatcherInspector = id; 
+                performanceScore = id; 
+                selected = id; 
+            }; 
+            SUPERCLASS = RubetteDriver; 
+        }, 
+        {
+            ACTIONS = {
+                changeFindLevels = id; 
+                closeRubette = id; 
+                doReadData = id; 
+                doSearch = id; 
+                doWriteData = id; 
+                hideWindow = id; 
+                initSearch = id; 
+                loadWeight = id; 
+                removeInput = id; 
+                removeOutput = id; 
+                rubetteChanged = id; 
+                saveWeight = id; 
+                saveWeightAs = id; 
+                setCascadeSearch = id; 
+                setInput = id; 
+                setOutput = id; 
+                showRubetteHelpPanel = id; 
+                showRubetteInfoPanel = id; 
+                showWindow = id; 
+                takeWeightNameFrom = id; 
+                windowDidBecomeKey = id; 
+                windowDidResignKey = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = RubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                findHow = id; 
+                findLevels = id; 
+                findLevelsMenu = id; 
+                findName = id; 
+                findWhat = id; 
+                foundPredicates = id; 
+                input = id; 
+                lastFoundPredicates = id; 
+                manager = id; 
+                myConverter = id; 
+                myInfoPanel = id; 
+                myListForm = id; 
+                myMenu = id; 
+                myValueForm = id; 
+                myWeight = id; 
+                myWindow = id; 
+                output = id; 
+                owner = id; 
+                rubetteData = id; 
+                weightName = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {browser = id; setSelectedCell = id; windowWillClose = id; }; 
+            CLASS = WeightListManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBrowser = id; 
+                myInspectorPanel = id; 
+                myString = id; 
+                myWeightList = id; 
+                myWeightWatcherInspector = id; 
+                owner = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = WeightView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myWeight = id; }; 
+            SUPERCLASS = WeightyView; 
+        }, 
+        {
+            CLASS = WeightWatcher; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myLPS = id; myWatchList = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                browser = id; 
+                displayWeightWatcher = id; 
+                removeWeight = id; 
+                setSelectedCell = id; 
+                setWeight = id; 
+                takeBaryWeightFrom = id; 
+                takeDeformationFrom = id; 
+                takeHighNormFrom = id; 
+                takeInversionFrom = id; 
+                takeLowNormFrom = id; 
+                takeNameFrom = id; 
+                takeProductFrom = id; 
+                takeToleranceFrom = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = WeightWatcherInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBaryWeightField = id; 
+                myBrowser = id; 
+                myDeformationField = id; 
+                myHighNormField = id; 
+                myInspectorPanel = id; 
+                myInvertSwitch = id; 
+                myLowNormField = id; 
+                myMaxField = id; 
+                myMeanField = id; 
+                myMinField = id; 
+                myNameField = id; 
+                myNormMeanField = id; 
+                myProductSwitch = id; 
+                myString = id; 
+                myToleranceField = id; 
+                myWeightListManager = id; 
+                myWeightSumView = id; 
+                myWeightSumViewPanel = id; 
+                myWeightView = id; 
+                myWeightViewPanel = id; 
+                myWeightWatcher = id; 
+                owner = id; 
+                selected = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = WeightWatcherView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myWeightWatcher = id; }; 
+            SUPERCLASS = WeightyView; 
+        }, 
+        {
+            ACTIONS = {doRedraw = id; }; 
+            CLASS = WeightyView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBoildDownPopUp = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myGridSwitch = id; 
+                myLineWidthField = id; 
+                myMeanLevelSwitch = id; 
+                myRadiusField = id; 
+                theWeight = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

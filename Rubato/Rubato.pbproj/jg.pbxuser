@@ -1,0 +1,404 @@
+// !$*UTF8*$!
+{
+	03FEE03000906EAA7F000001 = {
+		activeBuildStyle = 1CB7B68D0090B9A17F000001;
+		activeTarget = 03FEE38100906EAA7F000001;
+		addToTargets = (
+			03FEE38100906EAA7F000001,
+		);
+		breakpoints = (
+			97EB083202ED962700951B37,
+			97EB083302EDA8C100951B37,
+		);
+		perUserDictionary = {
+			PBXWorkspaceConfiguration = {
+				ContentSize = "{1009, 626}";
+				LeftSlideOut = {
+					ActiveTab = 0;
+					Frame = "{{0, 23}, {1009, 603}}";
+					Split0 = {
+						Frame = "{{318, 0}, {691, 603}}";
+						Split0 = {
+							Frame = "{{0, 24}, {691, 579}}";
+						};
+						SplitCount = 1;
+						Tab0 = {
+							Debugger = {
+								ActiveTab = 1;
+								Frame = "{{0, 0}, {691, 322}}";
+								Split0 = {
+									Frame = "{{0, 158}, {691, 164}}";
+									Split0 = {
+										Frame = "{{0, 0}, {286, 164}}";
+									};
+									Split1 = {
+										Frame = "{{295, 0}, {396, 164}}";
+									};
+									SplitCount = 2;
+								};
+								SplitCount = 1;
+								Tab0 = {
+									Frame = "{{0, 0}, {750, 50}}";
+								};
+								Tab1 = {
+									Frame = "{{0, 0}, {691, 134}}";
+								};
+								TabCount = 2;
+							};
+							Frame = "{{0, 0}, {691, 322}}";
+							LauncherConfigVersion = 4;
+						};
+						Tab1 = {
+							Frame = "{{0, 0}, {691, 121}}";
+							LauncherConfigVersion = 3;
+							Runner = {
+								Frame = "{{0, 0}, {691, 121}}";
+							};
+						};
+						Tab2 = {
+							BuildMessageFrame = "{{0, 0}, {693, 114}}";
+							BuildTranscriptFrame = "{{0, 123}, {693, 101}}";
+							Frame = "{{0, 0}, {691, 222}}";
+						};
+						Tab3 = {
+							Frame = "{{0, 0}, {691, 255}}";
+						};
+						TabCount = 4;
+					};
+					SplitCount = 1;
+					Tab0 = {
+						Frame = "{{0, 0}, {294, 603}}";
+					};
+					Tab1 = {
+						ClassesFrame = "{{0, 0}, {329, 447}}";
+						Frame = "{{0, 0}, {327, 737}}";
+						MembersFrame = "{{0, 456}, {329, 281}}";
+						OptionsSetName = "Hierarchy, all classes";
+					};
+					Tab2 = {
+						Frame = "{{0, 0}, {200, 737}}";
+					};
+					Tab3 = {
+						Frame = "{{0, 0}, {324, 603}}";
+						Split0 = {
+							Frame = "{{0, 0}, {324, 290}}";
+						};
+						Split1 = {
+							Frame = "{{0, 299}, {324, 304}}";
+						};
+						SplitCount = 2;
+					};
+					Tab4 = {
+						Frame = "{{0, 0}, {250, 603}}";
+					};
+					TabCount = 5;
+				};
+			};
+		};
+		userBookmarkGroup = 9783D22D010460AE00000001;
+		wantsIndex = 1;
+		wantsSCM = -1;
+	};
+	03FEE1AF00906EAA7F000001 = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{15, 431}, {750, 502}}";
+		};
+	};
+	03FEE20800906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE20A00906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE22300906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE23C00906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE26000906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE29400906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE2BF00906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE32900906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE35A00906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	03FEE38100906EAA7F000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				03FEE39500907AF97F000001,
+			);
+		};
+	};
+	03FEE39500907AF97F000001 = {
+		activeArgIndex = 0;
+		argumentStrings = (
+			/Users/jg/daten/midi/BachWONr12.midi,
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = NSEnableAutoreleasePool;
+				value = NO;
+			},
+			{
+				active = YES;
+				name = NSAutoreleaseFreedObjectCheckEnabled;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = NSZombieEnabled;
+				value = YES;
+			},
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+			/Volumes/jg/jg/rubato/ForeignSources/FScript,
+			/Volumes/jg/jg/cvswork/CocoaProjects/AndreasMeloProjects/ANMelo,
+		);
+	};
+	9701569A02D6508700951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				970156A402D6517400951B37,
+			);
+		};
+	};
+	970156A402D6517400951B37 = {
+		activeArgIndex = 2147483647;
+		argumentStrings = (
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+	970156AA02D65AD100951B37 = {
+		fRef = 97F4762702D43E4E00951B37;
+		isa = PBXTextBookmark;
+		name = "JGViterbi.m: viterbiRecursion";
+		rLen = 0;
+		rLoc = 3798;
+		rType = 0;
+		vrLen = 500;
+		vrLoc = 3194;
+	};
+	970156AB02D65AD100951B37 = {
+		fRef = 97F4762702D43E4E00951B37;
+		isa = PBXTextBookmark;
+		name = "JGViterbi.m: testViterbi";
+		rLen = 0;
+		rLoc = 5118;
+		rType = 0;
+		vrLen = 416;
+		vrLoc = 4447;
+	};
+	97709A24017C925000000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				97709A35017C954800000001,
+			);
+		};
+	};
+	97709A35017C954800000001 = {
+		activeArgIndex = 2;
+		argumentStrings = (
+			/Users/jg/daten/rubtest.pred,
+			"/Users/jg/daten/joachim/AugK-Melo/AugK-o-375-2.weight",
+			"/Users/jg/daten/joachim/AugK-Stemmata/Track01.stemma",
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+	9781A52002AE6BF100951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	9783D22D010460AE00000001 = {
+		children = (
+			9783D22E010460AE00000001,
+			970156AA02D65AD100951B37,
+			970156AB02D65AD100951B37,
+		);
+		isa = PBXBookmarkGroup;
+		name = Root;
+	};
+	9783D22E010460AE00000001 = {
+		fRef = 03FEE0A300906EAA7F000001;
+		isa = PBXTextBookmark;
+		name = "RubatoPreferences.m: 120";
+		rLen = 0;
+		rLoc = 5197;
+		rType = 0;
+		vrLen = 840;
+		vrLoc = 4474;
+	};
+	978FC35C010327C300000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	978FC35E0103284E00000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	978FC4D2010332C100000001 = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{15, 341}, {750, 502}}";
+		};
+	};
+	978FC6290103385700000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	978FC6650103427400000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	978FC66C0103427400000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	978FC6730103427400000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A0B61A01BD5C3C00951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A86C0103458100000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A8D3010347E800000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A8D4010347E800000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A8DF01034A8F00000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A8F401034A8F00000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A90B01034A8F00000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A5A91801034A8F00000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97A7EFC1017F281C00000001 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97C863A901A036AC00951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97E07781019C334300951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97EB083202ED962700951B37 = {
+		fileReference = 03FEE0A000906EAA7F000001;
+		isa = PBXFileBreakpoint;
+		lineNumber = 91;
+		state = 2;
+	};
+	97EB083302EDA8C100951B37 = {
+		fileReference = 03FEE18C00906EAA7F000001;
+		isa = PBXFileBreakpoint;
+		lineNumber = 727;
+		state = 2;
+	};
+	97EB084802EF12EF00951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+	97EB1CC101A02A5B00951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+	};
+}

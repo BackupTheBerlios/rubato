@@ -1,0 +1,218 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                openFile = id; 
+                saveAll = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                loadNollSet = id; 
+                loadRiemannSet = id; 
+                loadTonalitySet = id; 
+                resetChordSequence = id; 
+                saveNollSet = id; 
+                saveRiemannSet = id; 
+                saveTonalitySet = id; 
+                setWeightPrefs = id; 
+                takeCalcBestPathMethodFrom = id; 
+                takeMethodFrom = id; 
+                takePreferencesFrom = id; 
+            }; 
+            CLASS = HarmoPreferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myCausalCardField = id; 
+                myCausalSpanField = id; 
+                myDurationSwitch = id; 
+                myFinalCardField = id; 
+                myFinalSpanField = id; 
+                myFunctionDistanceMatrix = id; 
+                myFunctionScaleMatrix = id; 
+                myFunctionSwitchMatrix = id; 
+                myGlobalLevelField = id; 
+                myGlobalSlopeField = id; 
+                myIntraProfileField = id; 
+                myLocalLevelField = id; 
+                myMethodPopUpBtn = id; 
+                myModeDistanceMatrix = id; 
+                myNollProfileMatrix = id; 
+                myPitchReferenceField = id; 
+                mySaveChordSeqSwitch = id; 
+                mySemitoneUnitField = id; 
+                myTonalityDistanceMatrix = id; 
+                myTransitionProfileField = id; 
+                myWeightProfileField = id; 
+            }; 
+            SUPERCLASS = Preferences; 
+        }, 
+        {
+            ACTIONS = {
+                browser = id; 
+                doCalculate = id; 
+                doCalculatePath = id; 
+                doCalculateRiemannLogic = id; 
+                doCalculateWeight = id; 
+                doMakeChordSequence = id; 
+                doSearch = id; 
+                loadWeight = id; 
+                resetNollDefaultValues = id; 
+                resetRiemannDefaultValues = id; 
+                resetTonalityDefaultValues = id; 
+                setSelectedCell = id; 
+                showFindPredicatesWindow = id; 
+                showWeight = id; 
+            }; 
+            CLASS = HarmoRubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBrowser = id; 
+                myCalcAmountField = id; 
+                myCalcBestPathButton = id; 
+                myChordSequence = id; 
+                myChordSequenceButton = id; 
+                myChordWeight = id; 
+                myChordWeightSwitch = id; 
+                myEventList = id; 
+                myGeneralPrefsPanel = id; 
+                myGraphicPrefsPanel = id; 
+                myNollPrefsPanel = id; 
+                myPreferences = id; 
+                myRiemannGraphMatrix = id; 
+                myRiemannGraphPanel = id; 
+                myRiemannLogicButton = id; 
+                myRiemannPrefsPanel = id; 
+                myTonalityPrefsPanel = id; 
+                myWeightFunctionPanel = id; 
+                myWeightText = id; 
+                myWeightView = id; 
+                myWeightViewPanel = id; 
+            }; 
+            SUPERCLASS = RubetteDriver; 
+        }, 
+        {
+            ACTIONS = {
+                ok = id; 
+                openPrefsFile = id; 
+                reset = id; 
+                savePrefsFile = id; 
+                savePrefsFileAs = id; 
+                showPrefsPanel = id; 
+            }; 
+            CLASS = Preferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myConverter = id; myOwner = id; myPanel = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                changeFindLevels = id; 
+                closeRubette = id; 
+                doReadData = id; 
+                doSearch = id; 
+                doWriteData = id; 
+                hideWindow = id; 
+                initSearch = id; 
+                loadWeight = id; 
+                removeInput = id; 
+                removeOutput = id; 
+                rubetteChanged = id; 
+                saveWeight = id; 
+                saveWeightAs = id; 
+                setCascadeSearch = id; 
+                setInput = id; 
+                setOutput = id; 
+                showRubetteHelpPanel = id; 
+                showRubetteInfoPanel = id; 
+                showWindow = id; 
+                takeWeightNameFrom = id; 
+                windowDidBecomeKey = id; 
+                windowDidResignKey = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = RubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                findHow = id; 
+                findLevels = id; 
+                findLevelsMenu = id; 
+                findName = id; 
+                findWhat = id; 
+                foundPredicates = id; 
+                input = id; 
+                lastFoundPredicates = id; 
+                manager = id; 
+                myConverter = id; 
+                myInfoPanel = id; 
+                myListForm = id; 
+                myMenu = id; 
+                myValueForm = id; 
+                myWeight = id; 
+                myWindow = id; 
+                output = id; 
+                owner = id; 
+                rubetteData = id; 
+                weightName = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = WeightView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myWeight = id; }; 
+            SUPERCLASS = WeightyView; 
+        }, 
+        {
+            ACTIONS = {doRedraw = id; }; 
+            CLASS = WeightyView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBoildDownPopUp = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myGridSwitch = id; 
+                myLineWidthField = id; 
+                myMeanLevelSwitch = id; 
+                myRadiusField = id; 
+                theWeight = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

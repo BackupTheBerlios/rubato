@@ -1,0 +1,21 @@
+LANGUAGE = English;
+FILESTABLE = {
+    OTHER_SOURCES = (Makefile.preamble, Makefile, Makefile.postamble);
+    OTHER_RESOURCES = (RubetteHelp);
+    OTHER_LIBS = (Indexing_s);
+    H_FILES = (FindRubetteDriver.h);
+    INTERFACES = (FindRubette.nib);
+    CLASSES = (FindRubetteDriver.m);
+};
+LOCALIZABLE_FILES = {
+    RubetteHelp;
+    FindRubette.nib;
+};
+PROJECTVERSION = 1.1;
+INSTALLDIR = "$(HOME)/Library/Rubettes";
+PROJECTTYPE = Bundle;
+PROJECTNAME = Find;
+GENERATEMAIN = YES;
+DOCEXTENSIONS = ();
+DOCICONFILES = ();
+BUNDLE_EXTENSION = rubette;

@@ -1,0 +1,26 @@
+{
+    IBClasses = (
+        {
+            CLASS = Array; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {rep = id; tableView = id; }; 
+            SUPERCLASS = NSMutableArray; 
+        }, 
+        {
+            CLASS = ArrayTableView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = JGTableData; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {copy = id; }; 
+            CLASS = JGTableDataViewController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = NSTableView; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,8 @@
+b -[NSObject doesNotRecognizeSelector:]
+b -[NSException raise]
+
+WeightView crashes in 
+- (void)drawRect:(NSRect)rects
+somewhere here:
+    [self setCustomValues];
+    [self calcDrawSize];

@@ -1,0 +1,6 @@
+"Distributor" = {
+    ACTIONS = {"showAlertPanel:" = id; "showInfoPanel:" = id; }; 
+    OUTLETS = {alertPanel = id; infoPanel = id; }; 
+    SUPERCLASS = Object; 
+};
+"FirstResponder" = {ACTIONS = {}; OUTLETS = {}; SUPERCLASS = NSObject; };

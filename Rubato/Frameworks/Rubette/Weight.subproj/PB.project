@@ -1,0 +1,71 @@
+{
+    DYNAMIC_CODE_GEN = YES; 
+    English_RESOURCES = {}; 
+    FILESTABLE = {
+        CLASSES = (
+            MatrixEvent.m, 
+            Weight.m, 
+            WeightInspector.m, 
+            WeightListManager.m, 
+            WeightView.m, 
+            WeightWatcher.m, 
+            WeightWatcherInspector.m, 
+            WeightWatcherView.m, 
+            WeightyView.m
+        ); 
+        H_FILES = (
+            MatrixEvent.h, 
+            space.h, 
+            SpaceProtocol.h, 
+            splines.h, 
+            Weight.h, 
+            WeightInspector.h, 
+            WeightListManager.h, 
+            WeightView.h, 
+            WeightWatcher.h, 
+            WeightWatcherInspector.h, 
+            WeightWatcherView.h, 
+            WeightyView.h
+        ); 
+        INTERFACES = (WeightInspector.nib); 
+        OTHER_LINKED = (space.c, splines.c); 
+        OTHER_SOURCES = (
+            Makefile.preamble, 
+            Makefile, 
+            Makefile.postamble, 
+            SpaceProtocolMethods.m, 
+            ToDo.txt
+        ); 
+        PUBLIC_HEADERS = (
+            MatrixEvent.h, 
+            space.h, 
+            SpaceProtocol.h, 
+            splines.h, 
+            Weight.h, 
+            WeightInspector.h, 
+            WeightListManager.h, 
+            WeightView.h, 
+            WeightWatcher.h, 
+            WeightWatcherInspector.h, 
+            WeightWatcherView.h, 
+            WeightyView.h
+        ); 
+        SUBPROJECTS = (); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-DWITH_PS"; 
+    NEXTSTEP_INSTALLDIR = /Library/Frameworks; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = Weight; 
+    PROJECTTYPE = Component; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

@@ -1,0 +1,103 @@
+{
+    CURRENTLY_ACTIVE_VERSION = YES; 
+    DEPLOY_WITH_VERSION_NAME = A; 
+    DYNAMIC_CODE_GEN = YES; 
+    English_RESOURCES = {}; 
+    FILESTABLE = {
+        CLASSES = (
+            GenericFieldOperator.m, 
+            GenericFieldOperatorInspector.m, 
+            GenericOperatorApplicator.m, 
+            GenericOperatorInspector.m, 
+            GenericSplitter.m, 
+            GenericSplitterApplicator.m, 
+            InitialSet.m, 
+            LocalPerformanceScore.m, 
+            LPSInitialSet.m, 
+            LPSInspector.m, 
+            PerformanceOperator.m, 
+            PerformanceOperatorApplicator.m, 
+            PerformanceOperatorInspector.m, 
+            Simplex.m
+        ); 
+        FRAMEWORKS = (
+            AppKit.framework, 
+            Foundation.framework, 
+            JGFoundation.framework, 
+            MathMatrixKit.framework, 
+            Rubato.framework, 
+            RubatoDeprecatedCommonKit.framework, 
+            Rubette.framework
+        ); 
+        FRAMEWORKSEARCH = (); 
+        H_FILES = (
+            GenericFieldOperator.h, 
+            GenericFieldOperatorInspector.h, 
+            GenericOperatorApplicator.h, 
+            GenericOperatorInspector.h, 
+            GenericSplitter.h, 
+            GenericSplitterApplicator.h, 
+            InitialSet.h, 
+            LocalPerformanceScore.h, 
+            LPSInitialSet.h, 
+            LPSInspector.h, 
+            PerformanceOperator.h, 
+            PerformanceOperatorApplicator.h, 
+            PerformanceOperatorInspector.h, 
+            Simplex.h, 
+            PerformanceScore.h
+        ); 
+        INTERFACES = (
+            GenericSplitterApplicator.nib, 
+            LPSInspector.nib, 
+            PerformanceOperatorApplicator.nib, 
+            PerformanceOperatorInspector.nib
+        ); 
+        OTHER_SOURCES = (
+            Makefile.preamble, 
+            Makefile, 
+            Makefile.postamble, 
+            m.template, 
+            h.template, 
+            "GenericInitialSet-Methoden.m", 
+            SpaceProtocolMethods.m, 
+            MatrixEvent.h
+        ); 
+        PUBLIC_HEADERS = (
+            GenericFieldOperator.h, 
+            GenericFieldOperatorInspector.h, 
+            GenericOperatorApplicator.h, 
+            GenericOperatorInspector.h, 
+            GenericSplitter.h, 
+            GenericSplitterApplicator.h, 
+            InitialSet.h, 
+            LocalPerformanceScore.h, 
+            LPSInitialSet.h, 
+            LPSInspector.h, 
+            PerformanceOperator.h, 
+            PerformanceOperatorApplicator.h, 
+            PerformanceOperatorInspector.h, 
+            Simplex.h, 
+            PerformanceScore.h
+        ); 
+        SUBPROJECTS = (); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-Wno-precomp -DWITH_PS -DWITHMUSICKIT -Dselfvoid=id"; 
+    NEXTSTEP_INSTALLDIR = /Library/Frameworks; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_INSTALLDIR = /Library/Frameworks; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = PerformanceScore; 
+    PROJECTTYPE = Framework; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_INSTALLDIR = /Library/Frameworks; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

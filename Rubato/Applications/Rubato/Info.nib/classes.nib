@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {showAlertPanel = id; showInfoPanel = id; }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {alertPanel = id; infoPanel = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

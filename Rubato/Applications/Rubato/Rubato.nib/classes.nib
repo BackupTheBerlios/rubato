@@ -1,0 +1,148 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                debugLoadHarmoRubette = id; 
+                debugLoadMeloRubette = id; 
+                debugLoadMetroRubette = id; 
+                debugLoadPerformanceRubette = id; 
+                debugLoadPrimaVistaRubette = id; 
+                debugOpenStandardFile = id; 
+                debugSetNSArchiver = id; 
+                debugSetXMLArchiver = id; 
+                loadAllBuildInRubettes = id; 
+                loadRubette = id; 
+                openFile = id; 
+                saveAll = id; 
+                setActiveRubette = id; 
+                setPredicateManager = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showInspector = id; 
+                showInterpreterWindow = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                signInRubette = id; 
+                signOutRubette = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                activeRubette = id; 
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                globalInspector = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateManager = id; 
+                preferences = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                subDocumentController = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                addPredicateBrowser = id; 
+                addRubetteBrowser = id; 
+                addSubDocumentsBrowser = id; 
+                addTestBrowser = id; 
+                changeInProgress = id; 
+                closeSelfAndSubDocuments = id; 
+                closeSubDocuments = id; 
+                putInScrollViewController = id; 
+                redoChange = id; 
+                removeScrollViewController = id; 
+                revertToSaved = id; 
+                save = id; 
+                saveAs = id; 
+                showScrollViewController = id; 
+                undoChange = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {addSubDocument = id; loadDocumentBundle = id; }; 
+            CLASS = JGSubDocumentController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {addSubToolsMenuCell = id; loadedRubettesViewer = id; toolMenuCell = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                ok = id; 
+                openPrefsFile = id; 
+                reset = id; 
+                savePrefsFile = id; 
+                savePrefsFileAs = id; 
+                showPrefsPanel = id; 
+            }; 
+            CLASS = Preferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myConverter = id; myOwner = id; myPanel = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                getFileDirectory = id; 
+                getOperatorDirectory = id; 
+                getRubetteDirectory = id; 
+                getStemmaDirectory = id; 
+                getWeightDirectory = id; 
+            }; 
+            CLASS = RubatoPreferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                musicDirField = id; 
+                operatorDirField = id; 
+                rubetteDirField = id; 
+                stemmaDirField = id; 
+                weightDirField = id; 
+            }; 
+            SUPERCLASS = Preferences; 
+        }, 
+        {
+            ACTIONS = {
+                addDocument = id; 
+                addSubDocumentsBrowser = id; 
+                closeSelfAndSubDocuments = id; 
+                closeSubDocuments = id; 
+            }; 
+            CLASS = SubDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {childDocuments = id; parentDocument = id; }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {
+            ACTIONS = {addSubDocument = id; loadDocumentBundle = id; showGlobalInspector = id; }; 
+            CLASS = SubDocumentController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addSubToolsMenuCell = id; 
+                globalInspector = id; 
+                loadedRubettesViewer = id; 
+                toolMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

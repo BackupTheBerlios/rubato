@@ -1,0 +1,12 @@
+{
+    IBClasses = (
+        {
+            CLASS = FScriptAppControler; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {infoPanel = id; interpreterView = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

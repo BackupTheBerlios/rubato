@@ -1,0 +1,90 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                appDidInit = id; 
+                appWillTerminate = id; 
+                loadRubette = id; 
+                openFile = id; 
+                saveAll = id; 
+                setActiveRubette = id; 
+                setPredicateManager = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showInspector = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                signInRubette = id; 
+                signOutRubette = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                activeRubette = id; 
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                globalInspector = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                myRubetteList = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                changeInProgress = id; 
+                redoChange = id; 
+                save = id; 
+                saveAs = id; 
+                undoChange = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                deselect = id; 
+                displayPatient = id; 
+                emancipatedCopyOfInspector = id; 
+                revert = id; 
+                selectInspectorSubview = id; 
+                showInspectorPanel = id; 
+                showKVBrowserWithSelection = id; 
+            }; 
+            CLASS = ObjectInspectorDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inspectorBox = id; 
+                inspectorMenuBtn = id; 
+                inspectorPanel = id; 
+                manager = id; 
+                objectInspector = id; 
+                owner = id; 
+                selected = id; 
+                shortInfoTextField = NSTextField; 
+                tabView = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

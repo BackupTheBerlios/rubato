@@ -1,0 +1,51 @@
+Mac OS X:
+Before Rubato.app can be build, PerformanceScore.framework must exist.
+
+cd Rubettes
+pbxbuild install
+cd ../Frameworks
+pbxbuild install
+cd ../Operators
+pbxbuild install
+
+Making a package (old version, where the bundles are not contained in Rubato.app):
+================= 
+setenv DEST /tmp/RubatoPackage
+mkdir $DEST
+cd /Local/Users/jg/Library/Frameworks
+gnutar -zcf $DEST/RubatoFrameworks.tgz JGAppKit.framework JGFoundation.framework RubatoDeprecatedCommonKit.framework Rubato.framework MathMatrixKit.framework Predicates.framework
+gnutar -zcf $DEST/RubetteFrameworks.tgz Rubette.framework PerformanceScore.framework RubatoAnalysis.framework
+cd /Local/Library/Frameworks
+gnutar -zcf $DEST/RubatoForeignFrameworks.tgz MPWFoundation.framework MPWXmlKit.framework MusicKit.framework MKDSP.framework MKPerformSndMIDI.framework SndKit.framework
+
+cd /Local/Users/jg/Library/Rubato
+gnutar -zcf $DEST/Rubettes.tgz Rubettes
+gnutar -zcf $DEST/Operators.tgz Operators
+
+cd /Local/Users/jg/Applications
+gnutar -zcf $DEST/Rubato.tgz Rubato.app 
+cp /usr/lib/libDriver.A.dylib $DEST
+
+cd /tmp
+gnutar -cf /tmp/RubatoPackage.tar $DEST
+
+Depackaging:
+Preconditions: 
+- use csh or tcsh 
+- RubatoPackage.tar is in /tmp
+- $DEST/Library/Rubato extists as a directory 
+Also reasonable (as root): setenv DEST /Local
+(libDriver is probably not needed any more?).
+
+setenv DEST $HOME
+cd /tmp
+gnutar -xf RubatoPackage.tar
+cd RubatoPackage
+foreach i (*.tgz) 
+gnutar -zxf $i 
+end
+mv *.framework $DEST/Library/Frameworks
+mv *.app $DEST/Library/Applications
+mv *.dylib $DEST/usr/lib
+mv Rubettes $DEST/Library/Rubato
+mv Operators $DEST/Library/Rubato

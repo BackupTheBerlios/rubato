@@ -1,0 +1,159 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                openFile = id; 
+                saveAll = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {doMotifRedraw = id; takePitchLowFrom = id; takePitchSpanFrom = id; }; 
+            CLASS = MeloMotifView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myConverter = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myLineWidthField = id; 
+                myMotifContentField = id; 
+                myMotifOnsetField = id; 
+                myMotifPresenceField = id; 
+                myMotifSpanField = id; 
+                myMotifWeightField = id; 
+                myRadiusField = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {
+                doCalculateMotifWeights = id; 
+                doCalculateWeight = id; 
+                doMakeAllMotifs = id; 
+                hideWindow = id; 
+                loadWeight = id; 
+                setSelectedCell = id; 
+                setSelectedMotif = id; 
+                showFindPredicatesWindow = id; 
+                showWindow = id; 
+            }; 
+            CLASS = MeloRubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBrowser = id; 
+                myGraphicPrefsPanel = id; 
+                myMeloWeightText = id; 
+                myMotifCardField = id; 
+                myMotifSpanField = id; 
+                myMotifView = id; 
+                myMotifViewPanel = id; 
+                myNeighbourhoodField = id; 
+                myParadigmPopUp = id; 
+                mySymmetryPopUp = id; 
+                myWeightFunctionPanel = id; 
+                myWeightView = id; 
+                myWeightViewPanel = id; 
+            }; 
+            SUPERCLASS = RubetteDriver; 
+        }, 
+        {
+            ACTIONS = {doWeightRedraw = id; }; 
+            CLASS = MeloWeightView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myConverter = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myLineWidthField = id; 
+                myRadiusField = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {
+                changeFindLevels = id; 
+                closeRubette = id; 
+                doReadData = id; 
+                doSearch = id; 
+                doWriteData = id; 
+                hideWindow = id; 
+                initSearch = id; 
+                loadWeight = id; 
+                removeInput = id; 
+                removeOutput = id; 
+                rubetteChanged = id; 
+                saveWeight = id; 
+                saveWeightAs = id; 
+                setCascadeSearch = id; 
+                setInput = id; 
+                setOutput = id; 
+                showRubetteHelpPanel = id; 
+                showRubetteInfoPanel = id; 
+                showWindow = id; 
+                takeWeightNameFrom = id; 
+                windowDidBecomeKey = id; 
+                windowDidResignKey = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = RubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                findHow = id; 
+                findLevels = id; 
+                findLevelsMenu = id; 
+                findName = id; 
+                findWhat = id; 
+                foundPredicates = id; 
+                input = id; 
+                lastFoundPredicates = id; 
+                manager = id; 
+                myConverter = id; 
+                myInfoPanel = id; 
+                myListForm = id; 
+                myMenu = id; 
+                myValueForm = id; 
+                myWeight = id; 
+                myWindow = id; 
+                output = id; 
+                owner = id; 
+                rubetteData = id; 
+                weightName = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

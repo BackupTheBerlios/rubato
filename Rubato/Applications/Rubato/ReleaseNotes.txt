@@ -1,0 +1,26 @@
+Build: (Compiler flags):
+-DWITHMUSICKIT
+  MKScoreReader, PapaDocument : Predicates.froj
+  Rubato_main : Rubato
+-DWITH_MPWXmlKit
+  PrediBaseDocumentBasics.m PrediBaseDocument.m
+
+Install:
+  Frameworks in Frameworks(Private)
+
+In PBX we normally set Framework Installation Location under Build Settings to @executable_path/../Frameworks, where @executable_path stands for App.app/Contents/MacOS/App, so @executable_path/../Frameworks is App.app/Contents/Frameworks
+In the App-Project we do a copy Files Build Phase of the build Frameworks to "Frameworks"
+
+We have several Choices to install the Rubettes and Frameworks to. One would be to follow the Apple convention to put them right into Rubato.app/Contents. Another would be to make the difference clear to the user and make it easier to install new Rubettes and provide a real Directory "Rubato". As a third solution, we could put some Frameworks in Rubato (not shared) and some outside. We do not adopt to Apples "Shared Frameworks" policy until we see Rubatos frameworks in a stable and versioned condition.
+
+Installation: install all at somewhere/Rubato, where somewhere may be "/Library/Application Support"
+somewhere/Rubato/Rubato.app
+somewhere/Rubato/Rubettes
+somewhere/Rubato/Operators
+
+In the current version, we have all common Frameworks to reside within Rubato and PerformanceScore inside Performance.rubette. It could be interesting to have a common location for frameworks shared among Rubettes:
+Set Framework and other search paths to somewhere/Rubato. Get two options for install:
+1. One click install: copy Rubato-Folder anywhere.
+2. More clicks install: move Applications from /Rubato/Applications to common Applications folder AND move Frameworks to common Framework path (/Library/Frameworks or $HOME/Frameworks)
+
+pbxbuild -alltargets install DSTROOT=/Network/Library/Install

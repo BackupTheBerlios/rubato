@@ -1,0 +1,179 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                openFile = id; 
+                saveAll = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                doCalculateWeight = id; 
+                hideWindow = id; 
+                loadWeight = id; 
+                showInterpreterWindow = id; 
+                showTableViewTextController = id; 
+                showWindow = id; 
+            }; 
+            CLASS = ExternalRubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = NSTableView; }; 
+            SUPERCLASS = RubetteDriver; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = JGDraggableTableView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {draggableDelegate = id; }; 
+            SUPERCLASS = SDTableView; 
+        }, 
+        {CLASS = JGTableData; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {copy = id; showTableViewTextController = id; }; 
+            CLASS = JGTableDataViewController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = NSTableView; tableViewTextController = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                browser = id; 
+                changeFindSource = id; 
+                doCalculateWeight = id; 
+                doSearch = id; 
+                hideWindow = id; 
+                initSearch = id; 
+                loadWeight = id; 
+                myAction = id; 
+                setDistValue = id; 
+                setLowerLengthLimit = id; 
+                setMetricalProfile = id; 
+                setQuantAutoMesh = id; 
+                setQuantMesh = id; 
+                setQuantOrigin = id; 
+                setSelectedCell = id; 
+                showFindPredicatesWindow = id; 
+                showWindow = id; 
+            }; 
+            CLASS = MetroRubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                findSource = id; 
+                importBox = id; 
+                myAutomaticMeshSwitch = id; 
+                myBrowser = id; 
+                myDistValueField = id; 
+                myGraphicPrefsPanel = id; 
+                myLowerLengthLimitField = id; 
+                myMetricalProfileField = id; 
+                myMetroWeightText = id; 
+                myQuantMeshField = id; 
+                myQuantOriginField = id; 
+                myWeightFunctionPanel = id; 
+                myWeightView = id; 
+                myWeightViewPanel = id; 
+            }; 
+            SUPERCLASS = RubetteDriver; 
+        }, 
+        {
+            ACTIONS = {doWeightRedraw = id; }; 
+            CLASS = MetroWeightView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myConverter = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myLineWidthField = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {
+            ACTIONS = {
+                changeFindLevels = id; 
+                closeRubette = id; 
+                doReadData = id; 
+                doSearch = id; 
+                doWriteData = id; 
+                hideWindow = id; 
+                initSearch = id; 
+                loadWeight = id; 
+                removeInput = id; 
+                removeOutput = id; 
+                rubetteChanged = id; 
+                saveWeight = id; 
+                saveWeightAs = id; 
+                setCascadeSearch = id; 
+                setInput = id; 
+                setOutput = id; 
+                showRubetteHelpPanel = id; 
+                showRubetteInfoPanel = id; 
+                showWindow = id; 
+                takeWeightNameFrom = id; 
+                windowDidBecomeKey = id; 
+                windowDidResignKey = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = RubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                findHow = id; 
+                findLevels = id; 
+                findLevelsMenu = id; 
+                findName = id; 
+                findWhat = id; 
+                foundPredicates = id; 
+                input = id; 
+                lastFoundPredicates = id; 
+                manager = id; 
+                myConverter = id; 
+                myInfoPanel = id; 
+                myListForm = id; 
+                myMenu = id; 
+                myValueForm = id; 
+                myWeight = id; 
+                myWindow = id; 
+                output = id; 
+                owner = id; 
+                rubetteData = id; 
+                weightName = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = SDTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }
+    ); 
+    IBVersion = 1; 
+}

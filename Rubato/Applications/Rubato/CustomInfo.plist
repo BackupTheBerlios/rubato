@@ -1,0 +1,75 @@
+{
+    NSInfoPlistVersion = "5.0";
+    NSAppVersion = "2.0";
+    NSHumanReadableShortName = "AtRubato";
+    NSHumanReadableCompleteName = "AtRubato.";
+    NSHumanReadableCopyright = "Copyright (c) 2000, Mazzola, Zahorka, Garbers.";
+    NSTypes = (
+	{
+	    NSName = "PrediBase";
+	    NSHumanReadableName = "Predibase data type.";
+	    NSUnixExtensions = ("pred");
+	    NSDOSExtensions = ("prd");
+	    NSRole = Editor;
+	    NSDocumentClass = PrediBaseDocument;
+	},
+	{
+	    NSName = "PrediBaseXML";
+	    NSHumanReadableName = "Predibase data type.";
+	    NSUnixExtensions = ("xml");
+	    NSDOSExtensions = ("xml");
+	    NSRole = Editor;
+	    NSDocumentClass = PrediBaseDocument;
+	},
+	{
+	    NSName = "DTXDocument";
+	    NSHumanReadableName = "Rubato data type.";
+	    NSUnixExtensions = ("rubato");
+	    NSDOSExtensions = ("rub");
+	    NSRole = Editor;
+	    NSDocumentClass = DTXDocument;
+	},
+	{
+	    NSName = "TestDocument";
+	    NSHumanReadableName = "Rubato data type.";
+	    NSUnixExtensions = ("rubato");
+	    NSDOSExtensions = ("rub");
+	    NSRole = Editor;
+	    NSDocumentClass = TestDocument;
+	},
+	{
+	    NSName = "Midi";
+	    NSHumanReadableName = "Standard Midi type.";
+	    NSUnixExtensions = ("midi","mid");
+	    NSDOSExtensions = ("mid");
+	    NSRole = Viewer;
+	    NSDocumentClass = PapaDocument;
+	},
+	{
+	    NSName = "PrediBasePlist";
+	    NSHumanReadableName = "Human Readable Predibase.";
+	    NSUnixExtensions = ("plist");
+	    NSDOSExtensions = ("pli");
+	    NSRole = Editor;
+	    NSDocumentClass = PapaDocument;
+	},
+	{
+	    NSName = "Score";
+	    NSHumanReadableName = "NeXT Scorefile type.";
+	    NSUnixExtensions = ("score");
+	    NSDOSExtensions = ("sco");
+	    NSRole = Viewer;
+	    NSDocumentClass = PapaDocument;
+	},
+	{
+	    NSName = "Rubette";
+	    NSHumanReadableName = "Loadable Rubette or Distributor file type.";
+	    NSUnixExtensions = ("rubette");
+	    NSDOSExtensions = ("rbt");
+	    NSRole = Viewer;
+	    NSDocumentClass = RubetteLoader;
+	}
+    );
+}
+
+ 	

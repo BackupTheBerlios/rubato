@@ -1,0 +1,33 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                cascadeSearchToggle = id; 
+                changeFindLevels = id; 
+                changeFindSource = id; 
+                doSearch = id; 
+                newPressed = id; 
+                readRubetteData = id; 
+                readWriteToggle = id; 
+                writeRubetteData = id; 
+            }; 
+            CLASS = FindPredicatesWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                cascadeSearchButton = NSButton; 
+                delegate = id; 
+                findHowPopUpButton = NSPopUpButton; 
+                findLevelsMenu = NSPopUpButton; 
+                findLevelsTextField = NSTextField; 
+                findNameTextField = NSTextField; 
+                findSourceTextField = NSTextField; 
+                findWhatPopUpButton = NSPopUpButton; 
+                readRubetteDataIfBecomeKeySwitch = NSButton; 
+                writeRubetteDataIfResignKeySwitch = NSButton; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

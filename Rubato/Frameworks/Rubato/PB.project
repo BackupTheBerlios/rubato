@@ -1,0 +1,91 @@
+{
+    CURRENTLY_ACTIVE_VERSION = YES; 
+    DEPLOY_WITH_VERSION_NAME = A; 
+    DYNAMIC_CODE_GEN = YES; 
+    English_RESOURCES = {}; 
+    FILESTABLE = {
+        CLASSES = (
+            RubetteBundlePrincipalClass.m, 
+            AbstractDistributor.m, 
+            Distributor.m, 
+            DistributorAdditions.m, 
+            Preferences.m, 
+            RubatoPreferences.m, 
+            PrediBaseDocumentBasics.m
+        ); 
+        FRAMEWORKS = (
+            AppKit.framework, 
+            Foundation.framework, 
+            JGAppKit.framework, 
+            RubatoDeprecatedCommonKit.framework
+        ); 
+        FRAMEWORKSEARCH = (); 
+        H_FILES = (
+            Inspectable.h, 
+            RubatoTypes.h, 
+            SpaceTypes.h, 
+            FormListProtocol.h, 
+            RubetteTypes.h, 
+            RubatoController.h, 
+            PredicateTypes.h, 
+            RubetteBundlePrincipalClass.h, 
+            AbstractDistributor.h, 
+            Distributor.h, 
+            DistributorAdditions.h, 
+            Preferences.h, 
+            RubatoPreferences.h, 
+            Rubato.h, 
+            MathMatrixProtocols.h, 
+            PrediBaseDocumentBasics.h
+        ); 
+        INTERFACES = (DefaultInspector.nib, InspectorDriver.nib); 
+        OTHER_LINKED = (dummy.c); 
+        OTHER_SOURCES = (
+            Makefile.preamble, 
+            Makefile, 
+            Makefile.postamble, 
+            m.template, 
+            h.template, 
+            README.txt
+        ); 
+        PRECOMPILED_HEADERS = (); 
+        PROJECT_HEADERS = (); 
+        PUBLIC_HEADERS = (
+            RubatoTypes.h, 
+            Inspectable.h, 
+            SpaceTypes.h, 
+            FormListProtocol.h, 
+            RubetteTypes.h, 
+            RubatoController.h, 
+            PredicateTypes.h, 
+            MathMatrixProtocols.h, 
+            Preferences.h, 
+            RubetteBundlePrincipalClass.h, 
+            AbstractDistributor.h, 
+            Distributor.h, 
+            DistributorAdditions.h, 
+            RubatoPreferences.h, 
+            Rubato.h, 
+            PrediBaseDocumentBasics.h
+        ); 
+        SUBPROJECTS = (AppKit.subproj, ObjectInspector.subproj); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-Dselfvoid=id -DWITH_MPWXmlKit"; 
+    NEXTSTEP_INSTALLDIR = /Library/Frameworks; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_INSTALLDIR = /Library/Frameworks; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = Rubato; 
+    PROJECTTYPE = Framework; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_INSTALLDIR = /Library/Frameworks; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

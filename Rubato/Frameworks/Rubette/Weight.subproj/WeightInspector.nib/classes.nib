@@ -1,0 +1,97 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                displayPatient = id; 
+                revert = id; 
+                selectInspectorSubview = id; 
+                setValue = id; 
+                showObjectInspector = id; 
+            }; 
+            CLASS = GenericObjectInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                currentView = id; 
+                defaultView = id; 
+                insertButton = id; 
+                loadedButton = id; 
+                newButton = id; 
+                owner = id; 
+                panel = id; 
+                patient = id; 
+                removeButton = id; 
+                revertButton = id; 
+                savedPatient = id; 
+                subviewContainer = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {displayPatient = id; setValue = id; }; 
+            CLASS = NamedObjectInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {nameField = id; }; 
+            SUPERCLASS = GenericObjectInspector; 
+        }, 
+        {
+            ACTIONS = {deselect = id; displayPatient = id; revert = id; showInspectorPanel = id; }; 
+            CLASS = ObjectInspectorDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inspectorBox = id; 
+                inspectorPanel = id; 
+                manager = id; 
+                objectInspector = id; 
+                owner = id; 
+                selected = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {displayPatient = id; setValue = id; }; 
+            CLASS = WeightInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                drawLinesSwitch = id; 
+                myDeformationField = id; 
+                myFrameMatrix = id; 
+                myHighNormField = id; 
+                myInvertSwitch = id; 
+                myLowNormField = id; 
+                myMaxField = id; 
+                myMeanField = id; 
+                myMinField = id; 
+                myNormMeanField = id; 
+                myToleranceField = id; 
+                myWeightParametersText = id; 
+                myWeightView = id; 
+            }; 
+            SUPERCLASS = NamedObjectInspector; 
+        }, 
+        {
+            CLASS = WeightView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {drawSplinesSwitch = NSButton; myWeight = id; }; 
+            SUPERCLASS = WeightyView; 
+        }, 
+        {
+            ACTIONS = {doRedraw = id; }; 
+            CLASS = WeightyView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                drawLinesSwitch = NSButton; 
+                myBoildDownPopUp = id; 
+                myGridMeshField = id; 
+                myGridOriginField = id; 
+                myGridSwitch = id; 
+                myLineWidthField = id; 
+                myMeanLevelSwitch = id; 
+                myRadiusField = id; 
+                theWeight = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

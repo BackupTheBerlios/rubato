@@ -1,0 +1,78 @@
+{
+    CURRENTLY_ACTIVE_VERSION = YES; 
+    DEPLOY_WITH_VERSION_NAME = A; 
+    DYNAMIC_CODE_GEN = YES; 
+    FILESTABLE = {
+        CLASSES = (
+            JGList.m, 
+            JgObject.m, 
+            JgOwner.m, 
+            JgRefCountObject.m, 
+            OrderedList.m, 
+            JgFrameworkNibLoading.m, 
+            StringConverter.m
+        ); 
+        FRAMEWORKS = (AppKit.framework, Foundation.framework); 
+        FRAMEWORKSEARCH = (); 
+        HEADERSEARCH = (/Local/Users/jg/Library/Rubato/Frameworks); 
+        H_FILES = (
+            commonkit.h, 
+            CommonTypes.h, 
+            JGList.h, 
+            JgObject.h, 
+            JgOwner.h, 
+            JgRefCountObject.h, 
+            JgValue.h, 
+            Macros.h, 
+            OrderedList.h, 
+            Ordering.h, 
+            RefCounting.h, 
+            JgFrameworkNibLoading.h, 
+            StringConverter.h
+        ); 
+        OTHER_SOURCES = (
+            Makefile.preamble, 
+            Makefile, 
+            Makefile.postamble, 
+            m.template, 
+            h.template, 
+            Ordering.m, 
+            README.txt
+        ); 
+        PRECOMPILED_HEADERS = (commonkit.h); 
+        PUBLIC_HEADERS = (
+            commonkit.h, 
+            CommonTypes.h, 
+            JGList.h, 
+            JgObject.h, 
+            JgOwner.h, 
+            JgRefCountObject.h, 
+            JgValue.h, 
+            Macros.h, 
+            OrderedList.h, 
+            Ordering.h, 
+            RefCounting.h, 
+            JgFrameworkNibLoading.h, 
+            StringConverter.h
+        ); 
+        SUBPROJECTS = (AppKit.subproj); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-Dselfvoid=id"; 
+    NEXTSTEP_INSTALLDIR = /Library/Frameworks; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_INSTALLDIR = /Library/Frameworks; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = RubatoDeprecatedCommonKit; 
+    PROJECTTYPE = Framework; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_INSTALLDIR = /Library/Frameworks; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

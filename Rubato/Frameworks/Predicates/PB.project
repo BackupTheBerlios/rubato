@@ -1,0 +1,101 @@
+{
+    CURRENTLY_ACTIVE_VERSION = YES; 
+    DEPLOY_WITH_VERSION_NAME = A; 
+    DYNAMIC_CODE_GEN = YES; 
+    English_RESOURCES = {}; 
+    FILESTABLE = {
+        CLASSES = (
+            CompoundForm.m, 
+            CompoundPredicate.m, 
+            GenericForm.m, 
+            GenericPredicate.m, 
+            JgFract.m, 
+            JgPrediBase.m, 
+            MKScoreReader.m, 
+            PredicateDelimiter.m, 
+            SimpleForm.m, 
+            SimplePredicate.m, 
+            ValueExtensions.m
+        ); 
+        FRAMEWORKS = (
+            AppKit.framework, 
+            Foundation.framework, 
+            JGAppKit.framework, 
+            JGFoundation.framework, 
+            MusicKit.framework, 
+            Rubato.framework, 
+            RubatoDeprecatedCommonKit.framework
+        ); 
+        FRAMEWORKSEARCH = (); 
+        HEADERSEARCH = (/Local/Users/jg/Library/Rubato/Frameworks); 
+        H_FILES = (
+            CompoundForm.h, 
+            CompoundPredicate.h, 
+            GenericForm.h, 
+            GenericPredicate.h, 
+            JgFract.h, 
+            JgPrediBase.h, 
+            MKScoreReader.h, 
+            PredicateDelimiter.h, 
+            PredicateProtocol.h, 
+            PredicateTypes.h, 
+            predikit.h, 
+            PropListSupport.h, 
+            SimpleForm.h, 
+            SimplePredicate.h, 
+            ValueExtensions.h
+        ); 
+        IMAGES = (); 
+        OTHER_LINKED = (JgPrediBaseHacks.m); 
+        OTHER_SOURCES = (
+            Makefile.preamble, 
+            Makefile, 
+            Makefile.postamble, 
+            m.template, 
+            h.template, 
+            CompoundMathStream.m, 
+            CompoundValueAccess.m, 
+            SimpleMathStream.m, 
+            SimpleValueAccess.m, 
+            Compound.m, 
+            Simple.m
+        ); 
+        PRECOMPILED_HEADERS = (predikit.h); 
+        PUBLIC_HEADERS = (
+            CompoundPredicate.h, 
+            CompoundForm.h, 
+            GenericForm.h, 
+            GenericPredicate.h, 
+            MKScoreReader.h, 
+            PredicateDelimiter.h, 
+            PredicateProtocol.h, 
+            PredicateTypes.h, 
+            predikit.h, 
+            PropListSupport.h, 
+            SimpleForm.h, 
+            SimplePredicate.h, 
+            JgPrediBase.h, 
+            ValueExtensions.h, 
+            JgFract.h
+        ); 
+        SUBPROJECTS = (App.subproj); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-DWITHMUSICKIT -DWITH_MPWXmlKit -Dselfvoid=id"; 
+    NEXTSTEP_INSTALLDIR = /Library/Frameworks; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_INSTALLDIR = /Library/Frameworks; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = Predicates; 
+    PROJECTTYPE = Framework; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_INSTALLDIR = /Library/Frameworks; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

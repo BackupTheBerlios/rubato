@@ -1,0 +1,103 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                openFile = id; 
+                saveAll = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = Object; 
+        }, 
+        {
+            ACTIONS = {revertToSaved = id; save = id; saveAs = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                addPredicate = id; 
+                deselect = id; 
+                displayPredicate = id; 
+                doCanChangeType = id; 
+                doChangeType = id; 
+                newPredicate = id; 
+                removePredicate = id; 
+                setName = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = PredicateInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inspector = id; 
+                inspectorBox = id; 
+                manager = id; 
+                nameField = id; 
+                patient = id; 
+                selected = id; 
+                typeField = id; 
+                typeMenu = id; 
+                valueInspector = id; 
+            }; 
+            SUPERCLASS = Object; 
+        }, 
+        {
+            ACTIONS = {
+                browser = id; 
+                copy = id; 
+                cut = id; 
+                paste = id; 
+                pasteboard = id; 
+                revertToSaved = id; 
+                save = id; 
+                saveAs = id; 
+                setSelectedCell = id; 
+                setSelectedFrom = id; 
+            }; 
+            CLASS = PredicateManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                browser = id; 
+                browserWindow = id; 
+                formManager = id; 
+                inspector = id; 
+                myFormList = id; 
+                owner = id; 
+                predicateFinder = id; 
+                predicateList = id; 
+                selected = id; 
+                selectedCell = id; 
+            }; 
+            SUPERCLASS = Object; 
+        }
+    ); 
+    IBVersion = 1; 
+}

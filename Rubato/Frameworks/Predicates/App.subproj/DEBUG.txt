@@ -1,0 +1,6 @@
+p [NSDocumentController sharedDocumentController]
+p [$1 currentDocument]
+
+addSubDocumentsBrowser, addPredicateBrowser:
+p [subDocumentsBrowser window]
+p [pm window]

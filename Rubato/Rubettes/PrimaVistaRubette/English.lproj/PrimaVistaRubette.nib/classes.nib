@@ -1,0 +1,208 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                openFile = id; 
+                saveAll = id; 
+                showAlertPanel = id; 
+                showEditWindow = id; 
+                showFormBrowser = id; 
+                showInfoPanel = id; 
+                showMakroPalette = id; 
+                showPredicateBrowser = id; 
+                showPredicateFinder = id; 
+                showPredicateInspector = id; 
+            }; 
+            CLASS = Distributor; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPanel = id; 
+                documentMenuCell = id; 
+                editMenuCell = id; 
+                editWindow = id; 
+                formatBox = id; 
+                formatRadio = id; 
+                globalFormBrowser = id; 
+                globalFormManager = id; 
+                infoPanel = id; 
+                makroPalette = id; 
+                predicateBrowser = id; 
+                predicateFinder = id; 
+                predicateInspector = id; 
+                predicateManager = id; 
+                redoMenuCell = id; 
+                revertToSavedMenuCell = id; 
+                rubettesMenuCell = id; 
+                saveAsMenuCell = id; 
+                saveMenuCell = id; 
+                undoMenuCell = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                ok = id; 
+                openPrefsFile = id; 
+                reset = id; 
+                savePrefsFile = id; 
+                savePrefsFileAs = id; 
+                showPrefsPanel = id; 
+            }; 
+            CLASS = Preferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myConverter = id; myOwner = id; myPanel = id; myParameterTable = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {takeMakeArtiDurationFrom = id; takeMakeArtiSpikesFrom = id; }; 
+            CLASS = PrimaVista; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myAbsDynList = id; 
+                myAbsTpoList = id; 
+                myArtiList = id; 
+                myArtiWeight = id; 
+                myDynWeight = id; 
+                myPrefs = id; 
+                myRelDynList = id; 
+                myRelTpoList = id; 
+                myTpoWeight = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                resetAbsDynPrefNames = id; 
+                resetAbsDynPrefValues = id; 
+                resetArtiPrefNames = id; 
+                resetArtiPrefValues = id; 
+                resetRelDynPrefNames = id; 
+                resetRelDynPrefValues = id; 
+                resetRelTpoPrefNames = id; 
+                resetRelTpoPrefValues = id; 
+                showPrefs = id; 
+                takeAbsDynValueFrom = id; 
+                takeArtiValueFrom = id; 
+                takeRelDynValueFrom = id; 
+                takeRelTpoValueFrom = id; 
+            }; 
+            CLASS = PrimaVistaPreferences; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myAbsDefaultTpoField = id; 
+                myAbsDynNameMatrix = id; 
+                myAbsDynSlideMatrix = id; 
+                myAbsDynValueMatrix = id; 
+                myArtiNameMatrix = id; 
+                myArtiValueMatrix = id; 
+                myRelDynNameMatrix = id; 
+                myRelDynToleranceField = id; 
+                myRelDynValueMatrix = id; 
+                myRelTpoNameMatrix = id; 
+                myRelTpoValueMatrix = id; 
+                prefText = id; 
+            }; 
+            SUPERCLASS = Preferences; 
+        }, 
+        {
+            ACTIONS = {
+                doMakeArtiWeight = id; 
+                doMakeCustom1DWeight = id; 
+                doMakeCustom2DWeight = id; 
+                doMakeDynaWeight = id; 
+                doMakeTempoWeight = id; 
+                findAbsDynEvents = id; 
+                findAbsTpoEvents = id; 
+                findArtiEvents = id; 
+                findCustomEvents = id; 
+                findRelDynEvents = id; 
+                findRelTpoEvents = id; 
+                hideWindow = id; 
+                showAbsDynamics = id; 
+                showArpeggio = id; 
+                showArticulation = id; 
+                showOrnaments = id; 
+                showOthers = id; 
+                showRelDynamics = id; 
+                showRelTempo = id; 
+                showTuning = id; 
+                showWindow = id; 
+            }; 
+            CLASS = PrimaVistaRubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myAbsDynamicPrefsPanel = id; 
+                myArpeggioPrefsPanel = id; 
+                myArticulationPrefsPanel = id; 
+                myCoordPopUp1 = id; 
+                myCoordPopUp2 = id; 
+                myEventList = id; 
+                myOrnamentPrefsPanel = id; 
+                myOrnamentTypesPanel = id; 
+                myOtherPrefsPanel = id; 
+                myPVObject = id; 
+                myPreferences = id; 
+                myRelDynamicPrefsPanel = id; 
+                myRelTempoPrefsPanel = id; 
+                myTuningPrefsPanel = id; 
+                myValueNameField = id; 
+                predLHS = id; 
+            }; 
+            SUPERCLASS = RubetteDriver; 
+        }, 
+        {
+            ACTIONS = {
+                changeFindLevels = id; 
+                closeRubette = id; 
+                doReadData = id; 
+                doSearch = id; 
+                doWriteData = id; 
+                hideWindow = id; 
+                initSearch = id; 
+                loadWeight = id; 
+                removeInput = id; 
+                removeOutput = id; 
+                rubetteChanged = id; 
+                saveWeight = id; 
+                saveWeightAs = id; 
+                setCascadeSearch = id; 
+                setInput = id; 
+                setOutput = id; 
+                showRubetteHelpPanel = id; 
+                showRubetteInfoPanel = id; 
+                showWindow = id; 
+                takeWeightNameFrom = id; 
+                windowDidBecomeKey = id; 
+                windowDidResignKey = id; 
+                windowWillClose = id; 
+            }; 
+            CLASS = RubetteDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                findHow = id; 
+                findLevels = id; 
+                findLevelsMenu = id; 
+                findName = id; 
+                findWhat = id; 
+                foundPredicates = id; 
+                input = id; 
+                lastFoundPredicates = id; 
+                manager = id; 
+                myConverter = id; 
+                myInfoPanel = id; 
+                myListForm = id; 
+                myMenu = id; 
+                myValueForm = id; 
+                myWeight = id; 
+                myWindow = id; 
+                output = id; 
+                owner = id; 
+                rubetteData = id; 
+                weightName = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

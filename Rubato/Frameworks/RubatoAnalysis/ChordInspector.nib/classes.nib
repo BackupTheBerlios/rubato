@@ -1,0 +1,63 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {displayNextThirdStream = id; displayPatient = id; setValue = id; }; 
+            CLASS = ChordInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myBestPathLocusField = id; 
+                myOnsetField = id; 
+                myPitchClassView = id; 
+                myPitchCountField = id; 
+                myRiemannMatrix = id; 
+                myThirdStreamCountField = id; 
+                myThirdStreamMatrix = id; 
+                myThirdStreamNamesMatrix = id; 
+                myThirdStreamNumField = id; 
+            }; 
+            SUPERCLASS = GenericObjectInspector; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                displayPatient = id; 
+                revert = id; 
+                selectInspectorSubview = id; 
+                setValue = id; 
+                showObjectInspector = id; 
+            }; 
+            CLASS = GenericObjectInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                currentView = id; 
+                defaultView = id; 
+                insertButton = id; 
+                loadedButton = id; 
+                newButton = id; 
+                owner = id; 
+                panel = id; 
+                patient = id; 
+                removeButton = id; 
+                revertButton = id; 
+                savedPatient = id; 
+                subviewContainer = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {deselect = id; displayPatient = id; revert = id; showInspectorPanel = id; }; 
+            CLASS = ObjectInspectorDriver; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inspectorBox = id; 
+                inspectorPanel = id; 
+                manager = id; 
+                objectInspector = id; 
+                owner = id; 
+                selected = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

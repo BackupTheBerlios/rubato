@@ -1,0 +1,57 @@
+{
+    DYNAMIC_CODE_GEN = YES; 
+    FILESTABLE = {
+        FRAMEWORKSEARCH = (); 
+        H_FILES = (); 
+        OTHER_SOURCES = (Makefile.preamble, Makefile, Makefile.postamble); 
+        SUBPROJECTS = (
+            MetroRubette, 
+            MeloRubette, 
+            HarmoRubette, 
+            PrimaVistaRubette, 
+            PerformanceScore.fproj, 
+            PerformanceRubette
+        ); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-DWITHMUSICKIT -Dselfvoid=id"; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = Rubettes; 
+    PROJECTTYPE = Aggregate; 
+    PROJECTVERSION = 2.8; 
+    TARGETS = (
+        "debug@MetroRubette", 
+        "install@MetroRubette", 
+        "clean@MetroRubette", 
+        "debug@MeloRubette", 
+        "install@MeloRubette", 
+        "clean@MeloRubette", 
+        "debug@HarmoRubette", 
+        "install@HarmoRubette", 
+        "clean@HarmoRubette", 
+        "debug@PerformanceRubette", 
+        "install@PerformanceRubette", 
+        "clean@PerformanceRubette", 
+        "debug@PerformanceScore.fproj", 
+        "clean@PerformanceScore.fproj", 
+        "all@PerformanceScore.fproj", 
+        "install@PerformanceScore.fproj", 
+        "debug@HarmoRubette.fproj", 
+        "install@HarmoRubette.fproj", 
+        "clean@HarmoRubette.fproj", 
+        "all@HarmoRubette.fproj", 
+        "debug@MetroRubette.fproj", 
+        "clean@MetroRubette.fproj", 
+        "all@MetroRubette.fproj", 
+        "install@MetroRubette.fproj"
+    ); 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

@@ -1,0 +1,89 @@
+{
+    CURRENTLY_ACTIVE_VERSION = YES; 
+    DEPLOY_WITH_VERSION_NAME = A; 
+    DYNAMIC_CODE_GEN = YES; 
+    FILESTABLE = {
+        CLASSES = (
+            AdjointMatrix.m, 
+            AffineDifferenceMatrix.m, 
+            BinaryMatrixOperator.m, 
+            InverseMatrix.m, 
+            MathMatrix.m, 
+            PowerMatrix.m, 
+            ProductMatrix.m, 
+            ScaleMatrix.m, 
+            StripMatrix.m, 
+            SumMatrix.m, 
+            TaylorMatrix.m, 
+            UnaryMatrixOperator.m, 
+            UndressMatrix.m
+        ); 
+        FRAMEWORKS = (
+            AppKit.framework, 
+            Foundation.framework, 
+            JGFoundation.framework, 
+            Rubato.framework, 
+            RubatoDeprecatedCommonKit.framework
+        ); 
+        FRAMEWORKSEARCH = (); 
+        H_FILES = (
+            AdjointMatrix.h, 
+            AffineDifferenceMatrix.h, 
+            BinaryMatrixOperator.h, 
+            InverseMatrix.h, 
+            MathMatrix.h, 
+            mathmatrixkit.h, 
+            PowerMatrix.h, 
+            ProductMatrix.h, 
+            ScaleMatrix.h, 
+            StripMatrix.h, 
+            SumMatrix.h, 
+            TaylorMatrix.h, 
+            UnaryMatrixOperator.h, 
+            UndressMatrix.h
+        ); 
+        OTHER_SOURCES = (
+            Makefile.preamble, 
+            Makefile, 
+            Makefile.postamble, 
+            m.template, 
+            h.template, 
+            README.txt
+        ); 
+        PUBLIC_HEADERS = (
+            AdjointMatrix.h, 
+            mathmatrixkit.h, 
+            AffineDifferenceMatrix.h, 
+            BinaryMatrixOperator.h, 
+            InverseMatrix.h, 
+            MathMatrix.h, 
+            PowerMatrix.h, 
+            ProductMatrix.h, 
+            ScaleMatrix.h, 
+            StripMatrix.h, 
+            SumMatrix.h, 
+            TaylorMatrix.h, 
+            UnaryMatrixOperator.h, 
+            UndressMatrix.h
+        ); 
+        SUBPROJECTS = (AppKit.subproj); 
+    }; 
+    LANGUAGE = English; 
+    MAKEFILEDIR = "$(MAKEFILEPATH)/pb_makefiles"; 
+    NEXTSTEP_BUILDTOOL = /bin/gnumake; 
+    NEXTSTEP_COMPILEROPTIONS = "-Dselfvoid=id"; 
+    NEXTSTEP_INSTALLDIR = /Library/Frameworks; 
+    NEXTSTEP_JAVA_COMPILER = /usr/bin/javac; 
+    NEXTSTEP_OBJCPLUS_COMPILER = /usr/bin/cc; 
+    PDO_UNIX_BUILDTOOL = $NEXT_ROOT/Developer/bin/make; 
+    PDO_UNIX_INSTALLDIR = /Library/Frameworks; 
+    PDO_UNIX_JAVA_COMPILER = "$(JDKBINDIR)/javac"; 
+    PDO_UNIX_OBJCPLUS_COMPILER = "$(NEXTDEV_BIN)/gcc"; 
+    PROJECTNAME = MathMatrixKit; 
+    PROJECTTYPE = Framework; 
+    PROJECTVERSION = 2.8; 
+    WINDOWS_BUILDTOOL = $NEXT_ROOT/Developer/Executables/make; 
+    WINDOWS_INSTALLDIR = /Library/Frameworks; 
+    WINDOWS_JAVA_COMPILER = "$(JDKBINDIR)/javac.exe"; 
+    WINDOWS_OBJCPLUS_COMPILER = "$(DEVDIR)/gcc"; 
+}

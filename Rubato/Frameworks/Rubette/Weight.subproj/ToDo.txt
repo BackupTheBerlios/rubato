@@ -1,0 +1,2 @@
+WeightView setzt von Weight die Inversion!
+Das ist Mist. Ein View sollte nicht das Model-Object veraendern, es sei denn, er kopiert es vorher.
