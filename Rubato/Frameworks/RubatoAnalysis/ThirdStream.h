@@ -21,7 +21,7 @@
 - (int)top;
 - (size_t)length;
 - (unsigned short)thirdBitList;
-- (unsigned short)pitchClasses;
+- (int)pitchClasses;
 - (int)pitchClassAt:(int)index;
 #ifdef CHORDSEQ_DYN
 - (double)riemannWeightWithFunctionScale:(const double **)functionScale atFunction:(int)function andTonic:(int)tonic;

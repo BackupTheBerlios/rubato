@@ -15,6 +15,8 @@
 
 #import <RubatoAnalysis/JGChordProbabilityController.h>
 
+#import <Rubato/JGTitledScrollView.h>
+
 @interface HarmoRubetteDriver (ViterbiSupport)
 - (void)viterbiInit;
 - (void)viterbiAfterMakeChords;
@@ -89,6 +91,8 @@
   [myGeneralPrefsPanel release]; myGeneralPrefsPanel = nil;
   [myNollPrefsPanel performClose:self];
   [myNollPrefsPanel release]; myNollPrefsPanel = nil;
+
+  [chordProbabilityController closeWindow];
 }
 - (void)closeRubetteWindows;
 {
@@ -289,7 +293,7 @@
 - showWeightText;
 {
     if ([[self weight] count]) {
-	int i, p;
+	int i;
 	id iChord;
 	NSMutableString *mutableString = [NSMutableString new];
 	
@@ -311,15 +315,15 @@
 	[mutableString appendFormat:@"%s", "\nRiemann Function List\n"];
 	
 	for (i=0; i<[myChordSequence count]; i++) {
+          NSString *bestLocusName;
 	    iChord = [myChordSequence chordAt:i];
-	    p=[iChord locusOfPath:0];
+	    bestLocusName=[iChord bestLocusName];
 	    [mutableString appendFormat:@"%.5f", [iChord onset]];
 	    [mutableString appendFormat:@"%c", '\t'];
-	    if (p<MAX_LOCUS) {
-		[mutableString appendFormat:@"%s (", pitchClassName(locusOf(p).RieTon)];
-                [mutableString appendFormat:@"%s)", riemannFunctionName(locusOf(p).RieVal)];
-	    } else
-		[mutableString appendFormat:@"%s", "Out of harmonic context"];
+            if (bestLocusName)
+              [mutableString appendString:bestLocusName];
+            else
+              [mutableString appendString:@"Out of harmonic context"];
 	    
 	    [mutableString appendFormat:@"%c", '\t'];
 	    [mutableString appendFormat:@"%.5f", [iChord bestWeight]];
@@ -335,20 +339,24 @@
 
 - showRiemannGraph;
 {
-    id iChord, cell;
+  Chord *iChord;
+  id cell;
     int count, r, p, c;
     
     [myRiemannGraphMatrix getNumberOfRows:&r columns:&c];
     
     count = [myChordSequence count];
     [myRiemannGraphMatrix renewRows:r columns:count];
-    
+
 //    if (NO /* was [<view> isAutoDisplay] */) 
 //#error ViewConversion: 'setAutodisplay:' is obsolete
 //	[myRiemannGraphMatrix setAutodisplay:NO];
     for (c=0; c<count; c++) {
+      int bestTonality,bestFunction;
 	iChord = [myChordSequence chordAt:c];
 	p=[iChord locusOfPath:0];
+        bestTonality=[iChord tonicAt:p];
+        bestFunction=[iChord functionAt:p];
 	cell = [myRiemannGraphMatrix cellAtRow:0 column:c];
 	[cell setIntValue:c+1];
 //#warning ColorConversion: [cell setDrawsBackground:NO] was [cell setBackgroundGray:-1]
@@ -360,13 +368,29 @@
 //#warning ColorConversion: [cell setDrawsBackground:NO] was [cell setBackgroundGray:-1]
 	[cell setDrawsBackground:NO]; /* make it transparent */
 	[cell setBordered:YES];
-	
-	for (r=0; r<MAX_TONALITY; r++) {
+
+        NSParameterAssert(!harmoGraphTonalityNumbers || ([harmoGraphTonalityNumbers count] == iChord->tonalityCount));
+	for (r=0; r<iChord->tonalityCount; r++) {
+          int representedTonality;
+          if (harmoGraphTonalityNumbers) {
+            id tonalityNumberAtRow=[harmoGraphTonalityNumbers objectAtIndex:r];
+            if ([tonalityNumberAtRow respondsToSelector:@selector(intValue)])
+              representedTonality=[tonalityNumberAtRow intValue];
+            else if ([tonalityNumberAtRow respondsToSelector:@selector(doubleValue)])
+              representedTonality=(int)[tonalityNumberAtRow doubleValue];
+            else {
+               NSAssert(NO,@"HarmoRubetteDriver showRiemannGraph : harmoGraphTonalityNumbers contains unexpected elements");
+              representedTonality=0;
+            }
+          } else
+            representedTonality=modTwelve(-((r-6)*7));
+          NSParameterAssert(representedTonality<iChord->tonalityCount);
 	    cell = [myRiemannGraphMatrix cellAtRow:r+2 column:c];
 	    [cell setBordered:YES];
-	    if (p<MAX_LOCUS && locusOf(p).RieTon==modTwelve(-((r-6)*7))) {
+            // jg? :NEWHARMO: Permutation instead of fifth circle! 
+	    if ((p<iChord->locusCount) && (bestTonality==representedTonality)) {
 		/* modTwelve(-((r-6)*7)) gives the index counting down in fifths from F# in row 0 */
-		[cell setStringValue:[NSString jgStringWithCString:riemannFunctionName(locusOf(p).RieVal)]];
+                [cell setStringValue:[iChord functionNameForIndex:bestFunction]];
 		[cell setBackgroundColor:[NSColor lightGrayColor]];
 	    } else {
 //#warning ColorConversion: [cell setDrawsBackground:NO] was [cell setBackgroundGray:-1]
@@ -529,6 +553,45 @@
     return (spaceIndex)3;
 }
 
+
+- (void)setHarmoGraphTonalityNumbers:(NSArray *)newGraphTonalities;
+{
+  [newGraphTonalities retain];
+  [harmoGraphTonalityNumbers release];
+  harmoGraphTonalityNumbers=newGraphTonalities;
+}
+
+- (void)setHarmoSpace:(NSDictionary *)dict;
+{
+  //  int newFunctionCount=functionCount;
+  //  int newTonalityCount=tonalityCount;
+  NSArray *entry;
+  [myChordSequence setHarmoSpace:dict];
+  [myPreferences setHarmoSpace:dict];
+
+  entry=[dict objectForKey:@"Functions"];
+  if (entry) {
+    [[[chordProbabilityController probabilityMatrix] jgTitledScrollView] setVerticalTitles:entry];
+  }
+  entry=[dict objectForKey:@"Tonalities"];
+  if (entry) {
+    [[[chordProbabilityController probabilityMatrix] jgTitledScrollView] setHorizontalTitles:entry];
+  }
+  
+  entry=[dict objectForKey:@"HarmoGraphTonalityNumbers"];
+  if (entry) {
+    NSParameterAssert([entry count]==[myChordSequence tonalityCount]);
+    [self setHarmoGraphTonalityNumbers:entry];
+  }
+    entry=[dict objectForKey:@"HarmoGraphTonalities"];
+  if (entry) {
+     NSMutableArray *compound=[NSMutableArray arrayWithObjects:@"Chord #",@"Onset",nil];
+    NSParameterAssert([entry count]==[myChordSequence tonalityCount]);
+    [compound addObjectsFromArray:entry];
+    [[myRiemannGraphMatrix jgTitledScrollView] setVerticalTitles:compound];
+  }
+}
+
 @end
 
 @implementation HarmoRubetteDriver(BrowserDelegate)
@@ -607,5 +670,6 @@
     retVal = ([NSView focusView] == [sender matrixInColumn:column]) ? YES : browserValid;
     return retVal;
 }
+
 
 @end

@@ -11,7 +11,19 @@
 #define MAX_TONALITY 12
 #define MAX_FUNCTION 6
 #define MAX_LOCUS 72
+#define MAX_MODE 2
+#define MAX_MODELESS_FUNCTION 3
 #define EXPONENT 0.5
+
+#define TONALITY_OF(index) (mod((index), locusCount) % tonalityCount)
+#define FUNCTION_OF(index) (mod((index), locusCount) / tonalityCount)
+//old usage: locusOf(index).RieTon and locusOf(index).RieVal;
+
+#define PC_COUNT 12
+#define FUNCTION_RANGE(a) (mod(a,functionCount))
+#define TONALITY_RANGE(a) ((a)>=0 ? (a)%tonalityCount : (tonalityCount+(a)%tonalityCount)%tonalityCount)
+#define MOD_PC(a) ((a)>=0 ? (a)%PC_COUNT : (PC_COUNT+(a)%PC_COUNT)%PC_COUNT)
+// old usage: modTwelve
 
 typedef struct{
 	int RieVal;
@@ -37,6 +49,7 @@ inline extern int harmo_round(double x)
 int mod(int, int);
 unsigned char modTwelve(int);
 int pitchClassTwelve(double, double, double);
+
 const char* pitchClassName(int pitchClass);
 const char* riemannFunctionName(int rieVal);
 

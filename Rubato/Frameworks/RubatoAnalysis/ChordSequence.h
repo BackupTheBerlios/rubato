@@ -10,19 +10,28 @@
 @interface ChordSequence:JgRefCountObject
 {
 @public
-  int maxFunction,maxTonality,maxLocus; // non inclusive
+  // functionCount*tonalityCount==locusCount AND modeCount*modelessFunctionCount==functionCount
+  int functionCount,tonalityCount,locusCount,modeCount,modelessFunctionCount,pcCount; 
 #ifdef  CHORDSEQ_DYN
     double **myFunctionScale; /* [MAX_FUNCTION][MAX_TONALITY] 6x12 matrix with the TDS major and minor values of each tone     */
 #else
     double myFunctionScale[MAX_FUNCTION][MAX_TONALITY];
 #endif 
     double ***myNollMatrix;
-    double ***harmonicProfile; /* 6x12x12 Function x Tonalities x TwelveVector (for scalar multiplication with chord twelve vector), not persistent */
+    double ***harmonicProfile; /* functionCount x tonalityCount x pcCount, e.g. 6x12x12 Function x Tonalities x TwelveVector (for scalar multiplication with chord twelve vector), not persistent */
 
 //@protected
     id myChords; /* list of chord objects */
-    double myFunctionDist[3][3]; /* 3x3 matrix of nine distances for TDS-walks T~0, D~1, S~2 walks are row->col */
+#ifdef  CHORDSEQ_DYN
+    double **myModelessFunctionDist; /* [MAX_MODELESS_FUNCTION][MAX_MODELESS_FUNCTION] 3x3 matrix of nine distances for TDS-walks T~0, D~1, S~2 walks are row->col */
+#else
+    double myModelessFunctionDist[3][3]; /* 3x3 matrix of nine distances for TDS-walks T~0, D~1, S~2 walks are row->col */
+#endif
+#ifdef  CHORDSEQ_DYN
+    double **myModeDist; /* [MAX_MODE][MAX_MODE] 2x2 matrix of four distances for Major-Minor-walks */
+#else
     double myModeDist[2][2]; /* 2x2 matrix of four distances for Major-Minor-walks */
+#endif
     double myTonalityDist[2][7]; /* 2x7 matrix of tonality walks with fourth and fifth direction */
 #ifdef  CHORDSEQ_DYN
     double **myDistanceMatrix; /* [MAX_LOCUS][MAX_LOCUS] 72x72 matrix of distance */
@@ -57,9 +66,17 @@
     SEL calcBestPathSelector;
     id viterbiContext;
     NSMutableDictionary *fsBlocks; // Hooks, not persistent
+    NSDictionary *harmoSpace; // not yet persistent. Values are Arrays of Name.
 }
-- (void)setFunctionCount:(int)fuCount tonalityCount:(int)tonCount; // NEWHARMO
+- (NSDictionary *)harmoSpace;
+- (void)setHarmoSpace:(NSDictionary *)dict;
 - (NSMutableDictionary *)fsBlocks;
+
+- (void)allocFunctionScale:(double **)otherFunctionScale useFunctionList:(BOOL *)otherUseFunctionList distanceMatrix:(double **)otherDistanceMatrix doInit:(BOOL)doInit;
+- (void)allocModelessFunctionDist:(double **)otherModelessFunctionDist doInit:(BOOL)doInit;
+- (void)allocModeDist:(double **)otherModeDist doInit:(BOOL)doInit;
+- (void)allocModelessFunctionDist:(double **)otherModelessFunctionDist modeDist:(double **)otherModeDist doInit:(BOOL)doInit;
+- (void)allocNollMatrix:(double ***)otherNollMatrix doInit:(BOOL)doInit;
 
 - init;
 - (void)dealloc;
@@ -201,4 +218,10 @@
 - calcNollMatrix;
 - (double ***)nollMatrix;
 
+- (int)locusCount;
+- (int)tonalityCount;
+- (int)functionCount;
+- (int)modeCount;
+- (int)modelessFunctionCount;
+- (int)pcCount;
 @end

@@ -38,7 +38,7 @@
 {
 // myOwner probably HarmoRubetteDriver?
     id	myFunctionScaleMatrix;
-    id	myFunctionDistanceMatrix;
+    id	myModelessFunctionDistanceMatrix;
     id	myModeDistanceMatrix;
     id	myTonalityDistanceMatrix;
     id	myFunctionSwitchMatrix;
@@ -119,4 +119,5 @@
 - readPathPrefsFromStream:(NSUnarchiver *)stream;
 - readNollPrefsFromStream:(NSUnarchiver *)stream;
 
+- (void)setHarmoSpace:(NSDictionary *)dict;
 @end

@@ -151,7 +151,7 @@ thirdList theBigThirdList[211] =
     return myThirdList->thirdBitList;
 }
 
-- (unsigned short)pitchClasses;
+- (int)pitchClasses;
 {
     int i, toneList, tonei;
     toneList = 1 << modTwelve(myBasis);
@@ -206,7 +206,7 @@ thirdList theBigThirdList[211] =
 {
     int i, tonei;
     double valuei = 0.0, fui;
-    function = mod(function,6);
+//    function = mod(function,6); // NEWHARMO can have more than 6
     tonei = modTwelve(myBasis-tonic);
     if(fui=functionScale[function][tonei]) // ? why if?
       valuei = exp(fui*EXPONENT); // add flag for NEWHARMO

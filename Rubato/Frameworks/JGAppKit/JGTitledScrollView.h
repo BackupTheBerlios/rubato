@@ -28,4 +28,14 @@
 - (NSScrollView *)horizontalTitleView;
 - (NSScrollView *)verticalTitleView;
 - (id)reflectScrolledClipViewDelegate;
+
+- (void)setTitles:(NSArray *)titles horizontal:(BOOL)horizontal isContent:(BOOL)isContent;
+// Adjust title and content matrices
+- (void)setHorizontalTitles:(NSArray *)titles;
+- (void)setVerticalTitles:(NSArray *)titles;
+- (void)setHorizontalTitles:(NSArray *)horizontalTitles verticalTitles:(NSArray *)verticalTitles;
+@end
+
+@interface NSMatrix (JGTitledScrollView)
+- (JGTitledScrollView *)jgTitledScrollView;
 @end

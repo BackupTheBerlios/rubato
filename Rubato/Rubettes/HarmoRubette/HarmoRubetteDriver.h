@@ -35,6 +35,8 @@
     BOOL browserValid;
 
     id chordProbabilityController;
+
+    NSArray *harmoGraphTonalityNumbers; // Entry is (NS)Number. If not set, use Harmo1 Quintrepresentation
 }
 
 - init;
@@ -74,6 +76,8 @@
 + (const char *)rubetteVersion;
 + (spaceIndex)rubetteSpace;
 
+- (void)setHarmoGraphTonalityNumbers:(NSArray *)newGraphTonalities;
+- (void)setHarmoSpace:(NSDictionary *)dict;
 @end
 
 @interface HarmoRubetteDriver(BrowserDelegate)

@@ -7,13 +7,15 @@
 
 @interface Chord:JgRefCountObject <Ordering, Inspectable>
 {
+@public
+    int functionCount,tonalityCount,locusCount; // non inclusive
+@protected
     ChordSequence *myOwnerSequence; /* the ChordSequence Object, that contains this Chord instance */
     double *myPitchList; /* list object with Pitches of this chord */
     int myPitchCount;
-    unsigned short myPitchClasses; /* bit sequence 0,1,...,11 from the right as usual */
+    int myPitchClasses; /* bit sequence 0,1,...,11 from the right as usual (NEWHARMO: now holds space for 32 bits) */
     double myOnset;
     id myThirdStreamList; /* list of ThirdStream objects of the chord */
-    int maxFunction,maxTonality,maxLocus; // non inclusive
 #ifdef CHORD_DYN
     double **myRiemannMatrix; /* [MAX_FUNCTION][MAX_TONALITY] a numeric 6x12 matrix */
     double **myLevelMatrix; /* [MAX_FUNCTION][MAX_TONALITY] level 6x12 Matrix for the level sensitivity for the calculation of paths */
@@ -26,13 +28,15 @@
     				the last entry is free for calculations, it©s the workpath */
 
 #ifdef CHORD_DYN				
-    double *myPitchClassWeights; /*[MAX_TONALITY]*/
+    double *myPitchClassWeights; /*[MAX_TONALITY]  wrong! should be [myPitchCount]*/
 #else
     double myPitchClassWeights[MAX_TONALITY];
 #endif  
     double myWeight;
     BOOL isWeightCalculated;
 }
+
+- (void)allocRiemannMatrix:(double **)otherRiemannMatrix levelMatrix:(double **)otherLevelMatrix pitchClassWeights:(double *)otherPitchClassWeights doInit:(BOOL)doInit;
 
 // Designated Initializer
 - (id)initOwner:(id)aChordSequence;
@@ -52,8 +56,8 @@
 - (BOOL)hasToneEvent:anEvent;
 - (double) onset;
 - (const double *)pitchList;
-- (unsigned short)pitchClasses;
-- (unsigned short)fifthPitchClasses;/* chord Method for Fifth transformation */
+- (int)pitchClasses;
+- (int)fifthPitchClasses;/* chord Method for Fifth transformation */
 - thirdStreamList;
 
 - addToneEvent:anEvent;
@@ -72,7 +76,7 @@
 - updateSupport;
 
 /* management of subchords */
-- (BOOL)isSubChordOfPitchClasses:(unsigned short)pitchClasses;
+- (BOOL)isSubChordOfPitchClasses:(int)pitchClasses;
 - (BOOL)isSubChordOf:aChord;
 - (BOOL)isSubChordOfStream:aThirdStream;
 
@@ -113,8 +117,9 @@
 - (BOOL)maxWorkSupportIndex;
 - (int)calcSupportStart;
 - (int)tonicAt:(int)index;
-- (int)modeAt:(int)index;
-- (int)functionAt:(int)index;
+- (int)modeAt:(int)index; // not used anywhere
+- (int)modelessFunctionAt:(int)index; // not used anywhere
+- (int)functionAt:(int)index; // used instead
 
 /* relative weights of tones of a chord */
 - (double)relativeWeightOfTone:(int)toneIndex atLocus:(int)locus;
@@ -130,4 +135,11 @@
 // additionals
 - (NSString *)pitchListString; // as integers separated by ","
 - (NSString *)pitchListStringWithPitchFormat:(NSString *)pf delimiter:(NSString *)delimiter asInt:(BOOL)asInt;
+- (NSString *)pitchClassNameForIndex:(int)idx;
+- (NSString *)functionNameForIndex:(int)idx;
+- (NSString *)locusNameForIndex:(int)index;
+- (NSString *)bestLocusName;
+- (int)locusCount;
+- (int)tonalityCount;
+- (int)functionCount;
 @end

@@ -45,6 +45,17 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            CLASS = JGTitledScrollView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                horizontalTitleView = id; 
+                reflectScrolledClipViewDelegate = id; 
+                verticalTitleView = id; 
+            }; 
+            SUPERCLASS = NSScrollView; 
+        }, 
+        {CLASS = NSMatrix; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {
             ACTIONS = {deselect = id; displayPatient = id; revert = id; showInspectorPanel = id; }; 
             CLASS = ObjectInspectorDriver; 
             LANGUAGE = ObjC; 

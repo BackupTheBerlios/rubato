@@ -14,9 +14,9 @@
 //#define VAL_MAX_TONALITY MAX_TONALITY
 //#define VAL_MAX_FUNCTION MAX_FUNCTION
 //#define VAL_MAX_LOCUS MAX_LOCUS
-#define VAL_MAX_TONALITY maxTonality
-#define VAL_MAX_FUNCTION maxFunction
-#define VAL_MAX_LOCUS maxLocus
+#define VAL_MAX_TONALITY tonalityCount
+#define VAL_MAX_FUNCTION functionCount
+#define VAL_MAX_LOCUS locusCount
 
 
 @implementation Chord
@@ -38,7 +38,10 @@
 #ifdef CHORD_DYN
     MALLOC2(myRiemannMatrix,VAL_MAX_FUNCTION,VAL_MAX_TONALITY,double);
     MALLOC2(myLevelMatrix,VAL_MAX_FUNCTION,VAL_MAX_TONALITY,double);
-    myPitchClassWeights=malloc(VAL_MAX_TONALITY*sizeof(double));
+    if (otherPitchClassWeights)
+      myPitchClassWeights=malloc(myPitchCount*sizeof(double));
+    else
+      myPitchClassWeights=NULL;
 #endif
     if (doInit) {
       for(i=0; i<VAL_MAX_FUNCTION; i++) {
@@ -47,9 +50,10 @@
           myLevelMatrix[i][j]=(otherLevelMatrix ? otherLevelMatrix[i][j] : 0.0);
         }
       }
-      for(j=0; j<VAL_MAX_TONALITY; j++) {
-        myPitchClassWeights[j]=(otherPitchClassWeights ? otherPitchClassWeights[j] : 0.0);
-      }
+      if (otherPitchClassWeights) 
+        for(j=0; j<myPitchCount; j++) {
+          myPitchClassWeights[j]=(otherPitchClassWeights ? otherPitchClassWeights[j] : 0.0);
+        }
     }
 }
 - (void)deallocHarmoSpace;
@@ -94,14 +98,14 @@
     // there was a Problem in ChordInspector, when in Harmo-Rubette GenerateRiemannLogic
     // is not clicked.
     if (myOwnerSequence) {
-      maxFunction=myOwnerSequence->maxFunction;
-      maxTonality=myOwnerSequence->maxTonality;
-      maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+      functionCount=myOwnerSequence->functionCount;
+      tonalityCount=myOwnerSequence->tonalityCount;
+      locusCount=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
       [self allocRiemannMatrix:NULL levelMatrix:NULL pitchClassWeights:NULL doInit:YES];
     } else {
-      maxFunction=0;
-      maxTonality=0;
-      maxLocus=0;
+      functionCount=0;
+      tonalityCount=0;
+      locusCount=0;
     }
     mySupportStart = VAL_MAX_LOCUS;
     for(i=0;i<=PATHNUMBER;i++){
@@ -140,6 +144,7 @@
     int i;
 //    [super initWithCoder:aDecoder];
     /* class-specific code goes here */
+  int version=[aDecoder versionForClassName:@"Chord"];
     
     myOwnerSequence = [aDecoder decodeObject]; // jgreferences?: was: +retain. In encode:conditionalEncoding
     myThirdStreamList = [[aDecoder decodeObject] retain];
@@ -148,17 +153,21 @@
     myPitchList = realloc(myPitchList, myPitchCount*sizeof(double));
     for(i=0; i<myPitchCount; i++) 
 	[aDecoder decodeValueOfObjCType:"d" at:&myPitchList[i]];
-    [aDecoder decodeValueOfObjCType:"S" at:&myPitchClasses];
+    if (version<2) 
+      [aDecoder decodeValueOfObjCType:"S" at:&myPitchClasses];
+    else
+      [aDecoder decodeValueOfObjCType:"i" at:&myPitchClasses];
+
     [aDecoder decodeValueOfObjCType:"d" at:&myOnset];
 
-    if ([aDecoder versionForClassName:@"Chord"]<2) {
-      maxTonality=MAX_TONALITY;
-      maxFunction=MAX_FUNCTION;
+    if (version<2) {
+      tonalityCount=MAX_TONALITY;
+      functionCount=MAX_FUNCTION;
     } else {
-      [aDecoder decodeValueOfObjCType:"i" at:&maxFunction];
-      [aDecoder decodeValueOfObjCType:"i" at:&maxTonality];
+      [aDecoder decodeValueOfObjCType:"i" at:&functionCount];
+      [aDecoder decodeValueOfObjCType:"i" at:&tonalityCount];
     }
-    maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+    locusCount=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
     [self allocRiemannMatrix:NULL levelMatrix:NULL pitchClassWeights:NULL doInit:NO];
     for(i=0;i<VAL_MAX_FUNCTION*VAL_MAX_TONALITY;i++) {
 	[aDecoder decodeValueOfObjCType:"d" at:&myRiemannMatrix[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
@@ -171,9 +180,17 @@
     
     [aDecoder decodeValueOfObjCType:"c" at:&isWeightCalculated];
     [aDecoder decodeValueOfObjCType:"d" at:&myWeight];
-    for(i=0; i<VAL_MAX_TONALITY; i++) 
+    if (version<2) {
+      myPitchClassWeights=malloc(MAX_TONALITY*sizeof(double));
+      for(i=0; i<MAX_TONALITY; i++) 
 	[aDecoder decodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
-
+    } else if (isWeightCalculated) {
+      myPitchClassWeights=malloc(myPitchCount*sizeof(double));
+      for(i=0; i<myPitchCount; i++) 
+	[aDecoder decodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
+    } else {
+      myPitchClassWeights=NULL;
+    }
     return self;
 }
 
@@ -182,19 +199,23 @@
     int i;
 //    [super encodeWithCoder:aCoder];
     /* class-specific archiving code goes here */
-    
+    int version=[aCoder versionForClassName:@"Chord"];
+
     [aCoder encodeConditionalObject:myOwnerSequence];
     [aCoder encodeObject:myThirdStreamList];
     
     [aCoder encodeValueOfObjCType:"i" at:&myPitchCount];
     for(i=0; i<myPitchCount; i++) 
 	[aCoder encodeValueOfObjCType:"d" at:&myPitchList[i]];
-    [aCoder encodeValueOfObjCType:"S" at:&myPitchClasses];
+    if (version<2) 
+      [aCoder encodeValueOfObjCType:"S" at:&myPitchClasses];
+    else
+      [aCoder encodeValueOfObjCType:"i" at:&myPitchClasses];
     [aCoder encodeValueOfObjCType:"d" at:&myOnset];
 
-    if ([aCoder versionForClassName:@"Chord"]>=2) {
-      [aCoder encodeValueOfObjCType:"i" at:&maxFunction];
-      [aCoder encodeValueOfObjCType:"i" at:&maxTonality];      
+    if (version>=2) {
+      [aCoder encodeValueOfObjCType:"i" at:&functionCount];
+      [aCoder encodeValueOfObjCType:"i" at:&tonalityCount];      
     }
 
     for(i=0;i<VAL_MAX_FUNCTION*VAL_MAX_TONALITY;i++) {
@@ -208,8 +229,14 @@
     
     [aCoder encodeValueOfObjCType:"c" at:&isWeightCalculated];
     [aCoder encodeValueOfObjCType:"d" at:&myWeight];
-    for(i=0; i<VAL_MAX_TONALITY; i++) 
-	[aCoder encodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
+    if (version<2) {
+      for(i=0; i<MAX_TONALITY; i++) 
+	  [aCoder encodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
+    } else if (isWeightCalculated) {
+      for(i=0; i<myPitchCount; i++) 
+	  [aCoder encodeValueOfObjCType:"d" at:&myPitchClassWeights[i]];
+    }
+      
 }
 
 
@@ -235,7 +262,7 @@
 /* tone management */
 - (BOOL)hasPitchClass:(int)aPitchInt;
 {
-    return (myPitchClasses & 1<<modTwelve(aPitchInt)) ? YES : NO;
+    return (myPitchClasses & 1<<MOD_PC(aPitchInt)) ? YES : NO;
 }
 
 
@@ -255,12 +282,12 @@
 
 /*- (int)addPitchClass:(int)index;
 {
-    return myPitchClasses | 1<<modTwelve(index);
+    return myPitchClasses | 1<<MOD_PC(index);
 }*/
 
 /*- (int)removePitchClass:(int)index;
 {
-    return myPitchClasses & ~(1<<modTwelve(index));
+    return myPitchClasses & ~(1<<MOD_PC(index));
 }*/
 
 - addToneEvent:(MatrixEvent *)anEvent;
@@ -324,19 +351,19 @@
     return myPitchList;
 }
 
-- (unsigned short)pitchClasses;
+- (int)pitchClasses;
 {
     return myPitchClasses;
 }
 
-/* chord Methode för Quinttransformation */
-- (unsigned short) fifthPitchClasses;
+/* chord method for fifth transformation */
+- (int) fifthPitchClasses;
 {
     int i;
-    unsigned short fifthClasses = 0;
-    for(i=0; i<12; i++){
+    int fifthClasses = 0;
+    for(i=0; i<PC_COUNT; i++){
 	if([self hasPitchClass:i])
-	    fifthClasses = fifthClasses | 1<<modTwelve(i*7); 
+	    fifthClasses = fifthClasses | 1<<MOD_PC(i*7); // probably does not make sense if PC_COUNT!=12
 	    }
     return fifthClasses;
 }
@@ -365,25 +392,36 @@
 }
 
 /* Weight and RiemannMatrix calculation maintenance */
-- invalidate;
+- invalidate; // called by ChordSequence
 {
     int i;
+    if (myOwnerSequence) {
+      int newFunctionCount=[myOwnerSequence functionCount];
+      int newTonalityCount=[myOwnerSequence tonalityCount];
+      if ((newFunctionCount!=functionCount) || (newTonalityCount!=tonalityCount)) {
+        functionCount=newFunctionCount;
+        tonalityCount=newTonalityCount;
+        [self allocRiemannMatrix:NULL levelMatrix:NULL pitchClassWeights:NULL doInit:YES];        
+      }
+    }  
+    
     [self updatePitchClasses];
     [self invalidateWeight];
     for(i=0;i<=PATHNUMBER;i++){
-	myLocus[i] = VAL_MAX_LOCUS;
-	}
+      myLocus[i] = VAL_MAX_LOCUS;
+    }
     
     return self;
 }
 
 - invalidateWeight;
 {
-    int i;
     if(isWeightCalculated) /* reset myPitchClassWeights */
-	for (i=0; i<VAL_MAX_TONALITY; i++)
-	    myPitchClassWeights[i] = 0.0;
-    
+    {
+      if (myPitchClassWeights)
+        free(myPitchClassWeights);
+      myPitchClassWeights=NULL;
+    }    
     isWeightCalculated = NO;
     return self;
 }
@@ -395,6 +433,7 @@
     unsigned int oldPitchClasses = myPitchClasses;
     myPitchClasses = 0;
     for (i=0; i<myPitchCount; i++) {
+      // jg: NEWHARMO: allow custom calculation of pitchClass 
 	myPitchClasses = myPitchClasses | 1<<pitchClassTwelve(myPitchList[i],
 						[myOwnerSequence pitchReference],
 						[myOwnerSequence semitoneUnit]);
@@ -418,7 +457,7 @@
 
 
 /* management of subchords */
-- (BOOL)isSubChordOfPitchClasses:(unsigned short)pitchClasses;
+- (BOOL)isSubChordOfPitchClasses:(int)pitchClasses;
 {
     return myPitchClasses == (myPitchClasses & pitchClasses);
 }
@@ -533,6 +572,11 @@
 {
   NSString *blockKey=@"Chord:calcRiemannValueAtFunction:andTonic:";
   Block *block=[[myOwnerSequence fsBlocks] objectForKey:blockKey];
+  if ((function>MAX_FUNCTION) || (tonic>MAX_TONALITY)) {
+    static int c=0;
+    c++; // set breakpoint here    
+  }
+
   if (block) {
     id blockVal=[block value:self value:[ClassNumber numberWithDouble:(double)function] value:[ClassNumber numberWithDouble:(double)tonic]];
     if ([blockVal respondsToSelector:@selector(doubleValue)])
@@ -555,7 +599,7 @@
 #ifndef CHORDSEQ_DYN
                   (void *)
 #endif
-                           [myOwnerSequence functionScale] atFunction:function andTonic:tonic];
+                           [myOwnerSequence functionScale] atFunction:FUNCTION_RANGE(function) andTonic:tonic];
 	    }
 		/* take average */
 	    return    val / (double)c;
@@ -566,7 +610,8 @@
         case FLEISCHER: {
           int i,c=0;
           double val = 0.0;
-          for (i=0;i<12;i++) {
+          int pcCount=myOwnerSequence->pcCount; // normally 12
+          for (i=0;i<pcCount;i++) {
             if (myPitchClasses & 1<<i) {// see hasPitchClass
               c++;
               val+=(myOwnerSequence->harmonicProfile)[function][tonic][i];              
@@ -584,7 +629,7 @@
 
 - (double)calcRiemannValueAtLocus:(int)locus;
 {
-    return [self calcRiemannValueAtFunction:[self functionAt:locus]+[self modeAt:locus]*3
+  return [self calcRiemannValueAtFunction:[self functionAt:locus] //[self functionAt:locus]+[self modeAt:locus]*(myOwnerSequence->modelessFunctionCount)
 			andTonic:[self tonicAt:locus]];
 }
 
@@ -611,7 +656,7 @@
 			genericWeight:(double ***)nollRiemannWeight;
 {
     int  fifthClasses = [self fifthPitchClasses];
-    tonic = modTwelve(tonic*7); /* the fifth class of the tonic */
+    tonic = MOD_PC(tonic*7); /* the fifth class of the tonic */
     
     if(function == 1)
 	return MAX(riemann(function, tonic,fifthClasses,nollRiemannWeight),
@@ -659,12 +704,12 @@
 
 - (double)levelAtFunction:(int)function andTonality:(int)tonality;
 {
-    return myLevelMatrix [mod(function,6)][modTwelve(tonality)];
+    return myLevelMatrix[mod(function,functionCount)][TONALITY_RANGE(tonality)];
 }
 
 - setLevel:(double)level atFunction:(int)function andTonality:(int)tonality;
 {
-    myLevelMatrix[mod(function,6)][modTwelve(tonality)] = level;
+    myLevelMatrix[mod(function,functionCount)][TONALITY_RANGE(tonality)] = level;
     [self updateSupport];
     return self;
 }
@@ -766,17 +811,27 @@
 
 - (int)tonicAt:(int)index;
 {
-    return locusOf(index).RieTon;
+  return TONALITY_OF(index);
 }
 
+// not used anywhere
 - (int)modeAt:(int)index;
 {
-    return locusOf(index).RieVal <= 2 ? 0 : 1;
+  int locusVal=FUNCTION_OF(index); 
+  NSParameterAssert(locusVal>=0); // to be compatible with the uncommented line
+//    return locusOf(index).RieVal <= 2 ? 0 : 1;
+  return locusVal/(myOwnerSequence->modelessFunctionCount);
+}
+
+// not used anywhere
+- (int)modelessFunctionAt:(int)index;
+{
+    return mod(FUNCTION_OF(index),(myOwnerSequence->modelessFunctionCount));
 }
 
 - (int)functionAt:(int)index;
 {
-    return mod(locusOf(index).RieVal,3);
+  return mod(FUNCTION_OF(index),functionCount); // jg? outermost mod not necessary
 }
 
 
@@ -788,32 +843,65 @@
     if(!isWeightCalculated) {
 	int i;
 	double intraProfile = [myOwnerSequence intraProfile];
-	for (i=0; i<VAL_MAX_TONALITY; i++) 
-	    myPitchClassWeights[i] = 0.0;
-	    
+        if (myPitchClassWeights)
+          free(myPitchClassWeights);
+        myPitchClassWeights=malloc(myPitchCount*sizeof(double));
 	if(intraProfile>=0 && intraProfile<1 && [self levelAtLocus:locus]){
 	    if(myPitchCount == 1)
-		myPitchClassWeights[modTwelve(myPitchList[0])] = 1.0;
-	    else{
-		id copyChord = [self copy];
-		/* now calculate all the pitchClassWeights at once */
-		for (i=0; i<myPitchCount; i++) {
-		    if (myPitchClassWeights[modTwelve(myPitchList[i])]==0.0) {
-		    /* it's assumed not to be calculated if 0.0 */
-			double indexToneVal;
-			[copyChord removePitch:myPitchList[i]];
-			indexToneVal = [copyChord calcRiemannValueAtLocus:locus];
-			myPitchClassWeights[modTwelve(myPitchList[i])] = 1/(intraProfile + (1-intraProfile)*indexToneVal/[self levelAtLocus:locus]); /* HIER KEHRWERT NEHMEN */
-			[copyChord addPitch:myPitchList[i]];
-		    }
-		}
-		[copyChord release];
+              myPitchClassWeights[0] = 1.0;
+	    else {
+              id copyChord = [self copy];
+              // now calculate all the pitchClassWeights at once 
+              for (i=0; i<myPitchCount; i++) {
+                  double indexToneVal;
+                  [copyChord removePitch:myPitchList[i]];
+                  indexToneVal = [copyChord calcRiemannValueAtLocus:locus];
+                  myPitchClassWeights[i] = 1/(intraProfile + (1-intraProfile)*indexToneVal/[self levelAtLocus:locus]); // take inverse here 
+                  [copyChord addPitch:myPitchList[i]];
+              }
+              [copyChord release];
 	    }
-	    isWeightCalculated = YES; /* weights are usable now */
+	    isWeightCalculated = YES; // weights are usable now
 	}
     }
-    return myPitchClassWeights[modTwelve(myPitchList[toneIndex])];
+    return myPitchClassWeights[toneIndex];
 }
+
+/* old code for reference
+- (double)relativeWeightOfTone:(int)toneIndex atLocus:(int)locus;
+{
+  if (!myPitchCount || toneIndex<0 || toneIndex>=myPitchCount)
+    return 0.0;
+  if(!isWeightCalculated) {
+    int i;
+    double intraProfile = [myOwnerSequence intraProfile];
+    for (i=0; i<VAL_MAX_TONALITY; i++) // jg NEWHARMO? bis length of chord
+      myPitchClassWeights[i] = 0.0;
+
+    if(intraProfile>=0 && intraProfile<1 && [self levelAtLocus:locus]){
+      if(myPitchCount == 1)
+        myPitchClassWeights[modTwelve(myPitchList[0])] = 1.0;
+      else{
+        id copyChord = [self copy];
+        // now calculate all the pitchClassWeights at once
+        for (i=0; i<myPitchCount; i++) {
+          if (myPitchClassWeights[modTwelve(myPitchList[i])]==0.0) {
+            // it's assumed not to be calculated if 0.0
+            double indexToneVal;
+            [copyChord removePitch:myPitchList[i]];
+            indexToneVal = [copyChord calcRiemannValueAtLocus:locus];
+            myPitchClassWeights[modTwelve(myPitchList[i])] = 1/(intraProfile + (1-intraProfile)*indexToneVal/[self levelAtLocus:locus]); // HIER KEHRWERT NEHMEN
+            [copyChord addPitch:myPitchList[i]];
+          }
+        }
+        [copyChord release];
+      }
+      isWeightCalculated = YES; // weights are usable now
+    }
+  }
+  return myPitchClassWeights[modTwelve(myPitchList[toneIndex])];
+}
+*/
 - (BOOL)isWeightCalculated;
 {
     return isWeightCalculated;
@@ -938,5 +1026,56 @@
       [str appendFormat:pf,myPitchList[i]];
   }
   return str;
+}
+
+- (NSArray *)namesForKey:(NSString *)key;
+{
+  return [[myOwnerSequence harmoSpace] objectForKey:key];
+}
+
+#define NAME_ACCESS(key) \
+NSArray *names=[self namesForKey:(key)]; \
+if (names) {\
+  NSParameterAssert([names count]>idx); \
+  return [names objectAtIndex:idx]; \
+}
+
+- (NSString *)pitchClassNameForIndex:(int)idx;
+{
+  NAME_ACCESS(@"PitchClasses");
+  return [NSString stringWithCString:pitchClassName(idx)];
+}
+- (NSString *)functionNameForIndex:(int)idx;
+{
+  NAME_ACCESS(@"Functions");
+  return [NSString stringWithCString:riemannFunctionName(idx)];
+}
+- (NSString *)locusNameForIndex:(int)idx;
+{
+  NAME_ACCESS(@"Loci");
+  return [NSString stringWithFormat:@"%@ (%@)", 
+    [self functionNameForIndex:FUNCTION_OF(idx)], [self pitchClassNameForIndex:TONALITY_OF(idx)]];
+}
+
+// jg? pitchClassName in ChordSeq?
+- (NSString *)bestLocusName;
+{
+  int idx=[self locusOfPath:0];
+  if (idx<VAL_MAX_LOCUS)
+    return [self locusNameForIndex:idx];
+  else
+    return nil;    
+}
+- (int)locusCount;
+{
+  return locusCount;
+}
+- (int)tonalityCount;
+{
+  return tonalityCount;
+}
+- (int)functionCount;
+{
+  return functionCount;
 }
 @end

@@ -6,7 +6,7 @@
 #import <RubatoAnalysis/ChordSequence.h>
 #import <AppKit/NSPopUpButton.h>
 #import <RubatoDeprecatedCommonKit/JGNXCompatibleUnarchiver.h>
-
+#import <Rubato/JGTitledScrollView.h>
 
 @implementation HarmoPreferences
 
@@ -36,10 +36,17 @@
 {
     if ([sender isKindOfClass:[ChordSequence class]]) {
 	int r,c;
-	
+      int pcCount=[sender pcCount];
+      int tonalityCount=[sender tonalityCount];
+      int functionCount=[sender functionCount];
+      int modeCount=[sender modeCount];
+      int modelessFunctionCount=[sender modelessFunctionCount];
+      int locusCount=tonalityCount*functionCount;
+
+      // jg? NEWHARMO resize Matrices 
 	/* set general tonality values */
-	for (r=0; r<2; r++)
-	    for (c=0; c<2; c++)
+	for (r=0; r<modeCount; r++)
+	    for (c=0; c<modeCount; c++)
 		[[myModeDistanceMatrix cellAtRow:r column:c] setDoubleValue:[sender modeDistanceFrom:r to:c]];
 	for (r=0; r<2; r++)
 	    for (c=0; c<7; c++)
@@ -51,15 +58,15 @@
 	[myLocalLevelField setDoubleValue:[sender localLevel]];
 	[myGlobalLevelField setDoubleValue:[sender globalLevel]];
 	[self setMethod:[sender method]];
-	for (r=0; r<MAX_FUNCTION; r++)
-	    for (c=0; c<MAX_TONALITY; c++)
+	for (r=0; r<functionCount; r++)
+	    for (c=0; c<pcCount; c++)
 		[[myFunctionScaleMatrix cellAtRow:r column:c] setDoubleValue:[sender scaleValueAt:r:c]];
-	for (r=0; r<3; r++)
-	    for (c=0; c<3; c++) {
-		[[myFunctionDistanceMatrix cellAtRow:r column:c] setDoubleValue:[sender functionDistanceFrom:r to:c]];
+	for (r=0; r<modelessFunctionCount; r++)
+	    for (c=0; c<modelessFunctionCount; c++) {
+		[[myModelessFunctionDistanceMatrix cellAtRow:r column:c] setDoubleValue:[sender functionDistanceFrom:r to:c]];
 	    }
-	for (c=0; c<MAX_LOCUS; c++)
-	    [[myFunctionSwitchMatrix cellWithTag:c] setIntValue:[sender useFunctionAtLocus:c]];
+	for (c=0; c<locusCount; c++)
+          [[myFunctionSwitchMatrix cellAtRow:FUNCTION_OF(c) column:TONALITY_OF(c)] setIntValue:[sender useFunctionAtLocus:c]];
 	
 	/* set weight specific values */
 	[myWeightProfileField setDoubleValue:[sender weightProfile]];
@@ -92,10 +99,17 @@
     id aChordSequence = [myOwner chordSequence]; // jg is here also possible sender instead of myOwner? 
 // called by HarmoRubetteDriver:doCalculateRiemanLogic. myOwner is also probably
 // this HarmoRubetteDriver, because the Method is not defined anywhere else. 
+
+    int pcCount=[aChordSequence pcCount];
+    int tonalityCount=[aChordSequence tonalityCount];
+    int functionCount=[aChordSequence functionCount];
+    int modeCount=[aChordSequence modeCount];
+    int modelessFunctionCount=[aChordSequence modelessFunctionCount];
+    int locusCount=tonalityCount*functionCount;
     
     /* set general tonality values */
-    for (r=0; r<2; r++)
-	for (c=0; c<2; c++)
+    for (r=0; r<modeCount; r++)
+	for (c=0; c<modeCount; c++)
 	    [aChordSequence setModeDistance:
 		[[myModeDistanceMatrix cellAtRow:r column:c]doubleValue] from:r to:c];
     for (r=0; r<2; r++)
@@ -108,17 +122,17 @@
     [aChordSequence setSemitoneUnit:[mySemitoneUnitField doubleValue]];
     [aChordSequence setLocalLevel:[myLocalLevelField doubleValue]];
     [aChordSequence setGlobalLevel:[myGlobalLevelField doubleValue]];
-    for (r=0; r<MAX_FUNCTION; r++)
-	for (c=0; c<MAX_TONALITY; c++) 
+    for (r=0; r<functionCount; r++)
+	for (c=0; c<pcCount; c++) 
 	    [aChordSequence setScaleValue:
 		[[myFunctionScaleMatrix cellAtRow:r column:c]doubleValue] at:r:c];
-    for (r=0; r<3; r++)
-	for (c=0; c<3; c++)
+    for (r=0; r<modelessFunctionCount; r++)
+	for (c=0; c<modelessFunctionCount; c++)
 	    [aChordSequence setFunctionDistance:
-		[[myFunctionDistanceMatrix cellAtRow:r column:c]doubleValue] from:r to:c];
-    for (c=0; c<MAX_LOCUS; c++)
+		[[myModelessFunctionDistanceMatrix cellAtRow:r column:c]doubleValue] from:r to:c];
+    for (c=0; c<locusCount; c++)
 	[aChordSequence setUseFunction:
-	    [[myFunctionSwitchMatrix cellWithTag:c]intValue] atLocus:c];
+	    [[myFunctionSwitchMatrix cellAtRow:FUNCTION_OF(c) column:TONALITY_OF(c)] intValue] atLocus:c];
 
     [aChordSequence setMethod:[self method]];
     
@@ -354,7 +368,7 @@
     [self setParameter:GLOBAL_LEVEL toDoubleValue:[myGlobalLevelField doubleValue]];
 
     [self setParameter:FUNC_SCALE_MATRIX toMatrix:myFunctionScaleMatrix];
-    [self setParameter:FUNC_DIST_MATRIX toMatrix:myFunctionDistanceMatrix];
+    [self setParameter:FUNC_DIST_MATRIX toMatrix:myModelessFunctionDistanceMatrix];
     [self setParameter:FUNC_SWITCH_MATRIX toMatrix:myFunctionSwitchMatrix];
     
     [self setParameter:HARMO_CALC_METHOD toIntValue:[self method]];
@@ -414,7 +428,7 @@
     [myGlobalLevelField setDoubleValue:[self doubleValueOfParameter:GLOBAL_LEVEL]];
 
     [self getParameter:FUNC_SCALE_MATRIX forMatrix:myFunctionScaleMatrix];
-    [self getParameter:FUNC_DIST_MATRIX forMatrix:myFunctionDistanceMatrix];
+    [self getParameter:FUNC_DIST_MATRIX forMatrix:myModelessFunctionDistanceMatrix];
     [self getParameter:FUNC_SWITCH_MATRIX forMatrix:myFunctionSwitchMatrix];
     
     [self setMethod:[self intValueOfParameter:HARMO_CALC_METHOD]];
@@ -497,11 +511,20 @@
   }
 }
 
-
+// jg? problematic in NEWHARMO ! (there is no top object in the archive, even no object!)
+// better: allow copy paste of table data from text file.
+// the matrices of the current interface must match the saved file.
 - writeRiemannPrefsToStream:(NSArchiver *)stream;
 {
     int r,c, iVal;
     double dVal;
+
+    int functionCount1, functionCount2, pcCount, tonalityCount, modelessFunctionCount, locusCount;
+    [myFunctionScaleMatrix getNumberOfRows:&functionCount1 columns:&pcCount];
+    modelessFunctionCount=[myModelessFunctionDistanceMatrix numberOfRows];
+    [myFunctionSwitchMatrix getNumberOfRows:&functionCount2 columns:&tonalityCount];
+    locusCount=functionCount2*tonalityCount;
+
     /* get the RiemannMatrix specific values */
     dVal = [myPitchReferenceField doubleValue];
     [stream encodeValueOfObjCType:"d" at:&dVal];
@@ -511,18 +534,18 @@
     [stream encodeValueOfObjCType:"d" at:&dVal];
     dVal = [myGlobalLevelField doubleValue];
     [stream encodeValueOfObjCType:"d" at:&dVal];
-    for (r=0; r<MAX_FUNCTION; r++)
-	for (c=0; c<MAX_TONALITY; c++) {
+    for (r=0; r<functionCount1; r++)
+	for (c=0; c<pcCount; c++) {
 	    dVal = [[myFunctionScaleMatrix cellAtRow:r column:c]doubleValue];
 	    [stream encodeValueOfObjCType:"d" at:&dVal];
 	}
-    for (r=0; r<3; r++)
-	for (c=0; c<3; c++) {
-	    dVal = [[myFunctionDistanceMatrix cellAtRow:r column:c]doubleValue];
+    for (r=0; r<modelessFunctionCount; r++)
+	for (c=0; c<modelessFunctionCount; c++) {
+	    dVal = [[myModelessFunctionDistanceMatrix cellAtRow:r column:c]doubleValue];
 	    [stream encodeValueOfObjCType:"d" at:&dVal];
 	}
-    for (c=0; c<MAX_LOCUS; c++) {
-	iVal = [[myFunctionSwitchMatrix cellWithTag:c]intValue];
+    for (c=0; c<functionCount2*tonalityCount; c++) {
+	iVal = [[myFunctionSwitchMatrix cellAtRow:FUNCTION_OF(c) column:TONALITY_OF(c)] intValue];
 	[stream encodeValueOfObjCType:"i" at:&iVal];
     }
     
@@ -531,15 +554,16 @@
     return self;
 }
 
+// jg? problematic in NEWHARMO !
 - writeTonalityPrefsToStream:(NSArchiver *)stream;
 {
     int r,c;
     double dVal;
-    
+    int modeCount=[myModeDistanceMatrix numberOfRows];
     
     /* get general tonality values */
-    for (r=0; r<2; r++)
-	for (c=0; c<2; c++) {
+    for (r=0; r<modeCount; r++)
+	for (c=0; c<modeCount; c++) {
 	    dVal = [[myModeDistanceMatrix cellAtRow:r column:c]doubleValue];
 	    [stream encodeValueOfObjCType:"d" at:&dVal];
 	}
@@ -598,7 +622,13 @@
 {
     int r,c, iVal;
     double dVal;
-    
+
+    int functionCount1, functionCount2, pcCount, tonalityCount, modelessFunctionCount, locusCount;
+    [myFunctionScaleMatrix getNumberOfRows:&functionCount1 columns:&pcCount];
+    modelessFunctionCount=[myModelessFunctionDistanceMatrix numberOfRows];
+    [myFunctionSwitchMatrix getNumberOfRows:&functionCount2 columns:&tonalityCount];
+    locusCount=functionCount2*tonalityCount;
+
     /* set the RiemannMatrix specific values */
     [stream decodeValueOfObjCType:"d" at:&dVal];
     [myPitchReferenceField setDoubleValue:dVal];
@@ -608,19 +638,19 @@
     [myLocalLevelField setDoubleValue:dVal];
     [stream decodeValueOfObjCType:"d" at:&dVal];
     [myGlobalLevelField setDoubleValue:dVal];
-    for (r=0; r<MAX_FUNCTION; r++)
-	for (c=0; c<MAX_TONALITY; c++) {
+    for (r=0; r<functionCount1; r++)
+	for (c=0; c<pcCount; c++) {
 	    [stream decodeValueOfObjCType:"d" at:&dVal];
 	    [[myFunctionScaleMatrix cellAtRow:r column:c] setDoubleValue:dVal];
 	}
-    for (r=0; r<3; r++)
-	for (c=0; c<3; c++) {
+    for (r=0; r<modelessFunctionCount; r++)
+	for (c=0; c<modelessFunctionCount; c++) {
 	    [stream decodeValueOfObjCType:"d" at:&dVal];
-	    [[myFunctionDistanceMatrix cellAtRow:r column:c] setDoubleValue:dVal];
+	    [[myModelessFunctionDistanceMatrix cellAtRow:r column:c] setDoubleValue:dVal];
 	}
-    for (c=0; c<MAX_LOCUS; c++) {
+    for (c=0; c<locusCount; c++) {
 	[stream decodeValueOfObjCType:"i" at:&iVal];
-	[[myFunctionSwitchMatrix cellWithTag:c] setIntValue:iVal];
+	[[myFunctionSwitchMatrix cellAtRow:FUNCTION_OF(c) column:TONALITY_OF(c)] setIntValue:iVal];
     }
         
     [stream decodeValueOfObjCType:"i" at:&iVal];
@@ -632,10 +662,11 @@
 {
     int r,c;
     double dVal;
-    
+    int modeCount=[myModeDistanceMatrix numberOfRows];
+
     /* set general tonality values */
-    for (r=0; r<2; r++)
-	for (c=0; c<2; c++) {
+    for (r=0; r<modeCount; r++)
+	for (c=0; c<modeCount; c++) {
 	    [stream decodeValueOfObjCType:"d" at:&dVal];
 	    [[myModeDistanceMatrix cellAtRow:r column:c] setDoubleValue:dVal];
 	}
@@ -691,5 +722,37 @@
     return self;
 }
 
-
+- (void)setHarmoSpace:(NSDictionary *)dict;
+{
+  //  int newFunctionCount=functionCount;
+  //  int newTonalityCount=tonalityCount;
+  id entry;
+  entry=[dict objectForKey:@"PitchClasses"];
+  if (entry) {
+    [[myFunctionScaleMatrix jgTitledScrollView] setHorizontalTitles:entry];
+  }
+  entry=[dict objectForKey:@"Functions"];
+  if (entry) {
+    [[myFunctionScaleMatrix jgTitledScrollView] setVerticalTitles:entry];
+    [[myFunctionSwitchMatrix jgTitledScrollView] setVerticalTitles:entry];
+  }
+  entry=[dict objectForKey:@"Tonalities"];
+  if (entry) {
+    [[myFunctionSwitchMatrix jgTitledScrollView] setHorizontalTitles:entry];
+  }
+  entry=[dict objectForKey:@"Modes"];
+  if (entry) {
+    [[myModeDistanceMatrix jgTitledScrollView] setHorizontalTitles:entry verticalTitles:entry];
+  }
+  entry=[dict objectForKey:@"ModelessFunctions"];
+  if (entry) {
+    [[myModelessFunctionDistanceMatrix jgTitledScrollView] setHorizontalTitles:entry verticalTitles:entry];
+  }
+  
+  entry=[dict objectForKey:@"Loci"];
+  if (entry) {
+    id chordSeq=[myOwner chordSequence];
+    NSAssert([entry count]==[chordSeq tonalityCount]*[chordSeq functionCount],@"ChordSequence -setHarmoSpace: number of Loci entries does not reflect tonalityCount*functionCount");
+  }
+}  
 @end

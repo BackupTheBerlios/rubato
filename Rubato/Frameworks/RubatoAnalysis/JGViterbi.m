@@ -9,6 +9,7 @@
 
 #define psi_at(t,i) psi[(t)*N+(i)]
 
+
 static BOOL dontFreeJGViterbi=YES;
 
 void *viterbiCalloc(size_t nmemb, size_t size) {
@@ -475,6 +476,8 @@ NSString *JGViterbiSequence=@"JGViterbiSequence";
 NSString *JGViterbiMatrix=@"JGViterbiMatrix";
 NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
 
+#define VAL_MAX_LOCUS locusCount
+
 @implementation ChordSequence (JGViterbi)
 - (void)viterbiCalcBestPathUseRiemannMatrix;
 {// level matrix does not include restrictions on tonality
@@ -533,7 +536,7 @@ NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
   context->useLevelMatrix=useLevelMatrix;
 
   // set counts
-  vit->N=maxFunction*MAX_TONALITY;
+  vit->N=functionCount*tonalityCount;
   vit->T=[myChords count];
   // collect the symbols (for the number L)
   [myChords makeObjectsPerformSelector:@selector(addSymbolsToViterbiSymbols:) withObject:symbols];
@@ -560,53 +563,53 @@ NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
   int i,j;
   double *a=viterbi->a;
   int N=viterbi->N;
-  double *w=viterbiCalloc(MAX_LOCUS,sizeof(double));
+  double *w=viterbiCalloc(VAL_MAX_LOCUS,sizeof(double));
   static BOOL printDistMatrix=NO;
   if (printDistMatrix) {
     NSMutableString *str=[NSMutableString string];
-    for(i=0; i<MAX_LOCUS; i++) {
+    for(i=0; i<VAL_MAX_LOCUS; i++) {
       [str appendFormat:@"\ni=%d",i];
-      for (j=0;j<MAX_LOCUS;j++)
+      for (j=0;j<VAL_MAX_LOCUS;j++)
         [str appendFormat:@" %f",myDistanceMatrix[i][j]];
     }
    NSLog(str);
 //  NSLog([viterbi description]);
   }
 
-  for(i=0; i<MAX_LOCUS; i++) { // MAX_LOCUS==72==N
+  for(i=0; i<VAL_MAX_LOCUS; i++) { // MAX_LOCUS==72==N
     double distSum=0.0;
     double wSum=0.0;
-    double defaultVal=1.0/(double)MAX_LOCUS;
+    double defaultVal=1.0/(double)VAL_MAX_LOCUS;
     static double expScaling=-1.0; // should later be adjustable by user in preferences
     static BOOL useOld=NO;
     if (useOld) {
-      for(j=0; j<MAX_LOCUS; j++)
+      for(j=0; j<VAL_MAX_LOCUS; j++)
         distSum+=myDistanceMatrix[i][j];
       if (distSum>0.0)
-        for(j=0; j<MAX_LOCUS; j++)
+        for(j=0; j<VAL_MAX_LOCUS; j++)
           w[j]=1.0-myDistanceMatrix[i][j]/distSum;
       else
-        for(j=0; j<MAX_LOCUS; j++)
+        for(j=0; j<VAL_MAX_LOCUS; j++)
           w[j]=defaultVal;      
     } else { // accept negative values 
-      for(j=0; j<MAX_LOCUS; j++)
+      for(j=0; j<VAL_MAX_LOCUS; j++)
         w[j]=exp(expScaling*myDistanceMatrix[i][j]);
     }
     // calculate probability (sum over all transitions is one)
-    for(j=0; j<MAX_LOCUS; j++)  // (can be omitted: scaling is not relevant for the best path algorithm, but for P)
+    for(j=0; j<VAL_MAX_LOCUS; j++)  // (can be omitted: scaling is not relevant for the best path algorithm, but for P)
       wSum+=w[j];
     if (wSum>0.0)
-      for(j=0; j<MAX_LOCUS; j++)
+      for(j=0; j<VAL_MAX_LOCUS; j++)
         a_at(i,j)=w[j]/wSum;
     else
-      for(j=0; j<MAX_LOCUS; j++)
+      for(j=0; j<VAL_MAX_LOCUS; j++)
         a_at(i,j)=defaultVal;      
   }
   if (printTable){
     NSMutableString *str=[NSMutableString string];
 //    [str appendFormat:@"distSum=%f wSum=%f",distSum,wSum];    
     [str appendFormat:@"\tT\tD\tS\tt\td\ts\tT\tD\tS\tt\td\ts\n"];
-    for(j=0; j<MAX_LOCUS; j++) {
+    for(j=0; j<VAL_MAX_LOCUS; j++) {
       for(i=0; i<6; i++) {
         [str appendFormat:@"\t%f",myDistanceMatrix[i*12][j]];
       }
@@ -685,8 +688,8 @@ NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
     state=0;
     // semantics of index state in b_at(state,symbolNr):
     // first the tonality changes, then the function. (same as i in myDistanceMatrix[i][j])
-    for(i=0; i<myOwnerSequence->maxFunction; i++) {
-      for(j=0; j<myOwnerSequence->maxTonality; j++) {
+    for(i=0; i<myOwnerSequence->functionCount; i++) {
+      for(j=0; j<myOwnerSequence->tonalityCount; j++) {
         double val;
         if (usePointer)
           val=pointer[i][j];

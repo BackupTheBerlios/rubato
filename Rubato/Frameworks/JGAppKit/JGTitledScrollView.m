@@ -8,10 +8,8 @@
 
 #import "JGTitledScrollView.h"
 
-#define NOT_CORRECT 
 @implementation JGTitledScrollView
 
-#ifndef NOT_CORRECT
 - (void)awakeFromNib;
 {
   //  [super awakeFromNib]; // selector not recognised!
@@ -30,10 +28,11 @@
 - (NSScrollView *)scrollableWrapperForView:(NSView *)view;
 {// return value has retaincount 1.
   id superView=[view superview];
-  id newView=[[NSScrollView alloc] initWithFrame:[horizontalTitleView frame]];
+  id newView=[[NSScrollView alloc] initWithFrame:[view frame]];
+  [newView setDrawsBackground:NO];
   [newView setHasVerticalScroller:NO];
   [newView setHasHorizontalScroller:NO];
-  [view setFrameOrigin:NSZeroPoint]; // move to relative 0,0 
+  [view setFrameOrigin:NSZeroPoint]; // move to relative 0,0
   [view retain];
   [superView replaceSubview:view with:newView];
   [newView setDocumentView:view];
@@ -50,7 +49,7 @@
   [super reflectScrolledClipView:clipView];
   if (horizontalTitleView || verticalTitleView) {
     dr=[clipView documentRect];
-    dvr=[clipView documentVisibleRect];    
+    dvr=[clipView documentVisibleRect];
   }
   if (horizontalTitleView) {
     NSRect rect=[[horizontalTitleView documentView] frame];
@@ -62,12 +61,11 @@
     NSRect rect=[[verticalTitleView documentView] frame];
     NSPoint point=NSMakePoint([verticalTitleView documentVisibleRect].origin.x,
                               rect.origin.y + dvr.origin.y - dr.origin.y);
-    [[verticalTitleView contentView] scrollToPoint:point];    
+    [[verticalTitleView contentView] scrollToPoint:point];
   }
   if (reflectScrolledClipViewDelegate)
     [reflectScrolledClipViewDelegate scrollView:self reflectScrolledClipView:clipView];
 }
-#endif
 
 - (NSScrollView *)horizontalTitleView;
 {
@@ -82,4 +80,60 @@
   return reflectScrolledClipViewDelegate;
 }
 
+// Adjustes the matices of a contentView with titles
+- (void)setTitles:(NSArray *)titles horizontal:(BOOL)horizontal isContent:(BOOL)isContent;
+{
+  NSScrollView *titleView=isContent?self:(horizontal?horizontalTitleView:verticalTitleView);
+  if (titleView && titles) {
+    NSMatrix *mat=[titleView documentView];
+    if ([mat isKindOfClass:[NSMatrix class]]) {
+      int titleCount=[titles count];
+      int colCount,rowCount,cellCount;
+      int i;
+      [mat getNumberOfRows:&rowCount columns:&colCount];
+      cellCount=(horizontal?colCount:rowCount);
+      if (titleCount<cellCount) {
+        for (i=cellCount-1;i>=titleCount;i--)
+          (horizontal?[mat removeColumn:i]:[mat removeRow:i]);
+      }
+      for (i=0; i<titleCount; i++) {
+        NSCell *cell;
+        if (i>=cellCount)
+          (horizontal?[mat addColumn]:[mat addRow]);
+        if (!isContent) {
+          cell=[mat cellAtRow:(horizontal?0:i) column:(horizontal?i:0)];
+          [cell setStringValue:[titles objectAtIndex:i]];
+        }
+      }
+      [mat sizeToCells];
+    }
+  }
+}
+
+- (void)setHorizontalTitles:(NSArray *)titles;
+{
+  [self setTitles:titles horizontal:YES isContent:NO];
+  [self setTitles:titles horizontal:YES isContent:YES];
+}
+- (void)setVerticalTitles:(NSArray *)titles;
+{
+  [self setTitles:titles horizontal:NO isContent:NO];
+  [self setTitles:titles horizontal:NO isContent:YES];
+}
+- (void)setHorizontalTitles:(NSArray *)horizontalTitles verticalTitles:(NSArray *)verticalTitles;
+{
+  [self setHorizontalTitles:horizontalTitles];
+  [self setVerticalTitles:verticalTitles];
+}
+
 @end
+
+@implementation NSMatrix (JGTitledScrollView)
+- (JGTitledScrollView *)jgTitledScrollView;
+{
+  id view=[[self superview] superview];
+  NSParameterAssert([view isKindOfClass:[JGTitledScrollView class]]);
+  return view;
+}
+@end
+

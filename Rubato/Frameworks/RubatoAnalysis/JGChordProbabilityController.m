@@ -27,6 +27,11 @@
   [super dealloc];
 }
 
+- (NSMatrix *)probabilityMatrix;
+{
+  return probabilityMatrix;
+}
+
 - (void)setValuesForNewViterbi;
 {
   if (viterbi) {
@@ -270,9 +275,12 @@
 {
   int state=0;
   int r,c;
+  int functionCount, tonalityCount;
+  [probabilityMatrix getNumberOfRows:&functionCount columns:&tonalityCount];
+
   if (probabilityValues) {
-    for (r=0; r<MAX_FUNCTION; r++) {
-      for (c=0; c<MAX_TONALITY; c++) {
+    for (r=0; r<functionCount; r++) {
+      for (c=0; c<tonalityCount; c++) {
         probabilityValues[state]=[[probabilityMatrix cellAtRow:r column:c] doubleValue];
         state++;
       }
@@ -284,8 +292,10 @@
 {
   int state=0;
   int r,c;
-  for (r=0; r<MAX_FUNCTION; r++) {
-    for (c=0; c<MAX_TONALITY; c++) {
+  int functionCount, tonalityCount;
+  [probabilityMatrix getNumberOfRows:&functionCount columns:&tonalityCount];
+  for (r=0; r<functionCount; r++) {
+    for (c=0; c<tonalityCount; c++) {
       id dest=[probabilityMatrix cellAtRow:r column:c];
       if (probabilityValues)
         [dest setDoubleValue:probabilityValues[state]];
@@ -303,6 +313,11 @@
   if ((selectedT>0) && (selectedT<[chordSequence count]))
     chord=[chordSequence chordAt:selectedT];
   [[[harmoRubetteDriver distributor] globalInspector] setSelected:chord];
+}
+
+- (void)closeWindow;
+{
+  [window close];
 }
 
 @end

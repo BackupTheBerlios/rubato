@@ -65,16 +65,16 @@ unsigned char modTwelve(int a)
 
 int pitchClassTwelve(double pitch, double ref, double unit)
 {
-    if(unit){
-    return modTwelve(harmo_round((pitch - ref)/unit)); 
-	}
-    else
+  if(unit){
+    return modTwelve(harmo_round((pitch - ref)/unit));
+  } else
     return 0;
 }
 
+// jg: subst as instance method / usage as tonality names!
 const char* pitchClassName(int pitchClass)
 {
-    switch (modTwelve(pitchClass))
+    switch (MOD_PC(pitchClass))
     {
 	case 0:
 	return "C";
@@ -105,6 +105,7 @@ const char* pitchClassName(int pitchClass)
     }
 }
 
+// jg: subst as instance method
 const char* riemannFunctionName(int rieVal)
 {
     switch (rieVal)
@@ -143,6 +144,8 @@ const char* riemannFunctionName(int rieVal)
     return myShiftBits;
 }*/
 
+// jg: see TONALITY_OF(index), FUNCTION_OF(index) in HarmoTypes.h for
+//     a definition that repects locusCount, tonalityCount
 RiemannLocus locusOf(int index)
 {
     RiemannLocus retVal;

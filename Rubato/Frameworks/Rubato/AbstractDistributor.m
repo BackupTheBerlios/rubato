@@ -1,9 +1,12 @@
 /* Distributor.m */
 /* Version Control:
-   $Header: /home/xubuntu/berlios_backup/github/tmp-cvs/rubato/Repository/Rubato/Frameworks/Rubato/AbstractDistributor.m,v 1.1 2002/08/07 13:14:10 garbers Exp $
+   $Header: /home/xubuntu/berlios_backup/github/tmp-cvs/rubato/Repository/Rubato/Frameworks/Rubato/AbstractDistributor.m,v 1.2 2002/10/05 01:21:20 garbers Exp $
    $Log: AbstractDistributor.m,v $
-   Revision 1.1  2002/08/07 13:14:10  garbers
-   Initial revision
+   Revision 1.2  2002/10/05 01:21:20  garbers
+   Changed the Userinterface of HarmoRubette to be flexible in HarmoSpace.
+
+   Revision 1.1.1.1  2002/08/07 13:14:10  garbers
+   Initial import
 
    Revision 1.1.1.1  2001/05/04 16:23:50  jg
    OSX build 1
@@ -494,6 +497,19 @@
   NSDictionary *infoDict=[bundle infoDictionary];
   id/*<RubetteBundlePrincipalClass>*/ pc=nil;
   [bundle load]; // this imports the symbols of the bundle
+
+  // load Patch in same Directory or in Directory where main bundle is.
+  if (bundle) {
+    NSString *patchPath=[[bundle bundlePath] stringByAppendingString:@".patch"];
+    NSBundle *patchBundle=[NSBundle bundleWithPath:patchPath];
+    if (!patchBundle) {
+      patchPath=[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[patchPath lastPathComponent]];
+      patchBundle=[NSBundle bundleWithPath:patchPath];      
+    }
+    if (patchBundle)
+      [patchBundle principalClass];
+  }
+  
   if (infoDict) {
     id rubetteLoaderName=[infoDict objectForKey:@"RubetteBundlePrincipalClass"];
     if (rubetteLoaderName && [rubetteLoaderName isKindOfClass:[NSString class]])

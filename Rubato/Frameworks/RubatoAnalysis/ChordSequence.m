@@ -12,9 +12,9 @@
 //#define VAL_MAX_TONALITY MAX_TONALITY
 //#define VAL_MAX_FUNCTION MAX_FUNCTION
 //#define VAL_MAX_LOCUS MAX_LOCUS
-#define VAL_MAX_TONALITY maxTonality
-#define VAL_MAX_FUNCTION maxFunction
-#define VAL_MAX_LOCUS maxLocus
+#define VAL_MAX_TONALITY tonalityCount
+#define VAL_MAX_FUNCTION functionCount
+#define VAL_MAX_LOCUS locusCount
 
 /* some global variables/initialisation tables of this class */
 /* function values of chromatic scale tones */
@@ -82,6 +82,18 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 #endif
 }
 
+- (void)deallocModalitySpace;
+{
+#ifdef  CHORDSEQ_DYN
+  if (myModelessFunctionDist)
+    free(myModelessFunctionDist);
+  myModelessFunctionDist=NULL;
+  if (myModeDist)
+    free(myModeDist);
+  myModeDist=NULL;
+#endif
+}
+
 #define MALLOC2(carr,N,M,type) carr=malloc((N)*sizeof(type *)+(N)*(M)*sizeof(type)); \
 { int carri; for (carri=0;carri<N;carri++) carr[carri]=((type *)(carr+(N)))+carri*(M);}
 
@@ -96,19 +108,18 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
   }}
 
 
-
 - (void)allocFunctionScale:(double **)otherFunctionScale useFunctionList:(BOOL *)otherUseFunctionList distanceMatrix:(double **)otherDistanceMatrix doInit:(BOOL)doInit;
 {
   [self deallocHarmoSpace];
 #ifdef  CHORDSEQ_DYN
-  MALLOC2(myFunctionScale,VAL_MAX_FUNCTION,VAL_MAX_TONALITY,double);
+  MALLOC2(myFunctionScale,VAL_MAX_FUNCTION,pcCount,double);
   myUseFunctionList=malloc(VAL_MAX_LOCUS*sizeof(BOOL));
   MALLOC2(myDistanceMatrix,VAL_MAX_LOCUS,VAL_MAX_LOCUS,double);
 #endif
   if (doInit) {
     int i,j;
     for(i=0; i<VAL_MAX_FUNCTION; i++) {
-      for(j=0; j<VAL_MAX_TONALITY; j++) {
+      for(j=0; j<pcCount; j++) {
         myFunctionScale[i][j]=(otherFunctionScale ? otherFunctionScale[i][j] : 0.0);
       }
     }
@@ -121,9 +132,55 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
   }
 }
 
+- (void)allocModelessFunctionDist:(double **)otherModelessFunctionDist doInit:(BOOL)doInit;
+{
+#ifdef  CHORDSEQ_DYN
+  if (myModelessFunctionDist)
+    free(myModelessFunctionDist);
+  MALLOC2(myModelessFunctionDist,modelessFunctionCount,modelessFunctionCount,double);
+#endif
+  if (doInit) {
+    int i,j;
+    for(i=0; i<modelessFunctionCount; i++) {
+      for(j=0; j<modelessFunctionCount; j++) {
+        myModelessFunctionDist[i][j]=(otherModelessFunctionDist ? otherModelessFunctionDist[i][j] : 0.0);
+      }
+    }
+  }
+}
+- (void)allocModeDist:(double **)otherModeDist doInit:(BOOL)doInit;
+{
+#ifdef  CHORDSEQ_DYN
+  if (myModeDist)
+    free(myModeDist);
+  MALLOC2(myModeDist,modeCount,modeCount,double);
+#endif
+  if (doInit) {
+    int i,j;
+    for(i=0; i<modeCount; i++) {
+      for(j=0; j<modeCount; j++) {
+        myModeDist[i][j]=(otherModeDist ? otherModeDist[i][j] : 0.0);
+      }
+    }
+  }
+}
+
+- (void)allocModelessFunctionDist:(double **)otherModelessFunctionDist modeDist:(double **)otherModeDist doInit:(BOOL)doInit;
+{
+  [self allocModelessFunctionDist:otherModelessFunctionDist doInit:doInit];
+  [self allocModeDist:otherModeDist doInit:doInit];
+}
+
+- (void)allocNollMatrix:(double ***)otherNollMatrix doInit:(BOOL)doInit;
+{
+#ifdef  CHORDSEQ_DYN
+  if (myNollMatrix)
+    free(myNollMatrix);
+  MALLOC3(myNollMatrix,8,12,43,double);
+#endif
+}
 - init;
 {
-    int i, j;
     [super init];
 
     // pure c arrays
@@ -131,17 +188,26 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     myFunctionScale=NULL;
     myUseFunctionList=NULL;
     myDistanceMatrix=NULL;
+    myModelessFunctionDist=NULL;
+    myModeDist=NULL;
+    functionCount=0;
+    tonalityCount=0;
+    locusCount=0;
+    modeCount=0;
+    modelessFunctionCount=0;
+#else
+    functionCount=MAX_FUNCTION;
+    tonalityCount=MAX_TONALITY;
+    locusCount=functionCount*tonalityCount;
+    modeCount=MAX_MODE;
+    modelessFunctionCount=MAX_MODELESS_FUNCTION; 
 #endif
+    pcCount=12;
     harmonicProfile=NULL;
     fsBlocks=[[NSMutableDictionary alloc] init];
-    myNollMatrix = calloc(8, sizeof(double **));
-    for (i=0; i<8; i++) {
-	myNollMatrix[i] = calloc(12, sizeof(double *));
-	for (j=0; j<12; j++)
-	    myNollMatrix[i][j] = calloc(43, sizeof(double));
-    }
     myChords = [[[OrderedList alloc]init]ref];
-    [self resetToDefaultValues]; // initilizes maxTonality,...
+    [self allocNollMatrix:NULL doInit:NO];
+    [self resetToDefaultValues]; // initilizes tonalityCount,...
     [self invalidate];
 
   calcBestPathSelector=@selector(viterbiCalcBestPathUseLevelMatrix);
@@ -150,7 +216,6 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 
 - (void)dealloc;
 {
-    int i, j;
     /* do NXReference houskeeping */
   
     [myChords release]; myChords = nil;
@@ -158,14 +223,14 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     [viterbiContext release];
 
     // pure c arrays
-    for (i=0; i<8; i++) {
-      for (j=0; j<12; j++)
-        free(myNollMatrix[i][j]);
-      free(myNollMatrix[i]);
-    }
+#ifdef CHORDSEQ_DYN
+    if (myNollMatrix)
+      free(myNollMatrix);
+#endif
     if (harmonicProfile)
       free(harmonicProfile);
     [self deallocHarmoSpace];
+    [self deallocModalitySpace];
     [fsBlocks release];
     [super dealloc];
 }
@@ -182,38 +247,36 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     int i, j, classVersion = [aDecoder versionForClassName:NSStringFromClass([ChordSequence class])];
 //    [super initWithCoder:aDecoder];
     /* class-specific code goes here */
-    if (!myNollMatrix) {
-	myNollMatrix = calloc(8, sizeof(double **));
-	for (i=0; i<8; i++) {
-	    myNollMatrix[i] = calloc(12, sizeof(double *));
-	    for (j=0; j<12; j++)
-		myNollMatrix[i][j] = calloc(43, sizeof(double));
-	}
-    }
+    [self allocNollMatrix:NULL doInit:NO];
 
     if (classVersion<2) {
-      maxTonality=MAX_TONALITY;
-      maxFunction=MAX_FUNCTION;
+      tonalityCount=MAX_TONALITY;
+      functionCount=MAX_FUNCTION;
+      modeCount=2;
+      modelessFunctionCount=3;
     } else {
-      [aDecoder decodeValueOfObjCType:"i" at:&maxFunction];
-      [aDecoder decodeValueOfObjCType:"i" at:&maxTonality];
+      [aDecoder decodeValueOfObjCType:"i" at:&functionCount];
+      [aDecoder decodeValueOfObjCType:"i" at:&tonalityCount];
+      [aDecoder decodeValueOfObjCType:"i" at:&modeCount];
+      [aDecoder decodeValueOfObjCType:"i" at:&modelessFunctionCount];
     }
-    maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+    locusCount=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
     [self allocFunctionScale:NULL useFunctionList:NULL distanceMatrix:NULL doInit:NO];
+    [self allocModelessFunctionDist:NULL modeDist:NULL doInit:NO];
 
     myChords = [[[aDecoder decodeObject] retain] ref];
     
     /* read Riemann Function Values */
     for(i=0;i<VAL_MAX_LOCUS;i++) {
-	[aDecoder decodeValueOfObjCType:"d" at:&myFunctionScale[i/maxTonality][i%maxTonality]];
+	[aDecoder decodeValueOfObjCType:"d" at:&myFunctionScale[i/tonalityCount][i%tonalityCount]];
 	[aDecoder decodeValueOfObjCType:"c" at:&myUseFunctionList[i]];
     }
-    for(i=0;i<9;i++)
-	[aDecoder decodeValueOfObjCType:"d" at:&myFunctionDist[i/3][i%3]];
+    for(i=0;i<modelessFunctionCount*modelessFunctionCount;i++)
+	[aDecoder decodeValueOfObjCType:"d" at:&myModelessFunctionDist[i/modelessFunctionCount][i%modelessFunctionCount]];
 
     /* read Tonlity Values */
-    for(i=0;i<4;i++)
-	[aDecoder decodeValueOfObjCType:"d" at:&myModeDist[i/2][i%2]];
+    for(i=0;i<modeCount*modeCount;i++)
+	[aDecoder decodeValueOfObjCType:"d" at:&myModeDist[i/modeCount][i%modeCount]];
 
     for(i=0;i<14;i++)
 	[aDecoder decodeValueOfObjCType:"d" at:&myTonalityDist[i/7][i%7]];
@@ -240,7 +303,6 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     [aDecoder decodeValueOfObjCType:"c" at:&isDistanceCalculated];
     [aDecoder decodeValueOfObjCType:"c" at:&isBestPathCalculated];
     
-    
     if (classVersion) {
 	[aDecoder decodeValueOfObjCType:"i" at:&myMethod];
 	for(i=0;i<56;i++)
@@ -264,24 +326,26 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     /* class-specific archiving code goes here */
 
   if ([aCoder versionForClassName:@"ChordSequence"]>=2) {
-    [aCoder encodeValueOfObjCType:"i" at:&maxFunction];
-    [aCoder encodeValueOfObjCType:"i" at:&maxTonality];
+    [aCoder encodeValueOfObjCType:"i" at:&functionCount];
+    [aCoder encodeValueOfObjCType:"i" at:&tonalityCount];
+    [aCoder encodeValueOfObjCType:"i" at:&modeCount];
+    [aCoder encodeValueOfObjCType:"i" at:&modelessFunctionCount];
   }
 
   [aCoder encodeObject:myChords];
     
     /* write Riemann Function Values */
     for(i=0;i<VAL_MAX_LOCUS;i++) {
-	[aCoder encodeValueOfObjCType:"d" at:&myFunctionScale[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY]];
+	[aCoder encodeValueOfObjCType:"d" at:&myFunctionScale[i/pcCount][i%VAL_MAX_TONALITY]];
 	[aCoder encodeValueOfObjCType:"c" at:&myUseFunctionList[i]];
     }
-    for(i=0;i<9;i++)
-	[aCoder encodeValueOfObjCType:"d" at:&myFunctionDist[i/3][i%3]];
+    for(i=0;i<modelessFunctionCount*modelessFunctionCount;i++)
+	[aCoder encodeValueOfObjCType:"d" at:&myModelessFunctionDist[i/modelessFunctionCount][i%modelessFunctionCount]];
 
 
     /* write Tonlity Values */
-    for(i=0;i<4;i++)
-	[aCoder encodeValueOfObjCType:"d" at:&myModeDist[i/2][i%2]];
+    for(i=0;i<modeCount*modeCount;i++)
+	[aCoder encodeValueOfObjCType:"d" at:&myModeDist[i/modeCount][i%modeCount]];
 
     for(i=0;i<14;i++)
 	[aCoder encodeValueOfObjCType:"d" at:&myTonalityDist[i/7][i%7]];
@@ -358,19 +422,21 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     int i;
 
-  maxTonality=MAX_TONALITY;
-  maxFunction=MAX_FUNCTION;
-  maxLocus=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+  tonalityCount=MAX_TONALITY;
+  functionCount=MAX_FUNCTION;
+  locusCount=VAL_MAX_FUNCTION*VAL_MAX_TONALITY;
+  modelessFunctionCount=MAX_MODELESS_FUNCTION;
 
   [self allocFunctionScale:NULL useFunctionList:NULL distanceMatrix:NULL doInit:YES];
+  [self allocModelessFunctionDist:NO doInit:NO];
 
   for(i=0;i<VAL_MAX_LOCUS;i++) {
-	myFunctionScale[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY] = funScale[i/VAL_MAX_TONALITY][i%VAL_MAX_TONALITY];
+	myFunctionScale[i/pcCount][i%VAL_MAX_TONALITY] = funScale[i/pcCount][i%VAL_MAX_TONALITY];
 	myUseFunctionList[i] = YES;
     }
 
-    for(i=0;i<9;i++)
-	myFunctionDist[i/3][i%3] = funDist[i/3][i%3];
+    for(i=0;i<modelessFunctionCount*modelessFunctionCount;i++)
+	myModelessFunctionDist[i/modelessFunctionCount][i%modelessFunctionCount] = funDist[i/modelessFunctionCount][i%modelessFunctionCount];
     
     [self invalidate];
     return self;
@@ -380,8 +446,10 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     int i;
 
-    for(i=0;i<4;i++)
-	myModeDist[i/2][i%2] = modeDist[i/2][i%2];
+    modeCount=MAX_MODE;
+    [self allocModeDist:NULL doInit:NO];
+    for(i=0;i<modeCount*modeCount;i++)
+	myModeDist[i/modeCount][i%modeCount] = modeDist[i/modeCount][i%modeCount];
 
     for(i=0;i<14;i++)
 	myTonalityDist[i/7][i%7] = tonalityDist[i/7][i%7];
@@ -579,7 +647,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     
     function = mod(function, VAL_MAX_FUNCTION);
-    tone = mod(tone, VAL_MAX_TONALITY);
+    tone = mod(tone, pcCount);
     return myFunctionScale[function][tone];
 }
 
@@ -587,7 +655,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 {
     if([self scaleValueAt:function:tone] != value){
 	function = mod(function, VAL_MAX_FUNCTION);
-	tone = mod(tone, VAL_MAX_TONALITY);
+	tone = mod(tone, pcCount);
 	myFunctionScale[function][tone]=value;
 	[self invalidate];
     }
@@ -716,10 +784,10 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
         int i,j,k;
         if (harmonicProfile)
           free(harmonicProfile);
-        MALLOC3(harmonicProfile,maxFunction,maxTonality,12,double);
-        for (i=0; i<maxFunction; i++)
-          for (j=0; j<maxTonality; j++)
-            for (k=0; k<12; k++) {
+        MALLOC3(harmonicProfile,functionCount,tonalityCount,pcCount,double);
+        for (i=0; i<functionCount; i++)
+          for (j=0; j<tonalityCount; j++)
+            for (k=0; k<pcCount; k++) {
               id blockVal=[block value:NUMBER(i) value:NUMBER(j) value:NUMBER(k)];
               if ([blockVal respondsToSelector:@selector(doubleValue)])
                 harmonicProfile[i][j][k]=[blockVal doubleValue];
@@ -769,17 +837,17 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 
 - (double)functionDistanceFrom:(int)startFunction to:(int)targetFunction;
 {
-    startFunction = mod(startFunction,3);
-    targetFunction = mod(targetFunction,3);
-    return myFunctionDist[startFunction][targetFunction];
+    startFunction = mod(startFunction,modelessFunctionCount);
+    targetFunction = mod(targetFunction,modelessFunctionCount);
+    return myModelessFunctionDist[startFunction][targetFunction];
 }
 
 - setFunctionDistance:(double)dist from:(int)startFunction to:(int)targetFunction;
 {
-    startFunction = mod(startFunction,3);
-    targetFunction = mod(targetFunction,3);
-    if (myFunctionDist[startFunction][targetFunction] != dist) {
-	myFunctionDist[startFunction][targetFunction] = dist;
+    startFunction = mod(startFunction,modelessFunctionCount);
+    targetFunction = mod(targetFunction,modelessFunctionCount);
+    if (myModelessFunctionDist[startFunction][targetFunction] != dist) {
+	myModelessFunctionDist[startFunction][targetFunction] = dist;
 	[self invalidate];
     }
     return self;
@@ -787,15 +855,15 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 
 - (double)modeDistanceFrom:(int)startMode to:(int)targetMode;
 {
-    startMode = mod(startMode,2);
-    targetMode = mod(targetMode,2);
+    startMode = mod(startMode,modeCount);
+    targetMode = mod(targetMode,modeCount);
     return myModeDist[startMode][targetMode];
 }
 
 - setModeDistance:(double)dist from:(int)startMode to:(int)targetMode;
 {
-    startMode = mod(startMode,2);
-    targetMode = mod(targetMode,2);
+    startMode = mod(startMode,modeCount);
+    targetMode = mod(targetMode,modeCount);
     if (myModeDist[startMode][targetMode] != dist) {
 	myModeDist[startMode][targetMode] = dist;
 	[self invalidate];
@@ -841,7 +909,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     return self;
 }
 
-
+// jg? NEWHARMO unchanged?
 - (double)tonalityDistanceFrom:(int)startTonality to:(int)targetTonality;
 {
     int diff = modTwelve(targetTonality-startTonality);
@@ -852,6 +920,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 	return myTonalityDist[1][12-diff];
 }
 
+// jg? NEWHARMO unchanged?
 - setTonalityDistance:(double)dist from:(int)startTonality to:(int)targetTonality;
 {
     int diff = modTwelve(targetTonality-startTonality);
@@ -1008,26 +1077,26 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 				(int)targetFunction:(int)targetMode:(int)targetTonality;
 {
     int row=0, col=0;
-    targetTonality = modTwelve(targetTonality);
+    targetTonality = TONALITY_RANGE(targetTonality);
 
-    startMode = mod(startMode,2);
-    targetMode = mod(targetMode,2);
-    startFunction = mod(startFunction,3);
-    targetFunction = mod(targetFunction,3);
+    startMode = mod(startMode,modeCount);
+    targetMode = mod(targetMode,modeCount);
+    startFunction = mod(startFunction,modelessFunctionCount);
+    targetFunction = mod(targetFunction,modelessFunctionCount);
 
     for (col=0; col<7; col++) {
-	if (modTwelve(startTonality + col*5) == targetTonality) {
+	if (TONALITY_RANGE(startTonality + col*5) == targetTonality) {
 	    row = 0;
 	    break;
 	}
-	if (modTwelve(startTonality + col*7) == targetTonality) {
+	if (TONALITY_RANGE(startTonality + col*7) == targetTonality) {
 	    row = 1;
 	    break;
 	}
     }
     
 	
-    return  (myFunctionDist[startFunction][targetFunction]+ 
+    return  (myModelessFunctionDist[startFunction][targetFunction]+ 
 	    myModeDist[startMode][targetMode]+  
 	    myTonalityDist[row][col])*myTransitionProfile; 
 }
@@ -1035,9 +1104,12 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 /* distance calculation between two points in Riemann-Locus space */
 - (double)calcDistanceFrom:(int)startLocus to:(int)targetLocus;
 {
-    return [self calcDistanceFrom:	
-	    mod(locusOf(startLocus).RieVal,3): (locusOf(startLocus).RieVal<3 ? 0 : 1): locusOf(startLocus).RieTon 
-	to: mod(locusOf(targetLocus).RieVal,3):(locusOf(targetLocus).RieVal<3 ? 0 : 1):locusOf(targetLocus).RieTon];
+    return [self calcDistanceFrom:mod(FUNCTION_OF(startLocus),modelessFunctionCount)
+                                 :(FUNCTION_OF(startLocus)<modelessFunctionCount ? 0 : 1)
+                                 : TONALITY_OF(startLocus)
+                               to: mod(FUNCTION_OF(targetLocus),modelessFunctionCount)
+                                 :(FUNCTION_OF(targetLocus) <modelessFunctionCount ? 0 : 1)
+                                 :TONALITY_OF(targetLocus)];
 }
 
 - (double)distanceFrom:(int) startLocus to:(int)targetLocus;
@@ -1556,14 +1628,73 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     return (double ***)myNollMatrix;
 }
 
-
-- (void)setFunctionCount:(int)fuCount tonalityCount:(int)tonCount; // NEWHARMO
+- (NSDictionary *)harmoSpace;
 {
-#warning todo
-  // jg NEWHARMO ToDo
+  return harmoSpace;
 }
+
+- (void)setHarmoSpace:(NSDictionary *)dict;
+{
+//  int newFunctionCount=functionCount;
+//  int newTonalityCount=tonalityCount;
+  id entry;
+  [dict retain];
+  [harmoSpace release];
+  harmoSpace=dict;
+  entry=[dict objectForKey:@"Functions"];
+  if (entry) 
+    functionCount=[entry count];
+  entry=[dict objectForKey:@"Tonalities"];
+  if (entry)
+    tonalityCount=[entry count];
+  entry=[dict objectForKey:@"Modes"];
+  if (entry)
+    modeCount=[entry count];
+  entry=[dict objectForKey:@"ModelessFunctions"];
+  if (entry)
+    modelessFunctionCount=[entry count];
+  entry=[dict objectForKey:@"Pitches"];
+  if (entry)
+    pcCount=[entry count];
+
+  locusCount=tonalityCount*functionCount;
+  entry=[dict objectForKey:@"Loci"];
+  if (entry)
+    NSAssert([entry count]==locusCount,@"ChordSequence -setHarmoSpace: number of Loci entries does not reflect tonalityCount*functionCount");
+  [self allocFunctionScale:NULL useFunctionList:NULL distanceMatrix:NULL doInit:YES]; // need all three?
+  [self allocModelessFunctionDist:NULL modeDist:NULL doInit:YES];
+//  - (void)allocNollMatrix:(double ***)otherNollMatrix doInit:(BOOL)doInit;
+  [self invalidate];
+}
+
+
 - (NSMutableDictionary *)fsBlocks;
 {
   return fsBlocks;
+}
+
+- (int)locusCount;
+{
+  return locusCount;
+}
+- (int)tonalityCount;
+{
+  return tonalityCount;
+}
+- (int)functionCount;
+{
+  return functionCount;
+}
+- (int)modeCount;
+{
+  return modeCount;
+}
+- (int)modelessFunctionCount;
+{
+  return modelessFunctionCount;
+}
+- (int)pcCount;
+{
+  return pcCount;
 }
 @end

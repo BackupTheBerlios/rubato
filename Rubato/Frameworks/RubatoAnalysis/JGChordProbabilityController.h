@@ -32,6 +32,9 @@
     JGViterbi *viterbi;
 }
 + (id)newInstanceWithDefaultNib;
+
+- (NSMatrix *)probabilityMatrix;
+
 - (void)setValuesForNewViterbi;
 - (void)setViterbi:(JGViterbi *)newViterbi;
 - (IBAction)showWindow:(id)sender;
@@ -49,7 +52,6 @@
 - (void)updateSelectionOfComboBox:(NSComboBox *)comboBox;
 - (void)setInputEnabled:(BOOL)yn;
 - (void)updateDataAndViews;
-
 @end
 
 @interface JGChordProbabilityController (HarmoRubetteSpecific)
@@ -58,4 +60,6 @@
 - (void)setValuesWithMatrix;
 - (void)updateViewsWithData;
 - (void)updateInspector;
+
+- (void)closeWindow;
 @end
