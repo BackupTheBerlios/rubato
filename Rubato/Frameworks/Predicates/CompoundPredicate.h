@@ -16,6 +16,9 @@
 - (id)initWithCoder:(NSCoder *)aDecoder;
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 
+// only for private use
+- (NSMutableArray *)values;
+
 /* special object methods to be overridden */
 - (NSString *) inspectorNibFile;
 - makeString:aString withDelimiters:delimiters andIndent:(int)indentCount;

@@ -71,7 +71,10 @@
     [aCoder encodeObject:myValue];
 }
 
-
+- (id)value;
+{
+  return myValue;
+}
 
 /* special object methods to be overridden */
 - (NSString *) inspectorNibFile;

@@ -19,6 +19,10 @@
 
 #import "PrediBaseDocument.h"
 
+#import "JGPredicateConverter.h"
+#import <FScript/FSPropertyList2Lisp.h>
+#import <FScript/FSLisp2PropertyList.h>
+
 #define numMaxVisibleColumns 10
 
 #undef jgShowPredibase
@@ -165,10 +169,23 @@
 		predicate = [JGLogUnarchiver unarchiveObjectWithData:dataBuffer];
 		if (predicate) {
 // then it is written as ASCII.
-		    NSMutableString *mutableString = [NSMutableString new];
-		    [predicate appendToMathString:mutableString andTabs:0];
-		    [sender setString:mutableString forType:NSStringPboardType];
-//		    return self;
+                  static int kindOfString=1;
+                  NSString *str=nil;
+                  if (kindOfString==0) {
+                    NSMutableString *mutableString = [NSMutableString new];
+                    [predicate appendToMathString:mutableString andTabs:0];
+                    str=mutableString;
+                  } else if (kindOfString==1) {
+                    id plist=[JGPredicateConverter listForPredicate:predicate useNames:YES];
+                    if (plist){
+                     str=[FSPropertyList2Lisp stringFromPropertyList:plist vectorString:nil];
+
+                    }
+                  }
+                  if (str) 
+                    [sender setString:str forType:NSStringPboardType];
+                  else
+                    NSBeep();
 		}
 	    }
 	}
@@ -188,20 +205,29 @@
 - (void)paste:(id)sender;
 {
 // new, see FormManager.m
-id pboard, predicate;
-NSData *dataBuffer;
-NSString *firstType;
-
-pboard = [NSPasteboard generalPasteboard];
-firstType = [pboard availableTypeFromArray:[NSArray arrayWithObject:[NSString jgStringWithCString:PredFileType]]];
-if (firstType) {
+  id pboard, predicate=nil;
+  NSData *dataBuffer;
+  NSString *firstType;
+  id predType=[NSString stringWithCString:PredFileType];
+  
+  pboard = [NSPasteboard generalPasteboard];
+  firstType = [pboard availableTypeFromArray:[NSArray arrayWithObjects:predType,NSStringPboardType,nil]];
+  if ([firstType isEqualToString:predType]) {
     if (dataBuffer = [pboard dataForType:firstType]) {
-        predicate = [JGLogUnarchiver unarchiveObjectWithData:dataBuffer];
-        [[self document] addPredicate:predicate];
-
-    } else
-        NSBeep();
-} else
+      predicate = [JGLogUnarchiver unarchiveObjectWithData:dataBuffer];
+    }
+  } else if ([firstType isEqualToString:NSStringPboardType]) {
+    NSString *str=[pboard stringForType:firstType];
+    if (str) {
+      id plist=[FSLisp2PropertyList plistForCyclicLispString:str];
+      if (plist) {
+        predicate=[JGPredicateConverter predicateForList:plist];
+      }
+    }
+  }
+  if (predicate)
+    [[self document] addPredicate:predicate];
+  else
     NSBeep();
 }
 
