@@ -44,6 +44,7 @@
 			productRefGroup = 03FEE1FE00906EAA7F000001;
 			projectDirPath = "";
 			targets = (
+				97D750C0034C5F4900951B37,
 				97A0B61A01BD5C3C00951B37,
 				9781A52002AE6BF100951B37,
 				03FEE38100906EAA7F000001,
@@ -80,6 +81,7 @@
 		};
 		03FEE03100906EAA7F000001 = {
 			children = (
+				97D750C6034C5F9E00951B37,
 				977AFA0A02EC6CEB00951B37,
 				977AFA0902EC66D800951B37,
 				03FEE03600906EAA7F000001,
@@ -88,7 +90,6 @@
 				97A5A88D010347E800000001,
 				03FEE1F700906EAA7F000001,
 				03FEE1FE00906EAA7F000001,
-				9753C77B034B633100951B37,
 			);
 			isa = PBXGroup;
 			name = RubatoFrameworks;
@@ -2569,12 +2570,14 @@
 		};
 		03FEE1FE00906EAA7F000001 = {
 			children = (
+				97D750BE034C5DE300951B37,
 				977AFA1B02EC7EF100951B37,
 				977AFA1802EC7E8500951B37,
 				977AFA1902EC7E8500951B37,
 				977AFA1A02EC7E8500951B37,
 				977AFA1702EC7DBD00951B37,
 				97EB084702EF12EE00951B37,
+				97D750BF034C5F4900951B37,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -5543,7 +5546,8 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
-				9753C77F034B74E700951B37,
+				97D750D0034E08C900951B37,
+				97D750D1034E08C900951B37,
 			);
 			isa = PBXApplicationTarget;
 			name = "Rubato (Application)";
@@ -6203,6 +6207,9 @@
 			fileRef = 9753C777034B599500951B37;
 			isa = PBXBuildFile;
 			settings = {
+				ATTRIBUTES = (
+					Public,
+				);
 			};
 		};
 		9753C77A034B599500951B37 = {
@@ -6210,16 +6217,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		9753C77B034B633100951B37 = {
-			isa = PBXFileReference;
-			name = HarmoRubette.nib;
-			path = /Volumes/backups/jg/HarmoRubette.nib;
-			refType = 0;
-		};
-		9753C77F034B74E700951B37 = {
-			isa = PBXTargetDependency;
-			target = 03FEE26000906EAA7F000001;
 		};
 		9757F21A01BE5C4900951B37 = {
 			isa = PBXFileReference;
@@ -11235,6 +11232,172 @@
 		97D0065301084B0600000001 = {
 			isa = PBXTargetDependency;
 			target = 03FEE26000906EAA7F000001;
+		};
+		97D750BE034C5DE300951B37 = {
+			children = (
+			);
+			isa = PBXGroup;
+			name = Patches;
+			refType = 4;
+		};
+		97D750BF034C5F4900951B37 = {
+			isa = PBXBundleReference;
+			path = Rubato.app.patch;
+			refType = 3;
+		};
+		97D750C0034C5F4900951B37 = {
+			buildPhases = (
+				97D750C1034C5F4900951B37,
+				97D750C2034C5F4900951B37,
+				97D750C3034C5F4900951B37,
+				97D750C4034C5F4900951B37,
+				97D750C5034C5F4900951B37,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/Rubato/build;
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Rubato.app;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = patch;
+			};
+			dependencies = (
+			);
+			isa = PBXBundleTarget;
+			name = Rubato.app.patch;
+			productInstallPath = "$(USER_LIBRARY_DIR)/Bundles";
+			productName = Rubato.app.patch;
+			productReference = 97D750BF034C5F4900951B37;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Rubato.app</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+</dict>
+</plist>
+";
+			shouldUseHeadermap = 0;
+		};
+		97D750C1034C5F4900951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+				97D750C9034C601900951B37,
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		97D750C2034C5F4900951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		97D750C3034C5F4900951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+				97D750CA034C601900951B37,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		97D750C4034C5F4900951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+				97D750CB034C608300951B37,
+				97D750CC034C609F00951B37,
+				97D750CD034C609F00951B37,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		97D750C5034C5F4900951B37 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		97D750C6034C5F9E00951B37 = {
+			children = (
+				97D750C7034C601800951B37,
+				97D750C8034C601800951B37,
+			);
+			isa = PBXGroup;
+			path = Patches;
+			refType = 4;
+		};
+		97D750C7034C601800951B37 = {
+			isa = PBXFileReference;
+			path = RubatoAppPatch.h;
+			refType = 4;
+		};
+		97D750C8034C601800951B37 = {
+			isa = PBXFileReference;
+			path = RubatoAppPatch.m;
+			refType = 4;
+		};
+		97D750C9034C601900951B37 = {
+			fileRef = 97D750C7034C601800951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97D750CA034C601900951B37 = {
+			fileRef = 97D750C8034C601800951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97D750CB034C608300951B37 = {
+			fileRef = 03FEE20200906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97D750CC034C609F00951B37 = {
+			fileRef = 03FEE1FA00906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97D750CD034C609F00951B37 = {
+			fileRef = 03FEE1FB00906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97D750D0034E08C900951B37 = {
+			isa = PBXTargetDependency;
+			target = 03FEE35A00906EAA7F000001;
+		};
+		97D750D1034E08C900951B37 = {
+			isa = PBXTargetDependency;
+			target = 978FC66C0103427400000001;
 		};
 		97D78B6701081E6000000001 = {
 			isa = PBXFileReference;

@@ -62,7 +62,6 @@
                 myDurationSwitch = id; 
                 myFinalCardField = id; 
                 myFinalSpanField = id; 
-                myFunctionDistanceMatrix = id; 
                 myFunctionScaleMatrix = id; 
                 myFunctionSwitchMatrix = id; 
                 myGlobalLevelField = id; 
@@ -71,6 +70,7 @@
                 myLocalLevelField = id; 
                 myMethodPopUpBtn = id; 
                 myModeDistanceMatrix = id; 
+                myModelessFunctionDistanceMatrix = id; 
                 myNollProfileMatrix = id; 
                 myPitchReferenceField = id; 
                 mySaveChordSeqSwitch = id; 

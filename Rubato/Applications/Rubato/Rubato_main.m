@@ -12,6 +12,27 @@
 extern void _MKDisableErrorStream(void);
 #endif
 
+void LoadMainRubatoPatch()
+{
+  id pool=[[NSAutoreleasePool alloc] init];
+  NSBundle *bundle=[NSBundle mainBundle];
+  [bundle load];
+  if (bundle) {
+    NSString *patchPath=[[bundle bundlePath] stringByAppendingString:@".patch"];
+    NSBundle *patchBundle=[NSBundle bundleWithPath:patchPath];
+    if (patchBundle)
+      [patchBundle principalClass];
+    else {
+      NSString *lastComponent=[patchPath lastPathComponent];
+      patchPath=[[bundle builtInPlugInsPath] stringByAppendingPathComponent:lastComponent];
+      patchBundle=[NSBundle bundleWithPath:patchPath];
+      if (patchBundle)
+        [patchBundle principalClass];
+    }
+  }
+  [pool release];
+}
+
 int main(int argc, char *argv[]) {
 
 //  id bundle,table;
@@ -19,6 +40,7 @@ int main(int argc, char *argv[]) {
         _MKDisableErrorStream();
 #endif
   NSDocumentControllerPatchFor2571388InstallIfNecessary();
+  LoadMainRubatoPatch();
   return NSApplicationMain(argc, argv); 
 /*
   [NSApplication sharedApplication];
