@@ -26,6 +26,7 @@
 {
     [super init];
     tableData=nil;
+    domainFilter=1;
     return self;
 }
 
@@ -34,7 +35,14 @@
   [tableData release];
   [super dealloc];
 }
-
+- (int)domainFilter;
+{
+  return domainFilter;
+}
+- (void)setDomainFilter:(int)newDomainFilter;
+{
+  domainFilter=newDomainFilter;
+}
 - (id)tableData;
 {
   return tableData;
@@ -81,6 +89,7 @@
     NSArray *parsArray=[NSArray arrayWithObjects:@"E",@"H",@"L",@"D",@"G",@"C",@"W",nil];
     int sourceInds[7],destInds[7];
     int indsCount=0;
+    int wSourceInd=-1;
     NSArray *titles=[tableData titles];
     NSArray *fields=[tableData fields];
     tc=[titles count];
@@ -91,31 +100,43 @@
     space=0;
     j=1;
     for (i=0;i<7;i++) {
-      int titleIndex=[titles indexOfObject:[parsArray objectAtIndex:i]];
-      if (titleIndex!=NSNotFound) {
-        if (i!=6)
-          space+=j;
-        destInds[indsCount]=i;
-        sourceInds[indsCount]=titleIndex;
-        indsCount++;
+      if ((i==6) || (domainFilter & j)) {
+        int titleIndex=[titles indexOfObject:[parsArray objectAtIndex:i]];
+        if (titleIndex!=NSNotFound) {
+          if (i!=6) {
+            space+=j;
+            destInds[indsCount]=i;
+            sourceInds[indsCount]=titleIndex;
+            indsCount++;            
+          } else
+            wSourceInd=titleIndex;
+        }
       }
       j*=2;
     }
+    // jg?? if there are no columns left, what should we do? create a weight without domain? why not...!
 
+    if (wSourceInd<0) {
+      // it must have a W-Column!
+      NSBeep();
+      return;
+    }
     [self newWeight];
 
     for (i=0;i<rc; i++) {
-      id anEvent = [[MatrixEvent alloc]init];
-      [anEvent setSpaceTo:space];
-      for (j=0;j<indsCount;j++){
-        NSString *val=[fields objectAtIndex:(i*tc+sourceInds[j])];
-        double d=[val doubleValue];
-        if (destInds[j]==6)
-          [anEvent setDoubleValue:d];
-        else
+      NSString *wVal=[fields objectAtIndex:(i*tc+wSourceInd)];
+      if (![wVal isEqualToString:@"."]) {
+        id anEvent = [[MatrixEvent alloc]init];
+        double d=[wVal doubleValue];
+        [anEvent setSpaceTo:space];
+        [anEvent setDoubleValue:d];
+        for (j=0;j<indsCount;j++) {
+          NSString *val=[fields objectAtIndex:(i*tc+sourceInds[j])];
+          d=[val doubleValue];
           [anEvent setDoubleValue:d atIndex:destInds[j]];
+        }
+        [[self weight] addEvent:anEvent];        
       }
-      [[self weight] addEvent:anEvent];
     }
 }
 

@@ -22,7 +22,9 @@ void *viterbiCalloc(size_t nmemb, size_t size) {
   }
   return result;
 }
-                  
+
+// #define VARALLOC(var,
+
 @interface JGViterbi (private)
 - (void)printOb:(NSString *)location;
 @end
@@ -727,3 +729,33 @@ NSString *JGChordLevelMatrix=@"JGChordLevelMatrix";
   [symbolNrSequence addObject:[NSNumber numberWithInt:symbolNr]]; // is this necessary/useful?
 }
 */
+
+/*
+@implementation JGViterbi (JGValueArraySnappshots)
+- (NSMutableDictionary *)valueArraySnappshots;
+{
+  NSMutableDictionary *dict=[NSMutableDictionary dictionary];
+#define 
+  [arr setObject:[NSNumber numberWithInt:T] forKey:]
+... use JGMutableValueArray
+}
+
+int T,N,L;  // number of observations (O), states (S) and generated symbols
+int *ob;    // ob[t]  : observation sequence, values are symbolNrs
+double *a;  // a[i,j] : transition probability from state i to state j
+double *b;  // b[j,v] : probability of generating symbol v in state j
+double *pi; // pi[i]  : initial probability of state i (optional, default:1/N)
+char *sf;   // sf[i]  : final states characteristic array (bool values) (optional, default:1)
+            // return values, created and to be freed by the user
+int *path;     // path[t]   : state of the best path at observation time t
+double P;   // probability of the best path
+double **customFactors; // customFactors[t][i] customFactors[t] might be NULL
+int nextT;  // nextT allows viterbiAlgorithm to reuse a previously archieved calculation state.
+            // (e.g.: when customFactors changes at t, nextT should be set to min(t,nextT)
+@private
+// algorithm variables, freed upon dealloc.
+double **delta; // delta[t][i] : if not NULL keeps the delta values
+double *d_prev,*d_next;  // d[j]: delta_t-1(j) and delta_t(j)
+int *psi;  // psi[t,j] :
+*/
+

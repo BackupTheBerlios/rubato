@@ -8,7 +8,7 @@
 @implementation TempoOperatorInspector
 
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     id realSender = sender;
 // jg: Yes there are NSMatrix senders!
@@ -36,7 +36,7 @@
 	
     if (realSender==(id)[myCalcMethodPopUpBtn selectedItem]) 
 	[patient setIntegrationMethod:[realSender tag]];
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 

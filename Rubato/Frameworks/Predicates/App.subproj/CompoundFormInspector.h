@@ -15,7 +15,7 @@
     id	newValue;
 }
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 - displayPatient:sender;
 
 /* (BrowserDelegate) methods */

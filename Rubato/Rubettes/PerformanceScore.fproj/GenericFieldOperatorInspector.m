@@ -5,7 +5,7 @@
 @implementation GenericFieldOperatorInspector
 
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     id realSender = sender;
 // jg popups do not react to selectedCell.
@@ -27,7 +27,7 @@
 	[patient setDoBackwardTimeGuess:[realSender intValue]];
     if (sender==myForwardTimeGuessSwitch) 
 	[patient setDoForwardTimeGuess:[realSender intValue]];
-    return [super setValue:sender];
+     [super setValue:sender];
 }
 
 

@@ -464,6 +464,7 @@
 	
     [myMenu setSubmenu:submenu 
 	forItem:[myMenu addItemWithTitle:@"Stemma" action:0 keyEquivalent:@""]];
+    [[myMenu addItemWithTitle:@"Open as Midi in Workspace" action:@selector(openMidiTemp:) keyEquivalent:@""] setTarget:myPerformanceManager];
     [[myMenu addItemWithTitle:@"Save Performance As Score" action:@selector(saveScoreAs:) keyEquivalent:@""] setTarget:myPerformanceManager];
     [[myMenu addItemWithTitle:@"Save Performance As MIDI" action:@selector(saveMidiAs:) keyEquivalent:@""] setTarget:myPerformanceManager];
     [[myMenu addItemWithTitle:@"Graphic Preferences" action:@selector(makeKeyAndOrderFront:) keyEquivalent:@""] setTarget:myGraphicPrefsPanel];

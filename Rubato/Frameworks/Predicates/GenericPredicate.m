@@ -339,10 +339,9 @@ id currentFormManager;
     return NSNotFound;
 }
 
-- setValue: aValue;
+- (void)setValue: (id)aValue;
 {
     /* Predicate specific code goes here */
-    return self;
 }
 
 - removeValue: aValue;

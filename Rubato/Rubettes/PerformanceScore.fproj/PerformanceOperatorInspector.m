@@ -7,7 +7,7 @@
 
 @implementation PerformanceOperatorInspector
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     int i;
     if (sender==directionMatrix) 
@@ -21,7 +21,7 @@
     if (sender==parallelFieldMatrix) 
 	for (i=0; i<MAX_BASIS_DIMENSION; i++) 
 	    [patient setFieldIsParallelAt:i to:[[sender cellWithTag:i] intValue]];
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 

@@ -5,7 +5,7 @@
 
 @implementation ValueInspector
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     id aCell = [sender selectedCell];
     [self setValueType:sender];
@@ -35,7 +35,7 @@
 	    case 4: [patient setBoolValueOf:[[childName stringValue] cString] to:(BOOL)[aCell intValue]];
 		    break;
 	}
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 - setValueType:sender;

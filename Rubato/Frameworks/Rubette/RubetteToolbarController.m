@@ -67,6 +67,18 @@
         // Tell the item what message to send when it is clicked
         [toolbarItem setTarget: self];
         [toolbarItem setAction: @selector(showEvaluationView:)];
+    } else if ([itemIdent isEqual: @"F-Script"]) {
+      // Set the text label to be displayed in the toolbar and customization palette
+      [toolbarItem setLabel: @"F-Script"];
+      [toolbarItem setPaletteLabel: @"F-Script"];
+
+      // Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties
+      [toolbarItem setToolTip: @"F-Script Interpreter"];
+      [toolbarItem setImage: [NSImage imageNamed: @"F-Script"]];
+
+      // Tell the item what message to send when it is clicked
+      [toolbarItem setTarget: self];
+      [toolbarItem setAction: @selector(showInterpreterView:)];
     } else if ([itemIdent isEqual: @"InspectWeight"]) {
       // Set the text label to be displayed in the toolbar and customization palette
       [toolbarItem setLabel: @"Inspect Weight"];
@@ -137,7 +149,7 @@
     // Required delegate method   Returns the list of all allowed items by identifier   By default, the toolbar
     // does not assume any items are allowed, even the separator   So, every allowed item must be explicitly listed
     // The set of allowed items is used to construct the customization palette
-    return [NSArray arrayWithObjects: @"Import",@"Evaluation", @"InspectWeight", @"Custom",
+    return [NSArray arrayWithObjects: @"Import",@"Evaluation", @"InspectWeight", @"Custom",@"F-Script",
         NSToolbarCustomizeToolbarItemIdentifier,
         NSToolbarFlexibleSpaceItemIdentifier, NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
 }

@@ -22,7 +22,7 @@
     id	newValue;
 }
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 - displayPatient:sender;
 
 - setValueType:sender;

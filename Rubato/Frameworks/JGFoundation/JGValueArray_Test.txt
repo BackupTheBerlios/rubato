@@ -1,0 +1,50 @@
+as:=(JGValueArray testarrays).
+
+"not recommended use"
+  a:=(JGMutableValueArray arrayWithLength:3 prototype:(NSNumber numberWithFloat:2.0)).
+  b:=(JGValueArray arrayWithData:(a mutableData) prototype:(NSNumber numberWithFloat:2.0)).
+  c:=(JGMutableValueArray arrayWithMutableData:(a mutableData) prototype:(NSNumber numberWithInt:2)).
+  e:=(JGMutableValueArray arrayWithMutableData:(a mutableData) prototype:(NSNumber numberWithDouble:3.0)).
+
+a elementSize.
+b elementSize.
+c elementSize. "2 instead of 4!"
+e elementSize.
+
+"recommended use"
+  a:=(JGMutableValueArray arrayWithLength:3 prototype:'float').
+  b:=(JGValueArray arrayWithData:(a mutableData) prototype:(JGValueArray numberWithElementType:'f')).
+  c:=(JGMutableValueArray arrayWithMutableData:(a mutableData) prototype:'int').
+  e:=(JGMutableValueArray arrayWithMutableData:(a mutableData) prototype:'double').
+
+a elementSize.
+b elementSize.
+c elementSize. "4 good"
+e elementSize.
+
+
+f:=JGMutableValueArray arrayWithArray:{2.0, 3, (NSNumber numberWithInt:1)}
+
+// testing prototypes
+" the problem with Prototypes is, that NSNumber usually uses the smallest subclass without loosing
+  Values. So (NSNumber numberWithInt:2) does not return NSIntNumber, but NSShortNumber!"
+JGValueArray sizeForPrototype:(NSNumber numberWithInt:1).
+JGValueArray sizeForPrototype:(NSNumber numberWithLong:1).
+JGValueArray sizeForPrototype:(JGValueArray numberWithElementType:'long long').
+JGValueArray sizeForPrototype:'long long'.
+
+f:=JGMutableValueArray arrayWithArray:{(NSNumber numberWithLong:1)} prototype:'long'.
+f elementSize.
+f2:=JGMutableValueArray arrayWithArray:{1, 42} prototype:'long long'.
+f2 elementSize.
+g:=JGMutableValueArray arrayWithArray:{(NSNumber numberWithDouble:1.0)}.
+g elementSize.
+g:=JGMutableValueArray arrayWithArray:{(NSNumber numberWithFloat:1.0)}.
+g elementSize.
+
+f2:=JGMutableValueArray arrayWithArray:{1, 42} prototype:'int'.
+g2:=JGMutableValueArray arrayWithArray:{1, 42} prototype:7.
+h2:=JGMutableValueArray arrayWithArray:{1, 42} prototype:(NSNumber numberWithInt:80000).
+h2 objectAtIndex:1;
+
+JGValueArray testGetValue.

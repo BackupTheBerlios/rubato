@@ -45,7 +45,7 @@
 - (unsigned int)count;
 - (unsigned int)indexOfValue: aValue;
 
-- setValue: aValue;
+- (void)setValue:(id)sender;
 - removeValue: aValue;
 - deleteValue: aValue;
 - replaceValue: aValue with: bValue;

@@ -26,7 +26,7 @@
 - init;
 - (void)dealloc;
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 - displayPatient:sender;
 
 @end

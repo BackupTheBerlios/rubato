@@ -9,7 +9,7 @@
     id	parallelFieldMatrix;
 }
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 - displayPatient:sender;
 
 @end

@@ -11,6 +11,7 @@
   id tableViewController;
   IBOutlet NSWindow *interpreterWindow;
   IBOutlet id interpreterView;
+  IBOutlet NSMatrix *domainMatrix;
 }
 + (const char *)rubetteName;
 + (id)rubetteObjectClass;
@@ -58,4 +59,5 @@
 - (IBAction)showInterpreterWindow:(id)sender;
 
 - (IBAction)showTableViewTextController:(id)sender;
+- (IBAction)domainMatrixAction:(id)sender;
 @end

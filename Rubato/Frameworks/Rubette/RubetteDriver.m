@@ -10,6 +10,7 @@
 #import <Predicates/FormManager.h>
 #import <Rubato/RubatoController.h>
 #import "Weight.subproj/Weight.h"
+#import <FScript/FScript.h>
 
 //@class Weight;
 
@@ -96,6 +97,31 @@
 {
     NSTabView *tv=[myWindow contentView];
     [tv selectTabViewItemWithIdentifier:@"Evaluation"];
+}
+- (void)showInterpreterView:(id)sender;
+{
+  NSTabView *tv=[myWindow contentView];
+  NSString *identifier=@"F-Script-Interpreter";
+  int idx=[tv indexOfTabViewItemWithIdentifier:identifier];
+  if (idx==NSNotFound) {
+    int otherIdx=[tv indexOfTabViewItemWithIdentifier:@"Evaluation"];
+    NSTabViewItem *otherTabViewItem=[tv tabViewItemAtIndex:((otherIdx==NSNotFound) ? 0 : otherIdx)];
+    NSView *otherView=[otherTabViewItem view];
+    NSRect frameRect=[otherView frame];
+    FSInterpreterView *view=[[NSClassFromString(@"FSInterpreterView") alloc] initWithFrame:frameRect];
+    NSTabViewItem *tabViewItem=[[NSTabViewItem alloc] initWithIdentifier:identifier];
+    FSInterpreter *interpreter=[view interpreter];
+    [interpreter setShouldJournal:NO];
+    [interpreter setObject:self forIdentifier:@"rubetteDriver"];
+    [interpreter setObject:[self distributor] forIdentifier:@"distributor"];
+    
+    [tabViewItem setView:view];
+    [tabViewItem setLabel:@"F-Script"];
+    [tv addTabViewItem:tabViewItem];
+    [tabViewItem release];
+    [view release];
+  }
+  [tv selectTabViewItemWithIdentifier:identifier];
 }
 
 // helper method for the following methods

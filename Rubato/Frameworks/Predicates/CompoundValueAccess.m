@@ -13,7 +13,7 @@
     return [myList indexOf: aValue];
 }
 
-- setValue: aValue;
+- (void)setValue:(id)aValue;
 {
     if ([aValue conformsToProtocol:@protocol(PredicateProtocol)])
 	if ([myList addObjectIfAbsent:aValue])
@@ -31,7 +31,6 @@
 	
 	[myList makeObjectsPerform:@selector(setParent:)with:self];
     }
-    return self;
 }
 
 - removeValue: aValue;

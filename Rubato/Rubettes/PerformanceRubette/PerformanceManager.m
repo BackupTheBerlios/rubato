@@ -481,6 +481,31 @@ Class getMKScoreClass()
     return self;
 }
 #endif
+
+- (void)openMidiTemp:(id)sender;
+{
+#ifdef WITHMUSICKIT
+  NSString *tempFile=[NSString stringWithFormat:@"/tmp/Rubato-%@.mid",[[[NSDate date] description] substringToIndex:19]];
+  NSString *oldSF=nil;
+  if (scorefile!=NULL)
+    oldSF=[NSString stringWithCString:scorefile];
+  [self setScorefile:[tempFile cString]];
+  [self saveMidi:sender];
+  if (!oldSF)
+    if (scorefile) {
+      free(scorefile);
+      scorefile=NULL;
+    }
+      else
+        [self setScorefile:[oldSF cString]];
+  if (![[NSWorkspace sharedWorkspace] openFile:tempFile]) {
+    NSBeep();
+  }
+#else
+  NSBeep();
+#endif
+}
+
 @end
 
 #ifdef WITHMUSICKIT
@@ -516,4 +541,5 @@ Class getMKScoreClass()
 }
 @end
 #endif
+
 

@@ -5,7 +5,7 @@
 
 @implementation SimpleFormInspector
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     id aCell = [sender selectedCell];
     if (aCell==changeNameCheck)
@@ -37,7 +37,7 @@
 		    break;
 	}
     }
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 - setValueType:sender;

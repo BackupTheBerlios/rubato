@@ -6,7 +6,7 @@
 
 @implementation ScalarOperatorInspector
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     if (sender==myCalcDirectionMatrix) {
       NSCell *cell;
@@ -14,7 +14,7 @@
       cell=[sender selectedCell];
       [patient setCalcDirectionAt:[cell tag] to:[cell intValue]];
     }
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 

@@ -58,7 +58,7 @@
 - (BOOL)patientNew;
 
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 - revert:sender;
 - displayPatient:sender;
 

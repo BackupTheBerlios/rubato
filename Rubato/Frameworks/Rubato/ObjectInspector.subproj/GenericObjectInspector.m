@@ -1,8 +1,14 @@
 /* Version Control:
-   $Header: /home/xubuntu/berlios_backup/github/tmp-cvs/rubato/Repository/Rubato/Frameworks/Rubato/ObjectInspector.subproj/GenericObjectInspector.m,v 1.1 2002/08/07 13:14:10 garbers Exp $
+   $Header: /home/xubuntu/berlios_backup/github/tmp-cvs/rubato/Repository/Rubato/Frameworks/Rubato/ObjectInspector.subproj/GenericObjectInspector.m,v 1.2 2002/09/05 22:17:37 garbers Exp $
    $Log: GenericObjectInspector.m,v $
-   Revision 1.1  2002/08/07 13:14:10  garbers
-   Initial revision
+   Revision 1.2  2002/09/05 22:17:37  garbers
+   Added FScript for all Rubettes (Toolbar)
+   changed several (id)setValue:(id) to (void)setValue:
+   ExternalRubette more comfortable
+   PerformanceRubette has Play-Midi in Workspace menu item.
+
+   Revision 1.1.1.1  2002/08/07 13:14:10  garbers
+   Initial import
 
    Revision 1.1.1.1  2001/05/04 16:23:51  jg
    OSX build 1
@@ -357,11 +363,10 @@ setAccessor(id,currentView,setCurrentView)
 
 
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 {
     [owner setPatientEdited:YES];
     [owner displayPatient:self];
-    return self;
 }
 
 - revert: sender;

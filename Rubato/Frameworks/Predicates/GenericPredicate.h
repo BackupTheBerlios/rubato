@@ -91,7 +91,7 @@ typedef struct _dictstruct {
 - (unsigned int)count;
 - (unsigned int)indexOfValue: aValue;
 
-- setValue: aValue;
+- (void)setValue: (id)aValue;
 - removeValue: aValue;
 - deleteValue: aValue;
 - replaceValue: aValue with: bValue;

@@ -23,6 +23,9 @@
 #import <FScript/FSPropertyList2Lisp.h>
 #import <FScript/FSLisp2PropertyList.h>
 
+#define FSLisp2PropertyList_Class NSClassFromString(@"FSLisp2PropertyList")
+#define FSPropertyList2Lisp_Class NSClassFromString(@"FSPropertyList2Lisp")
+
 #define numMaxVisibleColumns 10
 
 #undef jgShowPredibase
@@ -178,7 +181,7 @@
                   } else if (kindOfString==1) {
                     id plist=[JGPredicateConverter listForPredicate:predicate useNames:YES];
                     if (plist){
-                     str=[FSPropertyList2Lisp stringFromPropertyList:plist vectorString:nil];
+                     str=[FSPropertyList2Lisp_Class stringFromPropertyList:plist vectorString:nil];
 
                     }
                   }
@@ -219,7 +222,7 @@
   } else if ([firstType isEqualToString:NSStringPboardType]) {
     NSString *str=[pboard stringForType:firstType];
     if (str) {
-      id plist=[FSLisp2PropertyList plistForCyclicLispString:str];
+      id plist=[FSLisp2PropertyList_Class plistForCyclicLispString:str];
       if (plist) {
         predicate=[JGPredicateConverter predicateForList:plist];
       }

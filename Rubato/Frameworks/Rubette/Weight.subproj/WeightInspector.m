@@ -21,7 +21,7 @@
 }
 
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 {
     id realSender = sender;
     if (realSender==myInvertSwitch) 
@@ -37,7 +37,7 @@
 	[patient setHighNorm:[sender doubleValue]];
 //    if (realSender==drawLinesSwitch)
 //      ;// nothing
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 - displayPatient: sender

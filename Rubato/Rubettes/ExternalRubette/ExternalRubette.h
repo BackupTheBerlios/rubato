@@ -9,6 +9,7 @@
 {
   int space;
   JGTableData *tableData;
+  int domainFilter;
 }
 + (const char *)rubetteVersion;
 + (spaceIndex)rubetteSpace;
@@ -20,6 +21,8 @@
 - (id)tableData;
 - (void)setTableData:(JGTableData *)newTableData;
 
+- (int)domainFilter;
+- (void)setDomainFilter:(int)newDomainFilter;
 
 /* The real Work */
 - (void)makePredList;

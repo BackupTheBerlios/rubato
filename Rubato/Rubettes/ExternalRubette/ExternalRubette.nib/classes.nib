@@ -42,6 +42,7 @@
         {
             ACTIONS = {
                 doCalculateWeight = id; 
+                domainMatrixAction = id; 
                 hideWindow = id; 
                 loadWeight = id; 
                 showInterpreterWindow = id; 
@@ -50,7 +51,7 @@
             }; 
             CLASS = ExternalRubetteDriver; 
             LANGUAGE = ObjC; 
-            OUTLETS = {tableView = NSTableView; }; 
+            OUTLETS = {domainMatrix = NSMatrix; tableView = NSTableView; }; 
             SUPERCLASS = RubetteDriver; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

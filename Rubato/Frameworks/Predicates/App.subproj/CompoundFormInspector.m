@@ -6,7 +6,7 @@
 
 @implementation CompoundFormInspector
 
-- setValue:sender
+- (void)setValue:(id)sender;
 {
     if ([sender selectedCell]==changeNameCheck)
 	[patient setAllowsToChangeName:(BOOL)[sender intValue]];
@@ -22,7 +22,7 @@
 			"cannot be changed in any way or unlocked. Proceed?"], @"OK", @"Cancel", nil, NULL)==NSAlertDefaultReturn)
 	    [patient setLocked:(BOOL)[sender intValue]];
     }
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 

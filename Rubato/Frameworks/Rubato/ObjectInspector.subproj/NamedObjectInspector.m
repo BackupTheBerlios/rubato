@@ -19,7 +19,7 @@
 }
 
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 {
     if (sender==nameField) {
 	if ([sender respondsToSelector:@selector(stringValue)])
@@ -32,7 +32,7 @@
 	    if ([[sender selectedCell] respondsToSelector:@selector(stringValue)])
 		[patient setNameString:[[[sender selectedCell] stringValue] cString]];
 	
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 - displayPatient: sender

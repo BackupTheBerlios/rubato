@@ -173,5 +173,24 @@
 {
   [tableViewController showTableViewTextController:sender];
 }
+
+- (IBAction)domainMatrixAction:(id)sender;
+{
+  id theMatrix=domainMatrix;
+  int i,theBit=1;
+  int c=[theMatrix numberOfColumns];
+  int filter=0;
+  for (i=0; i<c;i++) {
+    id cell=[theMatrix cellAtRow:0 column:i];
+    if ([cell state])
+      filter+=theBit;
+    theBit*=2;
+  }
+  if (!filter) {
+    [[theMatrix cellAtRow:0 column:0] setState:YES];
+    filter=1;
+  }
+  [[self rubetteObject] setDomainFilter:filter];
+}
 @end
 

@@ -37,7 +37,7 @@
 - (unsigned int) indexOfValue: aValue;
 
 - (void)addValue:(id)aValue;
-- setValue: aValue;
+- (void)setValue: (id)aValue;
 - removeValue: aValue;
 - deleteValue: aValue;
 - replaceValue: aValue with: bValue;

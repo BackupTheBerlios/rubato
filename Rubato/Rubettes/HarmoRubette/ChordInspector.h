@@ -18,7 +18,7 @@
 - init;
 - (void)dealloc;
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 - displayPatient:sender;
 - displayNextThirdStream:sender;
 - displayThirdStreamAt:(int)index;

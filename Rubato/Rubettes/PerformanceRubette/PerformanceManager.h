@@ -49,5 +49,5 @@
 - makeNoteFromEvent:anEvent;
 - makeMidiPerformanceOf:aScore;
 #endif
-
+- (void)openMidiTemp:(id)sender;
 @end

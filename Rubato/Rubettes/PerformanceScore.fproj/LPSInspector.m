@@ -18,9 +18,9 @@
     { [super dealloc]; return; };
 }
 
-- setValue:sender;
+- (void)setValue:(id)sender;
 {
-    return [super setValue:sender];
+    [super setValue:sender];
 }
 
 - displayPatient: sender
