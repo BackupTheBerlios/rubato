@@ -39,6 +39,8 @@
     
     myConverter = [[StringConverter alloc]init];
     isInitializingForDocument=NO;
+    generalPurposeDictionary=[[NSMutableDictionary alloc] init];
+
     return self;
 }
 
@@ -60,6 +62,7 @@
     if (weightfile) free(weightfile);
     [myConverter release];
     [self setRubetteObject:nil];
+    [generalPurposeDictionary release];
     [super dealloc];
 }
 
@@ -88,6 +91,12 @@
     return nil;
 }
 
+- (NSMutableDictionary *)generalPurposeDictionary;
+{
+  return generalPurposeDictionary;
+}
+
+
 - (void)showImportView:(id)sender;
 {
     NSTabView *tv=[myWindow contentView];
@@ -97,31 +106,6 @@
 {
     NSTabView *tv=[myWindow contentView];
     [tv selectTabViewItemWithIdentifier:@"Evaluation"];
-}
-- (void)showInterpreterView:(id)sender;
-{
-  NSTabView *tv=[myWindow contentView];
-  NSString *identifier=@"F-Script-Interpreter";
-  int idx=[tv indexOfTabViewItemWithIdentifier:identifier];
-  if (idx==NSNotFound) {
-    int otherIdx=[tv indexOfTabViewItemWithIdentifier:@"Evaluation"];
-    NSTabViewItem *otherTabViewItem=[tv tabViewItemAtIndex:((otherIdx==NSNotFound) ? 0 : otherIdx)];
-    NSView *otherView=[otherTabViewItem view];
-    NSRect frameRect=[otherView frame];
-    FSInterpreterView *view=[[NSClassFromString(@"FSInterpreterView") alloc] initWithFrame:frameRect];
-    NSTabViewItem *tabViewItem=[[NSTabViewItem alloc] initWithIdentifier:identifier];
-    FSInterpreter *interpreter=[view interpreter];
-    [interpreter setShouldJournal:NO];
-    [interpreter setObject:self forIdentifier:@"rubetteDriver"];
-    [interpreter setObject:[self distributor] forIdentifier:@"distributor"];
-    
-    [tabViewItem setView:view];
-    [tabViewItem setLabel:@"F-Script"];
-    [tv addTabViewItem:tabViewItem];
-    [tabViewItem release];
-    [view release];
-  }
-  [tv selectTabViewItemWithIdentifier:identifier];
 }
 
 // helper method for the following methods
@@ -752,6 +736,7 @@
 {
   [[self distributor] signOutRubette:self];
   [self closeRubetteWindows];
+  [generalPurposeDictionary removeAllObjects];
     /* this calls setManager with nil and writes the data */
     [self release];
 }
@@ -922,4 +907,52 @@
 {
   [rubetteObject setWeight:weight];
 }
+@end
+
+@implementation RubetteDriver (FScriptAdditions)
+- (id/*FSInterpreterView */)fsInterpreterViewCreateIfNecessary:(BOOL)createIfNecessary;
+{
+  NSTabView *tv=[myWindow contentView];
+  NSString *identifier=@"F-Script-Interpreter";
+  int idx=[tv indexOfTabViewItemWithIdentifier:identifier];
+  if (idx==NSNotFound) {
+    if (createIfNecessary) {
+      int otherIdx=[tv indexOfTabViewItemWithIdentifier:@"Evaluation"];
+      NSTabViewItem *otherTabViewItem=[tv tabViewItemAtIndex:((otherIdx==NSNotFound) ? 0 : otherIdx)];
+      NSView *otherView=[otherTabViewItem view];
+      NSRect frameRect=[otherView frame];
+      FSInterpreterView *view=[[NSClassFromString(@"FSInterpreterView") alloc] initWithFrame:frameRect];
+      NSTabViewItem *tabViewItem=[[NSTabViewItem alloc] initWithIdentifier:identifier];
+      FSInterpreter *interpreter=[view interpreter];
+      [interpreter setShouldJournal:NO];
+      [interpreter setObject:self forIdentifier:@"rubetteDriver"];
+      [interpreter setObject:[self distributor] forIdentifier:@"distributor"];
+
+      [tabViewItem setView:view];
+      [tabViewItem setLabel:@"F-Script"];
+      [tv addTabViewItem:tabViewItem];
+      [tabViewItem release];
+      return [view autorelease];
+    } else
+      return nil;
+  } else
+    return [[tv tabViewItemAtIndex:idx] view];
+
+}
+- (id/*FSInterpreter */)fsInterpreterCreateIfNecessary:(BOOL)createIfNecessary;
+{
+  return [[self fsInterpreterViewCreateIfNecessary:createIfNecessary] interpreter];
+}
+- (void)showInterpreterView:(id)sender;
+{
+  id result=[self fsInterpreterViewCreateIfNecessary:YES];
+  if (result) {
+    NSTabView *tv=[myWindow contentView];
+    NSString *identifier=@"F-Script-Interpreter";
+    [tv selectTabViewItemWithIdentifier:identifier];
+  } else {
+    NSBeep();
+  }
+}
+
 @end

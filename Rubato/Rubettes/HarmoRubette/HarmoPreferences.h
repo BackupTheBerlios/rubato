@@ -60,7 +60,12 @@
     
     id	myDurationSwitch;
     id	mySaveChordSeqSwitch;
-    id	myMethodPopUpBtn;
+    id	myMethodPopUpBtn; // alternative: myMethodMatrix
+
+    IBOutlet NSTextField *harmoFileNameTextField;
+    IBOutlet NSMatrix *myMethodMatrix; // alternative: myMethodPopUpBtn
+    IBOutlet NSPopUpButton *summationFormulaNumberPopUpButton;
+    IBOutlet NSTextField *summationFormulaNumberTextField;
 }
 
 - init;
@@ -68,7 +73,8 @@
 - (void)awakeFromNib;
 
 - takePreferencesFrom:sender;
-- resetChordSequence:sender;
+- (IBAction)resetRiemannLogic:(id)sender;
+- (IBAction)resetChordSequence:(id)sender;
 - setWeightPrefs:sender;
 
 - (void)takeCalcBestPathMethodFrom:(id)sender; // jg added
@@ -120,4 +126,5 @@
 - readNollPrefsFromStream:(NSUnarchiver *)stream;
 
 - (void)setHarmoSpace:(NSDictionary *)dict;
+- (IBAction)loadNewSpace:(id)sender;
 @end

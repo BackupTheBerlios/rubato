@@ -1,5 +1,16 @@
 #import "JGChordProbabilityController.h"
 
+#define SHOW_LEVELMATRIX_MODE 0
+#define SHOW_RIEMANNMATRIX_MODE 1
+#define SHOW_FACTORS_MODE 2
+#define SHOW_RESULTS_MODE 3
+
+@interface HarmoRubetteShort
+- (ChordSequence *)chordSequence;
+- (int)selectedChordIndex;
+- (void)selectChordAtIndex:(int)idx;
+@end
+
 @implementation JGChordProbabilityController
 + (id)newInstanceWithDefaultNib;
 {
@@ -15,7 +26,9 @@
   probabilityValues=NULL;
   viterbi=nil;
   selectedT=-1;
-  showResultsMode=NO;
+  displayMode=SHOW_LEVELMATRIX_MODE;
+  selectionChangedEntered=NO;
+  updateInspector=NO; // done by harmoRubetteDriver
   return self;
 }
 
@@ -110,7 +123,7 @@
   [comboBox removeAllItems];
   if (customFactors) {
     for (t=0;t<viterbi->nextT;t++) {
-      if (!showResultsMode || [viterbi deltaAtT:t]) {
+      if ((displayMode!=SHOW_RESULTS_MODE) || [viterbi deltaAtT:t]) {
         if (comboBox==allOnsetsComboBox) {
           [comboBox addItemWithObjectValue:[self comboBox:comboBox objectValueForT:t]];
         } else if (comboBox==restrictedOnsetsComboBox) {
@@ -150,14 +163,25 @@
 
 - (void)updateDataAndViews;
 {
-  if (showResultsMode) {
+  if (displayMode==SHOW_RESULTS_MODE) {
     [self setInputEnabled:NO];
     
     if (selectedT>=0)
       probabilityValues=[viterbi deltaAtT:selectedT];
     else
       probabilityValues=NULL;
-  } else {
+  } else if ((displayMode==SHOW_LEVELMATRIX_MODE) || (displayMode==SHOW_RIEMANNMATRIX_MODE)) {
+    [self setInputEnabled:(displayMode==SHOW_LEVELMATRIX_MODE)]; // enable editing of level-Matrix
+    probabilityValues=NULL;
+    if (selectedT>=0) {
+      Chord *chord=[[harmoRubetteDriver chordSequence] chordAt:selectedT];
+      if (chord) {
+        double **ppMatrix=((displayMode==SHOW_LEVELMATRIX_MODE) ? [chord levelMatrix] : [chord riemannMatrix]);
+        if (ppMatrix) // should always be there in a chord
+          probabilityValues=ppMatrix[0]; // all Matrix values start here and are arranged continuesly
+      }
+    }
+  } else if (displayMode==SHOW_FACTORS_MODE) {
     double **customFactors=viterbi->customFactors;
     if (customFactors) {
       if (selectedT>=0) {
@@ -175,9 +199,10 @@
       probabilityValues=NULL;
     }
   }
-  [restrictOnsetButton setEnabled:(!showResultsMode && (probabilityValues==NULL))];
+  [restrictOnsetButton setEnabled:((displayMode==SHOW_FACTORS_MODE) && (probabilityValues==NULL))];
   [self updateViewsWithData];
-  [self updateInspector];
+  if (updateInspector)
+    [self updateInspector]; // is probably invoked allready in harmoRubetteDriver
 }
 
 - (void)updateAll;
@@ -189,18 +214,15 @@
   [self updateDataAndViews];
 }
 
-
 // IB Actions
 - (IBAction)selectionChanged:(id)sender
 {
+  if (selectionChangedEntered)
+    return;
+  selectionChangedEntered=YES;
   if (sender==definitionsResultsRadioMatrix) {
     id selectedCell=[definitionsResultsRadioMatrix selectedCell];
-    NSParameterAssert((selectedCell==definitionsButtonCell) || (selectedCell==resultsButtonCell));
-    if (selectedCell==definitionsButtonCell) {
-      showResultsMode=NO;
-    } else if (selectedCell==resultsButtonCell) {
-      showResultsMode=YES;
-    }
+    displayMode=[selectedCell tag];  
     [self updateAll];
   } else {
     // a combo box is sender (it might be the textfield that sends, so it is not correct, only to ask for the selection
@@ -208,12 +230,21 @@
     if (sender==allOnsetsComboBox) {
       selectedT=[self tValueOfComboBox:allOnsetsComboBox];
       [self updateSelectionOfComboBox:restrictedOnsetsComboBox];
+      [harmoRubetteDriver selectChordAtIndex:selectedT];
     } else if (sender==restrictedOnsetsComboBox) {
       selectedT=[self tValueOfComboBox:restrictedOnsetsComboBox];
       [self updateSelectionOfComboBox:allOnsetsComboBox];
+      [harmoRubetteDriver selectChordAtIndex:selectedT];
+    } else if (sender==harmoRubetteDriver) {
+      selectedT=[harmoRubetteDriver selectedChordIndex];
+      if (selectedT==NSNotFound)
+        selectedT=-1;
+      [self updateSelectionOfComboBox:restrictedOnsetsComboBox];
+      [self updateSelectionOfComboBox:allOnsetsComboBox];      
     }
     [self updateDataAndViews];
   }
+  selectionChangedEntered=NO;
 }
 
 - (IBAction)setAllEntriesToDefaultPressed:(id)sender

@@ -9,7 +9,7 @@
 {
 @public
     int functionCount,tonalityCount,locusCount; // non inclusive
-@protected
+//@protected
     ChordSequence *myOwnerSequence; /* the ChordSequence Object, that contains this Chord instance */
     double *myPitchList; /* list object with Pitches of this chord */
     int myPitchCount;
@@ -142,4 +142,7 @@
 - (int)locusCount;
 - (int)tonalityCount;
 - (int)functionCount;
+
+- (double **)riemannMatrix;
+- (double **)levelMatrix;
 @end

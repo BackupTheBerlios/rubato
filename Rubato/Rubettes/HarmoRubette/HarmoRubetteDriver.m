@@ -25,6 +25,12 @@
 @end
 
 @implementation HarmoRubetteDriver (ViterbiSupport)
+- (void)awakeFromNib;
+{
+  if (!chordProbabilityController) {
+    [self viterbiInit];
+  }
+}
 - (void)viterbiInit;
 {
   chordProbabilityController=[[JGChordProbabilityController newInstanceWithDefaultNib] retain];
@@ -66,7 +72,7 @@
     myEventList = [[[OrderedList alloc]init]ref];
     myChordSequence = [[[ChordSequence alloc]init]ref];
     myChordWeight=nil;
-    [self viterbiInit];
+    // NewHarmo: is in Nib    [self viterbiInit];
     return self;
 }
 
@@ -419,6 +425,26 @@
     return self;
 }
 
+- (int)selectedChordIndex;
+{
+  return selRowIndex;
+}
+
+- (void)changedGraphSelection:(id)sender;
+{
+  if (sender==myRiemannGraphMatrix) {
+    int selColumn=[sender selectedColumn];
+    [self selectChordAtIndex:selColumn];
+  }
+}
+
+- (void)selectChordAtIndex:(int)idx;
+{
+  [myBrowser selectRow:idx inColumn:0];
+  [myBrowser scrollColumnToVisible:0];
+  [self updateFieldsWithBrowser:myBrowser];
+}
+
 - (void)updateFieldsWithBrowser:sender;
 {
     if ([sender isKindOfClass:[NSBrowser class]] && [sender selectedColumn]!=NSNotFound) 
@@ -426,12 +452,15 @@
     else
 	selRowIndex = NSNotFound;
 
+    [chordProbabilityController selectionChanged:self];
     if (selRowIndex!=NSNotFound) {
+      [myRiemannGraphMatrix selectCellAtRow:0 column:selRowIndex];
 	[[[self distributor] globalInspector] setSelected:[myChordSequence chordAt:selRowIndex]];
 	browserValid = NO;
 	[myBrowser validateVisibleColumns];
     } else {
 	int i, c = [myChordSequence count];
+      [myRiemannGraphMatrix deselectAllCells];
 	for (i=0; i<c && [myChordSequence chordAt:i]!=[[[self distributor] globalInspector] patient]; i++);
 	if (i<c)
 	    [[[self distributor] globalInspector] setSelected:nil];

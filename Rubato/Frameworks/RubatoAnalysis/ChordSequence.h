@@ -4,18 +4,20 @@
 
 #define MAZZOLA 1 
 #define NOLL 2 
-#define FLEISCHER 3 /* not yet implemented */ 
-
+#define DIRECT_HARMO 3
+#define THIRDCHAIN_HARMO 4
 
 @interface ChordSequence:JgRefCountObject
 {
 @public
   // functionCount*tonalityCount==locusCount AND modeCount*modelessFunctionCount==functionCount
-  int functionCount,tonalityCount,locusCount,modeCount,modelessFunctionCount,pcCount; 
+  int functionCount,tonalityCount,locusCount,modeCount,modelessFunctionCount,pcCount;
+  int summationFormulaNumber, useMorphology;
+
 #ifdef  CHORDSEQ_DYN
     double **myFunctionScale; /* [MAX_FUNCTION][MAX_TONALITY] 6x12 matrix with the TDS major and minor values of each tone     */
 #else
-    double myFunctionScale[MAX_FUNCTION][MAX_TONALITY];
+    double myFunctionScale[MAX_FUNCTION][MAX_TONALITY]; // Function PitchClass
 #endif 
     double ***myNollMatrix;
     double ***harmonicProfile; /* functionCount x tonalityCount x pcCount, e.g. 6x12x12 Function x Tonalities x TwelveVector (for scalar multiplication with chord twelve vector), not persistent */

@@ -34,7 +34,7 @@
     int	selRowIndex;
     BOOL browserValid;
 
-    id chordProbabilityController;
+    IBOutlet id chordProbabilityController;
 
     NSArray *harmoGraphTonalityNumbers; // Entry is (NS)Number. If not set, use Harmo1 Quintrepresentation
 }
@@ -76,6 +76,9 @@
 + (const char *)rubetteVersion;
 + (spaceIndex)rubetteSpace;
 
+- (void)changedGraphSelection:(id)sender;
+- (int)selectedChordIndex;
+- (void)selectChordAtIndex:(int)idx;
 - (void)setHarmoGraphTonalityNumbers:(NSArray *)newGraphTonalities;
 - (void)setHarmoSpace:(NSDictionary *)dict;
 @end

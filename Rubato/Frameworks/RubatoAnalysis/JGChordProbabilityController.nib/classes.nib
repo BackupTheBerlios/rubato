@@ -15,14 +15,12 @@
             OUTLETS = {
                 allOnsetsComboBox = NSComboBox; 
                 defaultValueTextField = NSTextField; 
-                definitionsButtonCell = NSButtonCell; 
                 definitionsResultsRadioMatrix = NSMatrix; 
                 harmoRubetteDriver = id; 
                 probabilityMatrix = NSMatrix; 
                 recalculateButton = NSButton; 
                 restrictOnsetButton = NSButton; 
                 restrictedOnsetsComboBox = NSComboBox; 
-                resultsButtonCell = NSButtonCell; 
                 setAllEntriesToDefaultButton = NSButton; 
                 unrestrictOnsetButton = NSButton; 
                 window = NSWindow; 

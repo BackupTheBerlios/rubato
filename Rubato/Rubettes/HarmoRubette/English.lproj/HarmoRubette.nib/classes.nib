@@ -42,10 +42,12 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
+                loadNewSpace = id; 
                 loadNollSet = id; 
                 loadRiemannSet = id; 
                 loadTonalitySet = id; 
                 resetChordSequence = id; 
+                resetRiemannLogic = id; 
                 saveNollSet = id; 
                 saveRiemannSet = id; 
                 saveTonalitySet = id; 
@@ -57,6 +59,7 @@
             CLASS = HarmoPreferences; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                harmoFileNameTextField = NSTextField; 
                 myCausalCardField = id; 
                 myCausalSpanField = id; 
                 myDurationSwitch = id; 
@@ -68,6 +71,7 @@
                 myGlobalSlopeField = id; 
                 myIntraProfileField = id; 
                 myLocalLevelField = id; 
+                myMethodMatrix = NSMatrix; 
                 myMethodPopUpBtn = id; 
                 myModeDistanceMatrix = id; 
                 myModelessFunctionDistanceMatrix = id; 
@@ -78,12 +82,15 @@
                 myTonalityDistanceMatrix = id; 
                 myTransitionProfileField = id; 
                 myWeightProfileField = id; 
+                summationFormulaNumberPopUpButton = NSPopUpButton; 
+                summationFormulaNumberTextField = NSTextField; 
             }; 
             SUPERCLASS = Preferences; 
         }, 
         {
             ACTIONS = {
                 browser = id; 
+                changedGraphSelection = id; 
                 doCalculate = id; 
                 doCalculatePath = id; 
                 doCalculateRiemannLogic = id; 
@@ -101,6 +108,7 @@
             CLASS = HarmoRubetteDriver; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                chordProbabilityController = id; 
                 myBrowser = id; 
                 myCalcAmountField = id; 
                 myCalcBestPathButton = id; 
@@ -124,6 +132,33 @@
                 myWeightViewPanel = id; 
             }; 
             SUPERCLASS = RubetteDriver; 
+        }, 
+        {
+            ACTIONS = {
+                probabilityMatrixChanged = id; 
+                recalculatePressed = id; 
+                restrictOnsetPressed = id; 
+                selectionChanged = id; 
+                setAllEntriesToDefaultPressed = id; 
+                showWindow = id; 
+                unrestrictOnsetPressed = id; 
+            }; 
+            CLASS = JGChordProbabilityController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                allOnsetsComboBox = NSComboBox; 
+                defaultValueTextField = NSTextField; 
+                definitionsResultsRadioMatrix = NSMatrix; 
+                harmoRubetteDriver = id; 
+                probabilityMatrix = NSMatrix; 
+                recalculateButton = NSButton; 
+                restrictOnsetButton = NSButton; 
+                restrictedOnsetsComboBox = NSComboBox; 
+                setAllEntriesToDefaultButton = NSButton; 
+                unrestrictOnsetButton = NSButton; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
         }, 
         {
             CLASS = JGTitledScrollView; 

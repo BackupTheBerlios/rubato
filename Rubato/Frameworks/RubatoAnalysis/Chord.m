@@ -568,6 +568,53 @@
   return a;
 }
 
+static double *injectionNumbers[4096];
+static double *closureNumbers[4096];
+
+- (void)calcInjectionNumbersAndClosureNumbers:(int)pitchClasses;
+{
+  int i,j;
+  injectionNumbers[pitchClasses]=malloc(144*sizeof(double));
+  closureNumbers[pitchClasses]=malloc(144*sizeof(double));
+  for (i=0;i<144;i++) {
+    int b= i % 12;
+    int a = i/12; //a = (i - b)/12
+    int sum=0;
+    int pitchCount=0;
+    for (j=0;j<12;j++) {
+      if (pitchClasses & (1<<j)) {
+        pitchCount++;
+        if (pitchClasses & (1<<((a*j+b) % 12)))
+          sum++;
+      }
+    }
+    if (sum==pitchCount)
+      closureNumbers[pitchClasses][i]=1.0;
+    else
+      closureNumbers[pitchClasses][i]=0.0;
+    injectionNumbers[pitchClasses][i]=((double)sum)/(double)pitchCount;
+  }
+}
+
+- (double *)closureNumbersForPitchClasses:(int)pitchClasses;
+{
+  double *ret=injectionNumbers[pitchClasses];
+  if (!ret) {
+    [self calcInjectionNumbersAndClosureNumbers:pitchClasses];
+    ret=injectionNumbers[pitchClasses];
+  }
+  return ret;
+}
+- (double *)injectionNumbersForPitchClasses:(int)pitchClasses;
+{
+  double *ret=injectionNumbers[pitchClasses];
+  if (!ret) {
+    [self calcInjectionNumbersAndClosureNumbers:pitchClasses];
+    ret=injectionNumbers[pitchClasses];
+  }
+  return ret;
+}
+
 - (double)calcRiemannValueAtFunction:(int)function andTonic:(int)tonic;
 {
   NSString *blockKey=@"Chord:calcRiemannValueAtFunction:andTonic:";
@@ -586,20 +633,19 @@
       return 0.0;      
     }
   } else {
-    switch([myOwnerSequence method]) {
-	case MAZZOLA: {
+    int method=[myOwnerSequence method];
+    switch(method) { 
+      case MAZZOLA: { 
 	    int j, c = [myThirdStreamList count]; /* c is always positive */
-	    double val = 0.0;
-	
-	    for(j=0; j<c; j++) {
-		
+	    double val = 0.0;	
+	    for(j=0; j<c; j++) {		
 		/* add all thirdstream contributions */
               // add flag for NEWHARMO (useThirdStream/useChord)
 		val += [[myThirdStreamList objectAt:j] riemannWeightWithFunctionScale:
 #ifndef CHORDSEQ_DYN
                   (void *)
 #endif
-                           [myOwnerSequence functionScale] atFunction:FUNCTION_RANGE(function) andTonic:tonic];
+                             [myOwnerSequence functionScale] atFunction:FUNCTION_RANGE(function) andTonic:tonic];
 	    }
 		/* take average */
 	    return    val / (double)c;
@@ -607,20 +653,68 @@
 	case NOLL: return [self calcNollRiemannValueAtFunction:function andTonic:tonic 
 			genericWeight:[myOwnerSequence nollMatrix]];
         // NEWHARMO
-        case FLEISCHER: {
+        case DIRECT_HARMO:
+        case THIRDCHAIN_HARMO: {
           int i,c=0;
+          int j; 
           double val = 0.0;
-          int pcCount=myOwnerSequence->pcCount; // normally 12
-          for (i=0;i<pcCount;i++) {
-            if (myPitchClasses & 1<<i) {// see hasPitchClass
-              c++;
-              val+=(myOwnerSequence->harmonicProfile)[function][tonic][i];              
+          int pcCount;
+          int pitchClasses;
+          int useMorphology=(myOwnerSequence->useMorphology);
+          BOOL useThirdChainFlag=(method==THIRDCHAIN_HARMO);
+          int summationFormulaNumber=(myOwnerSequence->summationFormulaNumber);
+          Block *summationFormulaBlock;
+          id NumberClass=nil;
+          if (summationFormulaNumber==3) {
+            NSString *sBlockKey=@"ChordSummationFormulaBlock:";
+            NumberClass=NSClassFromString(@"Number");
+            summationFormulaBlock=[[myOwnerSequence fsBlocks] objectForKey:sBlockKey];
+            NSParameterAssert(summationFormulaBlock!=nil);
+          }
+
+          if (useMorphology>0) {
+            pcCount=144;
+          } else
+            pcCount=myOwnerSequence->pcCount; // normally 12
+          if (useThirdChainFlag) {
+            c=[myThirdStreamList count];
+          } else {
+            c=1;
+            pitchClasses=myPitchClasses;
+          }
+          for (j=0;j<c;j++) {
+            double *pitchFactors;
+            if (useThirdChainFlag) {
+              pitchClasses=[[myThirdStreamList objectAtIndex:j] pitchClasses];
+            }               
+            if (useMorphology==1) {
+              pitchFactors=[self closureNumbersForPitchClasses:pitchClasses];
+            } else if (useMorphology==2) {
+              pitchFactors=[self injectionNumbersForPitchClasses:pitchClasses];
+            }
+            for (i=0;i<pcCount;i++) {
+              if (pitchClasses & 1<<i) {// see hasPitchClass
+                double lookup=(myOwnerSequence->harmonicProfile)[function][tonic][i];
+                double product;
+                c++;
+                if (useMorphology>0) {
+                  product=lookup*pitchFactors[i];
+                } else {
+                  product=lookup;  
+                }
+                if (summationFormulaNumber==2) { // exp
+                  product=exp(product);
+                } else if (summationFormulaNumber==0) { // exp (classic)
+                  if (product!=0.0)
+                    product=exp(product);
+                } else if (summationFormulaNumber==3) { // FScript code
+                  product=[[summationFormulaBlock value:[NumberClass numberWithDouble:product]] doubleValue];
+                }
+                val+=product;
+              }
             }
           }
           return val/=(double)c;
-//          for (j=0; j<myPitchCount; j++) {
-//            val+=f(myPitchList[j]);
-//          }
         }
     }
     return 0.0;    
@@ -1077,5 +1171,13 @@ if (names) {\
 - (int)functionCount;
 {
   return functionCount;
+}
+- (double **)riemannMatrix;
+{
+  return myRiemannMatrix;
+}
+- (double **)levelMatrix;
+{
+  return myLevelMatrix;
 }
 @end

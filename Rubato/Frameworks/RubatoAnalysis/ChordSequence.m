@@ -780,25 +780,35 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     if(!isRiemannCalculated){
         // NEWHARMO
       Block *block=[fsBlocks objectForKey:@"HarmonicProfileValueForFunction:tonic:pc:"];
-      if (block) {
-        int i,j,k;
+      int i,j,k;
+        int sumCount;
         if (harmonicProfile)
           free(harmonicProfile);
-        MALLOC3(harmonicProfile,functionCount,tonalityCount,pcCount,double);
+        if (useMorphology) {
+          sumCount=144;
+        } else
+          sumCount=pcCount;
+        MALLOC3(harmonicProfile,functionCount,tonalityCount,sumCount,double);
+
         for (i=0; i<functionCount; i++)
           for (j=0; j<tonalityCount; j++)
-            for (k=0; k<pcCount; k++) {
-              id blockVal=[block value:NUMBER(i) value:NUMBER(j) value:NUMBER(k)];
-              if ([blockVal respondsToSelector:@selector(doubleValue)])
-                harmonicProfile[i][j][k]=[blockVal doubleValue];
-              else
-                harmonicProfile[i][j][k]=0.0;
+            for (k=0; k<sumCount; k++) {
+              double val;
+              if (block) {
+                id blockVal=[block value:NUMBER(i) value:NUMBER(j) value:NUMBER(k)];
+                if ([blockVal respondsToSelector:@selector(doubleValue)])
+                  val=[blockVal doubleValue];
+                else
+                  val=0.0;
+              } else {
+                val=myFunctionScale[i][(k+pcCount-j) % pcCount]; // pcCount==12!
+              }
+              harmonicProfile[i][j][k]=val;
             }
-      }
-	[self calcNollMatrix];
-	for(i=0; i<c; i++)
-	    [[myChords objectAt:i] calcRiemannMatrix];
-	isRiemannCalculated = YES;
+        [self calcNollMatrix];
+        for(i=0; i<c; i++)
+          [[myChords objectAt:i] calcRiemannMatrix];
+        isRiemannCalculated = YES;
     }
     if(!isLevelCalculated){
 	double gLevel = 0.0, lLevel =0.0;
@@ -1028,7 +1038,7 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
 
 - setMethod:(int)aMethod;
 {
-    if (aMethod != myMethod && aMethod>0 && aMethod<=FLEISCHER) {
+    if (aMethod != myMethod && aMethod>0) {
 	myMethod = aMethod;
 	[self invalidate];
     }

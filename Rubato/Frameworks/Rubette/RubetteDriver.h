@@ -75,6 +75,7 @@
     
     char* weightfile;
     unsigned long weightCount;
+    NSMutableDictionary *generalPurposeDictionary; // removeAllObjects on -closeRubette to deal with retain cycles
 
     BOOL isInitializingForDocument;
 }
@@ -92,6 +93,8 @@
 - (void)dealloc;
 - (void)forwardInvocation:(NSInvocation *)invocation;
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector; //necessary fuer forwardInvocation
+
+- (NSMutableDictionary *)generalPurposeDictionary;
 
 // cleanup
 - (void)closeRubetteWindows;
@@ -182,4 +185,10 @@
 - (void)setLastFoundPredicates:(id)fp;
 - (id)weight;
 - (void)setWeight:(id)weight;
+@end
+
+@interface RubetteDriver (FScriptAdditions)
+- (id /*FSInterpreterView */)fsInterpreterViewCreateIfNecessary:(BOOL)createIfNecessary;
+- (id /*FSInterpreter */)fsInterpreterCreateIfNecessary:(BOOL)createIfNecessary;
+- (void)showInterpreterView:(id)sender;
 @end

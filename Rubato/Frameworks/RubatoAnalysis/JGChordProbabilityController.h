@@ -17,16 +17,17 @@
     IBOutlet NSButton *recalculateButton;
 
     IBOutlet NSMatrix *definitionsResultsRadioMatrix;
-    IBOutlet NSButtonCell *definitionsButtonCell;
-    IBOutlet NSButtonCell *resultsButtonCell;
     
     IBOutlet NSButton *setAllEntriesToDefaultButton;
     IBOutlet NSTextField *defaultValueTextField;
 
     double *probabilityValues;
     int selectedT; // index of chord resp. t index in viterbi
-    BOOL showResultsMode;
+    BOOL displayMode;
     // int modelChangedFromT; // keep track of minimum t, for which viterbi must be recalculated
+    BOOL selectionChangedEntered; // avoid update cylces
+    BOOL updateInspector;
+
 @public
     id harmoRubetteDriver;
     JGViterbi *viterbi;

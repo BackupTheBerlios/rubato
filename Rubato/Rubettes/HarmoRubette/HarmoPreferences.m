@@ -8,6 +8,8 @@
 #import <RubatoDeprecatedCommonKit/JGNXCompatibleUnarchiver.h>
 #import <Rubato/JGTitledScrollView.h>
 
+#import <FScript/FScript.h>
+
 @implementation HarmoPreferences
 
 - init;
@@ -92,11 +94,89 @@
     return self;
 }
 
+- (IBAction)loadNewSpace:(id)sender;
+{
+  static NSString *fileName=nil;
+  NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+  NSUserDefaults *standardUserDefaults=[NSUserDefaults standardUserDefaults];
+  NSString *key=@"HarmoRubetteSpaceStandardDirectory";
+  BOOL found;
+  int result;
+  if (!fileName) {
+    fileName=[[standardUserDefaults objectForKey:key] retain];
+    if (!fileName)
+      fileName=[@"~/Library/Application Support/Rubato/HarmoRubette/HarmoSpaces" retain];
+  }
+  result=[openPanel runModalForDirectory:fileName file:nil types:[NSArray arrayWithObjects:@"harmoSpace",@"fscript",nil]];
+  [fileName release];
+  fileName=[[openPanel filename] copy];
+  [standardUserDefaults setObject:fileName forKey:key];
+  if(result == NSOKButton) {
+    FSInterpreter *interpreter=[myOwner fsInterpreterCreateIfNecessary:YES];
+    System *s=[interpreter objectForIdentifier:@"sys" found:&found];
+    if ([s isKindOfClass:NSClassFromString(@"System")]) {
+      [harmoFileNameTextField setStringValue:[fileName lastPathComponent]];
+      [s load:fileName];
+    } else {
+      NSBeep();
+      NSLog(@"No valid System instance 'sys' in current FScript-Interpreter");
+    }
+  }
+}
 
-- resetChordSequence:sender;
+- (IBAction)resetRiemannLogic:(id)sender;
+{
+
+  ChordSequence *aChordSequence = [myOwner chordSequence];
+  int newTag;
+
+  newTag=[[summationFormulaNumberPopUpButton selectedItem] tag];
+  if (newTag==3) {
+    // command is evaluated each time something changes! Is this desired?
+    NSString *command=[summationFormulaNumberTextField stringValue];
+    NSString *key=@"ChordSummationFormulaBlock:";
+    Block *block=nil;
+    NSMutableDictionary *fsBlocks=[aChordSequence fsBlocks];
+    if (![command length]) {
+      [fsBlocks removeObjectForKey:key];
+    } else {
+      NSString *errMsg=nil;
+      FSInterpreter *interpreter=[myOwner fsInterpreterCreateIfNecessary:YES];
+      FSInterpreterResult *result=[interpreter execute:command]; // better: (command asBlock), but needs to wrap command within '' which can lead to problems.
+      if ([result isOk]) {
+        block=[result result];
+        if ([block isKindOfClass:NSClassFromString(@"Block")]) {
+          if ([block argumentCount]!=1) {
+            errMsg=@"Block does not have exactly one argument";
+          }
+        } else {
+          errMsg=@"Return value is not a F-Script Block";
+        }
+      } else {
+        errMsg=[result errorMessage];
+        [result inspectBlocksInCallStack];
+      }
+      if (errMsg) {
+        newTag=aChordSequence->summationFormulaNumber; // oldTag
+        [summationFormulaNumberPopUpButton selectItemAtIndex:[summationFormulaNumberPopUpButton indexOfItemWithTag:newTag]];
+        errMsg=[@"Change Block text and reselect 'F-Script Block' in PopUpButton. Error description: " stringByAppendingString:errMsg];
+        NSRunAlertPanel(@"HarmoRubette Theory Settings Error", errMsg, @"OK",nil, nil);
+      } else {
+        [fsBlocks setObject:block forKey:key];
+      }
+    }
+  }
+  aChordSequence->summationFormulaNumber=newTag;
+//  aChordSequence->useThirdChainFlag=[[myMethodMatrix selectedCell] tag]; // setMethod
+  //      aChordSequence->useMorphology;
+  [self resetChordSequence:nil]; // should be replaced later, if riemann logic and riemann tensor influencing parts are splitted.
+}
+
+// jg: this method should be split into resetRiemannLogic and resetRiemannTensor.
+- (IBAction)resetChordSequence:(id)sender;
 {
     int r, c;
-    id aChordSequence = [myOwner chordSequence]; // jg is here also possible sender instead of myOwner? 
+    ChordSequence *aChordSequence = [myOwner chordSequence]; // jg is here also possible sender instead of myOwner? 
 // called by HarmoRubetteDriver:doCalculateRiemanLogic. myOwner is also probably
 // this HarmoRubetteDriver, because the Method is not defined anywhere else. 
 
@@ -106,6 +186,8 @@
     int modeCount=[aChordSequence modeCount];
     int modelessFunctionCount=[aChordSequence modelessFunctionCount];
     int locusCount=tonalityCount*functionCount;
+
+
     
     /* set general tonality values */
     for (r=0; r<modeCount; r++)
@@ -122,6 +204,8 @@
     [aChordSequence setSemitoneUnit:[mySemitoneUnitField doubleValue]];
     [aChordSequence setLocalLevel:[myLocalLevelField doubleValue]];
     [aChordSequence setGlobalLevel:[myGlobalLevelField doubleValue]];
+
+     
     for (r=0; r<functionCount; r++)
 	for (c=0; c<pcCount; c++) 
 	    [aChordSequence setScaleValue:
@@ -151,7 +235,6 @@
     
 //#warning ViewConversion:  The View 'update' method is obsolete; if the receiver of this method is an NSView convert to [<theView> setNeedsDisplay:YES]
     [myOwner update];
-    return self;
 }
 
 - setWeightPrefs:sender;
@@ -194,18 +277,28 @@
 
 - setMethod:(int)aMethod;
 {
-//#warning PopUpConversion: Consider NSPopUpButton methods instead of using itemMatrix to access items in a pop-up list.
-//    id popUpMatrix = [myMethodPopUpBtn itemMatrix];
-//    [popUpMatrix selectCellWithTag:aMethod];
+  if (myMethodPopUpBtn) { // old interface
+    //#warning PopUpConversion: Consider NSPopUpButton methods instead of using itemMatrix to access items in a pop-up list.
+    //    id popUpMatrix = [myMethodPopUpBtn itemMatrix];
+    //    [popUpMatrix selectCellWithTag:aMethod];
     [myMethodPopUpBtn selectItemAtIndex:[myMethodPopUpBtn indexOfItemWithTag:aMethod]];
     [myMethodPopUpBtn setTitle:[myMethodPopUpBtn titleOfSelectedItem]];
-    return self;
+  } else if (myMethodMatrix) { // new interface 
+    [myMethodMatrix selectCellWithTag:aMethod];    
+  }
+  return self;
 }
 
 - (int) method;
 {
+  if (myMethodPopUpBtn) { // old interface
     return [[myMethodPopUpBtn selectedItem]tag];
-
+  } else if (myMethodMatrix) { // new interface
+    return [[myMethodMatrix selectedCell] tag];
+  } else {
+    NSParameterAssert(myMethodPopUpBtn||myMethodMatrix);
+    return 0;
+  }
 }
 
 - (BOOL)useDuration;
