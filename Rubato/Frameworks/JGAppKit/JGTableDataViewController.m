@@ -247,7 +247,6 @@
 @end
 
 @implementation JGTableData(NSTableViewNotifications)
-/*
  - (void)tableViewSelectionDidChange:(NSNotification *)notification;
  - (void)tableViewColumnDidMove:(NSNotification *)notification;
  - (void)tableViewColumnDidResize:(NSNotification *)notification;

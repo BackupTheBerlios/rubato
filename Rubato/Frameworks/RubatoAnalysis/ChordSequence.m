@@ -862,9 +862,21 @@ double nollProfile[8][7] =  {	{4.1,1.7,3.7,1.3,0.7,0.5,1.1},  /* TON */
     isLevelCalculated = YES;
   }
   if(!isDistanceCalculated){
-    for(i=0;i<VAL_MAX_LOCUS;i++){
-      for(j=0;j<VAL_MAX_LOCUS;j++)
-        myDistanceMatrix[i][j] = [self calcDistanceFrom:i to:j];
+    NSArray *distanceMatrix=[harmoSpace objectForKey:@"DistanceMatrix"];
+    if (distanceMatrix) {
+      // skip calculation, use external Setting
+      NSParameterAssert([distanceMatrix count]==VAL_MAX_LOCUS);
+      for(i=0;i<VAL_MAX_LOCUS;i++) {
+        NSArray *distanceVector=[distanceMatrix objectAtIndex:i];
+        NSParameterAssert([distanceVector count]==VAL_MAX_LOCUS);
+        for(j=0;j<VAL_MAX_LOCUS;j++)
+          myDistanceMatrix[i][j]=[[distanceVector objectAtIndex:j] doubleValue];
+      }
+    } else {
+      for(i=0;i<VAL_MAX_LOCUS;i++){
+        for(j=0;j<VAL_MAX_LOCUS;j++)
+          myDistanceMatrix[i][j] = [self calcDistanceFrom:i to:j];
+      }
     }
     isDistanceCalculated = YES;
   }
