@@ -88,6 +88,7 @@
 				97A5A88D010347E800000001,
 				03FEE1F700906EAA7F000001,
 				03FEE1FE00906EAA7F000001,
+				9753C77B034B633100951B37,
 			);
 			isa = PBXGroup;
 			name = RubatoFrameworks;
@@ -282,6 +283,8 @@
 				97A178F20274151500951B37,
 				9784A4BC0277305300951B37,
 				9784A4BD0277305300951B37,
+				9753C777034B599500951B37,
+				9753C778034B599500951B37,
 			);
 			isa = PBXGroup;
 			name = Classes;
@@ -2276,6 +2279,8 @@
 				03FEE1C800906EAA7F000001,
 				97F4762702D43E4E00951B37,
 				97F4762902D43E7700951B37,
+				97F569AA02DC4D0300951B37,
+				97F569A902DC4D0300951B37,
 			);
 			isa = PBXGroup;
 			name = Classes;
@@ -2317,8 +2322,6 @@
 				03FEE1D000906EAA7F000001,
 				03FEE1D100906EAA7F000001,
 				03FEE1D200906EAA7F000001,
-				97F569A902DC4D0300951B37,
-				97F569AA02DC4D0300951B37,
 			);
 			isa = PBXGroup;
 			name = Headers;
@@ -3500,6 +3503,7 @@
 				9758C9B902C128EE00951B37,
 				977AFA1502EC7B1D00951B37,
 				97C16635032762E000951B37,
+				9753C779034B599500951B37,
 			);
 			isa = PBXHeadersBuildPhase;
 			name = Headers;
@@ -3807,6 +3811,7 @@
 				9758C9BA02C128EE00951B37,
 				977AFA1602EC7B1D00951B37,
 				97C16636032762E000951B37,
+				9753C77A034B599500951B37,
 			);
 			isa = PBXSourcesBuildPhase;
 			name = Sources;
@@ -5538,7 +5543,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
-				97C1663B0327B88200951B37,
+				9753C77F034B74E700951B37,
 			);
 			isa = PBXApplicationTarget;
 			name = "Rubato (Application)";
@@ -6183,6 +6188,38 @@
 			name = MPWFoundation.framework;
 			path = /Library/Frameworks/MPWFoundation.framework;
 			refType = 0;
+		};
+		9753C777034B599500951B37 = {
+			isa = PBXFileReference;
+			path = JGTitledScrollView.h;
+			refType = 4;
+		};
+		9753C778034B599500951B37 = {
+			isa = PBXFileReference;
+			path = JGTitledScrollView.m;
+			refType = 4;
+		};
+		9753C779034B599500951B37 = {
+			fileRef = 9753C777034B599500951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		9753C77A034B599500951B37 = {
+			fileRef = 9753C778034B599500951B37;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		9753C77B034B633100951B37 = {
+			isa = PBXFileReference;
+			name = HarmoRubette.nib;
+			path = /Volumes/backups/jg/HarmoRubette.nib;
+			refType = 0;
+		};
+		9753C77F034B74E700951B37 = {
+			isa = PBXTargetDependency;
+			target = 03FEE26000906EAA7F000001;
 		};
 		9757F21A01BE5C4900951B37 = {
 			isa = PBXFileReference;
@@ -7207,6 +7244,7 @@
 				978FC496010332C100000001,
 				978FC497010332C100000001,
 				978FC498010332C100000001,
+				97E1E3030344542000951B37,
 			);
 			isa = PBXGroup;
 			path = HarmoRubette;
@@ -10381,10 +10419,6 @@
 				);
 			};
 		};
-		97C1663B0327B88200951B37 = {
-			isa = PBXTargetDependency;
-			target = 97EB084802EF12EF00951B37;
-		};
 		97C1663C0327C45300951B37 = {
 			isa = PBXFileReference;
 			name = "F-Script.icns";
@@ -11491,6 +11525,21 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		97E1E3030344542000951B37 = {
+			children = (
+				97E1E3040344542000951B37,
+			);
+			isa = PBXVariantGroup;
+			name = HarmoRubette2.nib;
+			path = "";
+			refType = 4;
+		};
+		97E1E3040344542000951B37 = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/HarmoRubette2.nib;
+			refType = 4;
 		};
 		97E46E0C01BE3F4700951B37 = {
 			fileRef = 97EB1C2701A003B400951B37;
