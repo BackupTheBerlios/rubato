@@ -82,6 +82,7 @@
 		};
 		03FEE03100906EAA7F000001 = {
 			children = (
+				97BCF39C035746C900951B37,
 				97D750C6034C5F9E00951B37,
 				977AFA0A02EC6CEB00951B37,
 				977AFA0902EC66D800951B37,
@@ -10382,6 +10383,19 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		97BCF39C035746C900951B37 = {
+			children = (
+				97BCF39D035746C900951B37,
+			);
+			isa = PBXGroup;
+			path = FScripts;
+			refType = 4;
+		};
+		97BCF39D035746C900951B37 = {
+			isa = PBXFileReference;
+			path = MetroMovie.fscript;
+			refType = 4;
 		};
 		97C1662F032762E000951B37 = {
 			isa = PBXFileReference;
