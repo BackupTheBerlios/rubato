@@ -8,6 +8,7 @@
 		);
 		breakpoints = (
 			97E2E1050354BF4500951B37,
+			977257DE035863E100D3499E,
 		);
 		perUserDictionary = {
 			PBXWorkspaceConfiguration = {
@@ -16,10 +17,10 @@
 					ActiveTab = 0;
 					Frame = "{{0, 23}, {1009, 603}}";
 					Split0 = {
-						ActiveTab = 2;
+						ActiveTab = 3;
 						Frame = "{{318, 0}, {691, 603}}";
 						Split0 = {
-							Frame = "{{0, 246}, {691, 357}}";
+							Frame = "{{0, 268}, {691, 335}}";
 						};
 						SplitCount = 1;
 						Tab0 = {
@@ -56,12 +57,12 @@
 							};
 						};
 						Tab2 = {
-							BuildMessageFrame = "{{0, 0}, {693, 114}}";
-							BuildTranscriptFrame = "{{0, 123}, {693, 101}}";
-							Frame = "{{0, 0}, {691, 222}}";
+							BuildMessageFrame = "{{0, 0}, {693, 83}}";
+							BuildTranscriptFrame = "{{0, 92}, {693, 127}}";
+							Frame = "{{0, 0}, {691, 217}}";
 						};
 						Tab3 = {
-							Frame = "{{0, 0}, {661, 185}}";
+							Frame = "{{0, 0}, {691, 244}}";
 						};
 						TabCount = 4;
 					};
@@ -264,6 +265,12 @@
 		);
 		sourceDirectories = (
 		);
+	};
+	977257DE035863E100D3499E = {
+		fileReference = 97E2E10E0354C06D00951B37;
+		isa = PBXFileBreakpoint;
+		lineNumber = 136;
+		state = 2;
 	};
 	9781A52002AE6BF100951B37 = {
 		activeExec = 0;

@@ -2511,6 +2511,8 @@
 				03FEE1F400906EAA7F000001,
 				03FEE1F500906EAA7F000001,
 				03FEE1F600906EAA7F000001,
+				977257DF035F58A100D3499E,
+				977257E0035F58A100D3499E,
 			);
 			isa = PBXGroup;
 			name = "Supporting Files";
@@ -3387,9 +3389,9 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = /Volumes/OSX_ext/Users/jg/rubato/ForeignSources/FScript/build;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-Dselfvoid=void";
@@ -4614,7 +4616,7 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
 				FRAMEWORK_VERSION = A;
 				HEADER_SEARCH_PATHS = Frameworks;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -5177,7 +5179,7 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
 				FRAMEWORK_VERSION = A;
 				HEADER_SEARCH_PATHS = Frameworks;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -5536,7 +5538,7 @@
 				973587F402ECAF9000951B37,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "/Volumes/jg/jg/rubato/ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build /Volumes/jg/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build /Volumes/jg/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build /Volumes/jg/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build /Volumes/jg/jg/rubato/ForeignSources/FScript/build";
+				FRAMEWORK_SEARCH_PATHS = "/Users/jg/rubato/ForeignSources/FScript/build /Users/jg/rubato/ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build";
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = /Rubato;
 				LIBRARY_SEARCH_PATHS = "";
@@ -5859,6 +5861,8 @@
 				97EB085E02EF14AB00951B37,
 				97EB085F02EF14AB00951B37,
 				97C1663D0327C45400951B37,
+				977257E1035F58A300D3499E,
+				977257E2035F58A300D3499E,
 			);
 			isa = PBXResourcesBuildPhase;
 			name = "Bundle Resources";
@@ -6145,6 +6149,11 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		9704F009036310710015F2B8 = {
+			isa = PBXFileReference;
+			path = ChewSpiralArray.fscript;
+			refType = 4;
 		};
 		9708D0640355FF8100951B37 = {
 			isa = PBXFileReference;
@@ -6598,6 +6607,35 @@
 		};
 		97709A34017C954800000001 = {
 			fileRef = 03FEE20300906EAA7F000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		977257DC0358209000D3499E = {
+			isa = PBXFileReference;
+			path = CustomDistanceCalculation.fscript;
+			refType = 4;
+		};
+		977257DF035F58A100D3499E = {
+			isa = PBXFileReference;
+			name = fs.scriptSuite;
+			path = ../ForeignSources/FScript/JGAdditions/fs.scriptSuite;
+			refType = 2;
+		};
+		977257E0035F58A100D3499E = {
+			isa = PBXFileReference;
+			name = fs.scriptTerminology;
+			path = ../ForeignSources/FScript/JGAdditions/fs.scriptTerminology;
+			refType = 2;
+		};
+		977257E1035F58A300D3499E = {
+			fileRef = 977257DF035F58A100D3499E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		977257E2035F58A300D3499E = {
+			fileRef = 977257E0035F58A100D3499E;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -7261,6 +7299,8 @@
 				978FC498010332C100000001,
 				9708D0640355FF8100951B37,
 				9708D0650355FFEF00951B37,
+				977257DC0358209000D3499E,
+				9704F009036310710015F2B8,
 			);
 			isa = PBXGroup;
 			path = HarmoRubette;
@@ -8464,6 +8504,7 @@
 				978FC6710103427400000001,
 			);
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
 				INSTALL_PATH = "@executable_path/../PlugIns";
 				OTHER_CFLAGS = "-Dselfvoid=void";
 				OTHER_LDFLAGS = "-bundle -undefined error";
@@ -8923,7 +8964,7 @@
 				97A5A87C0103458100000001,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "/Volumes/jg/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build /Volumes/jg/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build /Volumes/jg/jg/rubato/ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build /Volumes/jg/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build";
+				FRAMEWORK_SEARCH_PATHS = "/Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MKDSP_Native/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/MusicKit/build /Users/jg/rubato/ForeignSources/SndKit-2.1.0/Frameworks/SndKit/build /Users/jg/rubato/ForeignSources/MusicKit-5.4.0/Frameworks/PlatformDependent/MKPerformSndMIDI_MacOSX/build";
 				INSTALL_PATH = "@executable_path/../PlugIns";
 				OTHER_CFLAGS = "-DWITHMUSICKIT -Dselfvoid=void";
 				OTHER_LDFLAGS = "-bundle -undefined error";
@@ -11286,7 +11327,7 @@
 				97D750C5034C5F4900951B37,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/Rubato/build;
+				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/Rubato/build;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -11738,7 +11779,7 @@
 				97E2E10C0354C01A00951B37,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "/Volumes/jg/jg/rubato/ForeignSources/FScript/build /Volumes/jg/jg/rubato/Rubato/build";
+				FRAMEWORK_SEARCH_PATHS = "/Users/jg/rubato/ForeignSources/FScript/build /Users/jg/rubato/Rubato/build";
 				OTHER_CFLAGS = "-Dselfvoid=void";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -11951,7 +11992,8 @@
 				97EB084D02EF12EF00951B37,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Volumes/jg/jg/rubato/ForeignSources/FScript/build;
+				FRAMEWORK_SEARCH_PATHS = /Users/jg/rubato/ForeignSources/FScript/build;
+				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "@executable_path/../PlugIns";
 				OTHER_CFLAGS = "-Dselfvoid=void";
 				OTHER_LDFLAGS = "";

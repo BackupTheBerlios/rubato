@@ -27,6 +27,9 @@ HarmoGraphTonalityNumbers:={6,11,4,9,2,7,0,5,10,3,8,1}.
 "optional naming of Tonalities in Riemann graph"
 HarmoGraphTonalities:={'F#', 'B', 'E', 'Ah', 'D', 'G', 'C', 'F', 'Bb', 'Eb','Ab','Db'}.
 
+"You can set a DistanceMatrix and avoid calculation by means of TonalityDistance, FunctionDistance and ModeDistance"
+"DistanceMatrix:={{...}, ..., {....}}. a LocusCount x LocusCount Matrix"
+
 "==================="
 " reduced example:
 Tonalities:={'F','C','G'}.
@@ -39,8 +42,8 @@ Loci:=([:fu :to | fu ++ '(' ++ to ++ ')'] value:@Functions value:@2Tonalities) \
 "==================="
 "Register Space"
 
-space:=(NSMutableDictionary dictionaryWithObjects:{Functions, Tonalities, Modes, ModelessFunctions, PitchClasses, HarmoGraphTonalities, HarmoGraphTonalityNumbers, Loci, TonalityToPitchClassMapping} 
-forKeys:{'Functions','Tonalities','Modes','ModelessFunctions','PitchClasses' , 'HarmoGraphTonalities', 'HarmoGraphTonalityNumbers', 'Loci', 'TonalityToPitchClassMapping'}).
+space:=(NSMutableDictionary dictionaryWithObjects:{Functions, Tonalities, Modes, ModelessFunctions, PitchClasses, HarmoGraphTonalities, HarmoGraphTonalityNumbers, Loci, TonalityToPitchClassMapping ", DistanceMatrix"} 
+forKeys:{'Functions','Tonalities','Modes','ModelessFunctions','PitchClasses' , 'HarmoGraphTonalities', 'HarmoGraphTonalityNumbers', 'Loci', 'TonalityToPitchClassMapping' ", 'DistanceMatrix'"}).
 
 rubetteDriver setHarmoSpace:space.
 
